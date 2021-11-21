@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>330791126625-vprhop6ql1911cjnrg5mlfk120erm7nj.apps.googleusercontent.com</string>
+	<string>330791126625-4avv4f1nuu2np0iu29tn743noguj6dak.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.330791126625-vprhop6ql1911cjnrg5mlfk120erm7nj</string>
+	<string>com.googleusercontent.apps.330791126625-4avv4f1nuu2np0iu29tn743noguj6dak</string>
 	<key>API_KEY</key>
 	<string>AIzaSyC-C5NDKM7bq9WnLMQRhzPbN9g7nUKM4G8</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.agrimetal.yorimich</string>
+	<string>com.agrimetal.yorimichi2</string>
 	<key>PROJECT_ID</key>
 	<string>my-app-94296</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:330791126625:ios:1d119eebb7f03cc9b94c20</string>
+	<string>1:330791126625:ios:b96f571afe709bf5b94c20</string>
 </dict>
 </plist>

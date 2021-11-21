@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A42DDB72747BEA200A36B0F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A42DDB62747BEA200A36B0F /* GoogleService-Info.plist */; };
+		0A42DDB9274A0CB600A36B0F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A42DDB8274A0CB600A36B0F /* GoogleService-Info.plist */; };
 		0A901AB1272024AD00EC0A36 /* PosterColectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901AB0272024AD00EC0A36 /* PosterColectionViewCellViewModel.swift */; };
 		0A901AB3272024C000EC0A36 /* PostCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901AB2272024C000EC0A36 /* PostCollectionViewCellViewModel.swift */; };
 		0A901AB5272024D100EC0A36 /* PostActionsCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901AB4272024D100EC0A36 /* PostActionsCollectionViewCellViewModel.swift */; };
@@ -160,7 +160,7 @@
 
 /* Begin PBXFileReference section */
 		0A42DDB52747BD6D00A36B0F /* yorimichi2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = yorimichi2.entitlements; sourceTree = "<group>"; };
-		0A42DDB62747BEA200A36B0F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0A42DDB8274A0CB600A36B0F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0A901AB0272024AD00EC0A36 /* PosterColectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterColectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		0A901AB2272024C000EC0A36 /* PostCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		0A901AB4272024D100EC0A36 /* PostActionsCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostActionsCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -572,7 +572,7 @@
 		0AD31980271FB74800734539 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				0A42DDB62747BEA200A36B0F /* GoogleService-Info.plist */,
+				0A42DDB8274A0CB600A36B0F /* GoogleService-Info.plist */,
 				0AD3194D271FB3ED00734539 /* SceneDelegate.swift */,
 				0AD31954271FB3EE00734539 /* Assets.xcassets */,
 				0AD3194B271FB3ED00734539 /* AppDelegate.swift */,
@@ -763,8 +763,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A42DDB9274A0CB600A36B0F /* GoogleService-Info.plist in Resources */,
 				0AD31958271FB3EE00734539 /* LaunchScreen.storyboard in Resources */,
-				0A42DDB72747BEA200A36B0F /* GoogleService-Info.plist in Resources */,
 				0AD31955271FB3EE00734539 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1143,12 +1143,13 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.agrimetal.yorimich;
+				PRODUCT_BUNDLE_IDENTIFIER = com.agrimetal.yorimichi2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1179,12 +1180,13 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.agrimetal.yorimich;
+				PRODUCT_BUNDLE_IDENTIFIER = com.agrimetal.yorimichi2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

@@ -193,7 +193,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
                     case .success(let user):
                         HapticManager.shared.vibrate(for: .success)
                         UserDefaults.standard.setValue(user.username, forKey: "username")
-                        UserDefaults.standard.setValue(user.email, forKey: email)
+                        UserDefaults.standard.setValue(user.email, forKey: "email")
                         self?.navigationController?.popToRootViewController(animated: true)
                         self?.completion?()
                     case .failure(let error):
