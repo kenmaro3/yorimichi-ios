@@ -7,14 +7,7 @@
 
 import Foundation
 
-struct MethodInfo{
-    let code: String
-    
-    var getSearchString: String {
-        let str = methodCodeToString(x: code)
-        return str
-    }
-}
+
 
 let methodList = [
     "M000",

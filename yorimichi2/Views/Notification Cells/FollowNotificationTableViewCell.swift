@@ -45,7 +45,7 @@ class FollowNotificationTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let followButton = IGFollowButton()
+    private let followButton = FollowButton()
     
     
     // MARK: - Init

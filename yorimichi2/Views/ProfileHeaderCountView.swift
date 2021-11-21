@@ -61,7 +61,7 @@ class ProfileHeaderCountView: UIView {
         return button
     }()
     
-    private let actionButton = IGFollowButton()
+    private let actionButton = FollowButton()
     
 //    private let actionButton: UIButton = {
 //        let button = UIButton()

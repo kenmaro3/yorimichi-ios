@@ -7,15 +7,6 @@
 
 import Foundation
 
-struct SourceInfo{
-    let code: String
-    
-    var getSearchString: String {
-        let str = sourceCodeToString(x: code)
-        return str
-    }
-}
-
 let sourceList = [
     "S000",
     "S001",

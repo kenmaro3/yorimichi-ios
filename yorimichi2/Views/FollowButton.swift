@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class IGFollowButton: UIButton {
+final class FollowButton: UIButton {
     enum State : String{
         case follow = "Follow"
         case unfollow = "UnFollow"
