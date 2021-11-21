@@ -491,7 +491,7 @@ extension PhotoEditInfoViewController: SearchGenreViewControllerDelegate{
         else{
             fatalError("cannot find genre from list")
         }
-        dismiss(animated: true, completion: nil)
+        //dismiss(animated: true, completion: nil)
     }
     
     
