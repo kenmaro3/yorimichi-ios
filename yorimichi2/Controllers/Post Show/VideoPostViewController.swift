@@ -257,7 +257,7 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
 //            print("falling here======")
 //            return
 //        }
-        ProgressHUD.show("Loading...")
+        ProgressHUD.show("ロード中...")
         
         StorageManager.shared.getDownLoadUrl(for: model, completion: {[weak self] result in
             DispatchQueue.main.async {
@@ -274,10 +274,6 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
 //                    let frame = strongSelf.view.frame
 //                    playerLayer.frame = strongSelf.view.bounds
                     
-                    print("=========")
-                    print(strongSelf.profileView.height)
-                    print(strongSelf.videoView.height)
-                    print(strongSelf.view.bounds.height)
                     if let tmp = strongSelf.navigationController?.navigationBar.frame.height{
                         print(tmp)
                         playerLayer.frame = CGRect(x: 0, y: 0, width: strongSelf.view.width, height: strongSelf.videoView.height-tmp)
@@ -310,7 +306,7 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
                         })
                     
                 case .failure:
-                    ProgressHUD.showFailed("Failed to load video.")
+                    ProgressHUD.showFailed("ビデオのロードに失敗しました。")
 //                    let url = URL(fileURLWithPath: path)
 //                    strongSelf.player = AVPlayer(url: url)
 //

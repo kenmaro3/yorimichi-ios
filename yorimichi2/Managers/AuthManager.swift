@@ -33,7 +33,7 @@ final class AuthManager{
                        profilePicture: Data?,
                        completion: @escaping (Result<User, Error>) -> Void)
     {
-        ProgressHUD.show("Creating Account...")
+        ProgressHUD.show("ユーザ情報を登録しています...")
        let newUser = User(username: username, email: email)
         auth.createUser(withEmail: email, password: password, completion: {result, error in
             guard result != nil, error == nil else{
@@ -77,7 +77,7 @@ final class AuthManager{
             }
             
             
-            ProgressHUD.show("Signing In...")
+            ProgressHUD.show("サインインしています...")
             self?.auth.signIn(withEmail: email, password: password){ result, error in
                 guard result != nil, error == nil else{
                     ProgressHUD.dismiss()
@@ -99,7 +99,7 @@ final class AuthManager{
     }
     
     public func signOut(completion: @escaping(Bool) -> Void){
-        ProgressHUD.show("Siging Out...")
+        ProgressHUD.show("ログアウトしています...")
         do{
             try auth.signOut()
             ProgressHUD.dismiss()

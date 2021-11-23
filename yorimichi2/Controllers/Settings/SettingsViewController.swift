@@ -140,13 +140,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     @objc private func didTapSignOut(){
         let actionSheet = UIAlertController(
-            title: "Sign Out",
-            message: "Are you sure?",
+            title: "ログアウト",
+            message: "ログアウトしますか？",
             preferredStyle: .actionSheet
         )
         
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        actionSheet.addAction(UIAlertAction(title: "Sign Out", style: .destructive, handler: { [weak self] _ in
+        actionSheet.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "ログアウト", style: .destructive, handler: { [weak self] _ in
             AuthManager.shared.signOut{ success in
                 if success{
                     DispatchQueue.main.async {

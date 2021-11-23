@@ -207,7 +207,7 @@ class PhotoEditInfoViewController: UIViewController {
             // Generate a video name that is unique based on id
             let newVideoId = StorageManager.shared.generateVideoName()
             
-            ProgressHUD.show("Posting Video...")
+            ProgressHUD.show("ビデオを投稿しています...")
             
             // Genereate thumbnail
             let asset = AVAsset(url: url)
@@ -284,7 +284,7 @@ class PhotoEditInfoViewController: UIViewController {
                                                     return
                                                 }
                                                 
-                                                ProgressHUD.showSuccess("Posted.")
+                                                ProgressHUD.showSuccess("投稿しました。")
                                                 self?.tabBarController?.tabBar.isHidden = false
                                                 self?.tabBarController?.selectedIndex = 0
                                                 self?.navigationController?.popToRootViewController(animated: false)
@@ -296,8 +296,8 @@ class PhotoEditInfoViewController: UIViewController {
                                     }
                                     else{
                                         HapticManager.shared.vibrate(for: .error)
-                                        let alert = UIAlertController(title: "Woops", message: "We were unable to upload your video. please try again.", preferredStyle: .alert)
-                                        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+                                        let alert = UIAlertController(title: "ビデオ投稿エラー", message: "ビデオ投稿ができませんでした。再度お試しください。", preferredStyle: .alert)
+                                        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                                         self?.present(alert, animated: true)
                                     }
                                 })
@@ -309,8 +309,8 @@ class PhotoEditInfoViewController: UIViewController {
                         else{
                             HapticManager.shared.vibrate(for: .error)
                             ProgressHUD.dismiss()
-                            let alert = UIAlertController(title: "Woops", message: "We were unable to upload your video. please try again.", preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+                            let alert = UIAlertController(title: "ビデオ投稿エラー", message: "ビデオ投稿ができませんでした。再度お試しください。", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                             self?.present(alert, animated: true)
                             
                         }

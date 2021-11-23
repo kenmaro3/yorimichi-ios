@@ -372,10 +372,10 @@ extension ProfileViewController: ProfileHeaderCollectionReusableViewDelegate{
             return
         }
         
-        let sheet = UIAlertController(title: "Change Profile Picture", message: "Update your profile picture from here", preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: "プロフィール画像の変更", message: "プロフィール画像の変更をここから行えます。", preferredStyle: .actionSheet)
         
-        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        sheet.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { [weak self] _ in
+        sheet.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
+        sheet.addAction(UIAlertAction(title: "写真を撮る", style: .default, handler: { [weak self] _ in
             DispatchQueue.main.async {
                 let picker = UIImagePickerController()
                 picker.sourceType = .camera
@@ -385,7 +385,7 @@ extension ProfileViewController: ProfileHeaderCollectionReusableViewDelegate{
             }
         }))
         
-        sheet.addAction(UIAlertAction(title: "Choose Photo", style: .default, handler: {[weak self] _ in
+        sheet.addAction(UIAlertAction(title: "写真を選ぶ", style: .default, handler: {[weak self] _ in
             DispatchQueue.main.async{
                 let picker = UIImagePickerController()
                 picker.sourceType = .photoLibrary
@@ -415,7 +415,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
             return
         }
         
-        ProgressHUD.show("Uploading")
+        ProgressHUD.show("アップロード中")
         
         StorageManager.shared.uploadProfilePicture(username: user.username, data: image.pngData(), completion: {[weak self] success in
             if success{
@@ -423,10 +423,10 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
                 self?.posts = []
                 self?.fetchProfileInfo()
                 
-                ProgressHUD.showSuccess("Updated!")
+                ProgressHUD.showSuccess("変更しました。")
             }
             else{
-                ProgressHUD.showFailed("Failed to upload profile picture.")
+                ProgressHUD.showFailed("プロフィール画像の変更に失敗しました。")
             }
         })
         

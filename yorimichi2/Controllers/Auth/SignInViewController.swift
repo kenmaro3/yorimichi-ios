@@ -133,7 +133,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
                     vc.modalPresentationStyle = .fullScreen
                     self?.present(vc, animated: true, completion: nil)
                     
-                    AlertManager.shared.presentError(title: "Authentication Failed", message: "Please check your email and password again."){[weak self] alert in
+                    AlertManager.shared.presentError(title: "ログインエラー", message: "メールアドレスとパスワードを再度ご確認ください。"){[weak self] alert in
                         self?.present(alert, animated: true)
                         
                     }
@@ -148,8 +148,8 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
     }
     
     private func presentError(){
-        let alert = UIAlertController(title: "Invalid Information", message: "Please make sure to type all the field and password longer than 6 characters.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        let alert = UIAlertController(title: "入力データが無効です。", message: "必須の入力フィールドを入力し、パスワードが６文字以上であることを確認してください。", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "了解", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
     

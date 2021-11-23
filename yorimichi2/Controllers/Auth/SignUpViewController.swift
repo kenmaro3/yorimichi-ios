@@ -133,10 +133,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     // MARK: - Actions
     
     @objc private func didTapImage(){
-        let sheet = UIAlertController(title: "Profile Picture", message: "Set a picture to help your friends find you.", preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: "プロフィール写真", message: "プロフィール写真を登録して、プロフィールを充実させましょう。", preferredStyle: .actionSheet)
         
-        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        sheet.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { [weak self] _ in
+        sheet.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
+        sheet.addAction(UIAlertAction(title: "写真を撮る", style: .default, handler: { [weak self] _ in
             DispatchQueue.main.async {
                 let picker = UIImagePickerController()
                 picker.sourceType = .camera
@@ -146,7 +146,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
             }
         }))
         
-        sheet.addAction(UIAlertAction(title: "Choose Photo", style: .default, handler: {[weak self] _ in
+        sheet.addAction(UIAlertAction(title: "写真を選ぶ", style: .default, handler: {[weak self] _ in
             DispatchQueue.main.async{
                 let picker = UIImagePickerController()
                 picker.sourceType = .photoLibrary
@@ -180,8 +180,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
         
         DatabaseManager.shared.isUsernameExist(username: username, completion: {[weak self] res in
             if res{
-                let alert = UIAlertController(title: "Invalid Username", message: "Username is already taken", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                let alert = UIAlertController(title: "ユーザーネームが無効です。", message: "ユーザーネームがすでに存在しています。他のユーザーネームをお選びください。", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
                 self?.present(alert, animated: true)
             }
             else{
@@ -208,8 +208,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     }
     
     private func presentError(){
-        let alert = UIAlertController(title: "Invalid Information", message: "Please make sure to type all the field and password longer than 6 characters.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        let alert = UIAlertController(title: "無効な入力データ", message: "必須入力フィールドを全て入力し、パスワードは６文字以上であることを確認してください。", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
     

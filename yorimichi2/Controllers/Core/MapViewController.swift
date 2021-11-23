@@ -1239,7 +1239,7 @@ extension MapViewController: ListOnMapViewControllerDelegate{
                         
                     }
                     else{
-                        AlertManager.shared.presentError(title: "Failed to Delete Yorimichi", message: "ヨリミチ情報の削除に失敗しました、再度お試しください。", completion: { [weak self] alert in
+                        AlertManager.shared.presentError(title: "ヨリミチの削除に失敗しました。", message: "ヨリミチ情報の削除に失敗しました、再度お試しください。", completion: { [weak self] alert in
                             self?.present(alert, animated: true)
                         }
                         )
@@ -1257,7 +1257,7 @@ extension MapViewController: ListOnMapViewControllerDelegate{
                             
                         }
                         else{
-                            AlertManager.shared.presentError(title: "Failed to Delete Yorimichi", message: "ヨリミチ情報の削除に失敗しました、再度お試しください。", completion: { [weak self] alert in
+                            AlertManager.shared.presentError(title: "ヨリミチの削除に失敗しました。", message: "ヨリミチ情報の削除に失敗しました、再度お試しください。", completion: { [weak self] alert in
                                 self?.present(alert, animated: true)
                             }
                             )
@@ -1275,7 +1275,7 @@ extension MapViewController: ListOnMapViewControllerDelegate{
                             
                         }
                         else{
-                            AlertManager.shared.presentError(title: "Failed to Delete Yorimichi", message: "ヨリミチ情報の削除に失敗しました、再度お試しください。", completion: { [weak self] alert in
+                            AlertManager.shared.presentError(title: "ヨリミチの削除に失敗しました。", message: "ヨリミチ情報の削除に失敗しました、再度お試しください。", completion: { [weak self] alert in
                                 self?.present(alert, animated: true)
                             }
                             )
@@ -1376,8 +1376,8 @@ extension MapViewController: ListOnMapViewControllerDelegate{
             preferredStyle: .actionSheet
         )
         
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        actionSheet.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { [weak self] _ in
+        actionSheet.addAction(UIAlertAction(title: "いいえ", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "はい", style: .destructive, handler: { [weak self] _ in
             DispatchQueue.main.async {
                 guard let cellTitle = viewModel.title
                 else {
