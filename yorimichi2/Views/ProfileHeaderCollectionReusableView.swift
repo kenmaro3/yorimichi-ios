@@ -93,7 +93,7 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
         if let name = viewModel.name {
             text = name + "\n"
         }
-        text += viewModel.bio ?? "Welcome to my profile"
+        text += viewModel.bio ?? "プロフィールへようこそ"
         imageView.sd_setImage(with: viewModel.profilePictureUrl, completed: nil)
         bioLabel.text = text
         bioLabel.sizeToFit()

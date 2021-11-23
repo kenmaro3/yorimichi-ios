@@ -21,7 +21,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Settings"
+        title = "設定"
         
         configureModels()
         
@@ -56,7 +56,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         )
         sections.append(
             
-            SettingsSection(title: "App", options: [
+            SettingsSection(title: "アプリの評価、共有", options: [
                 SettingOption(title: "アプリを評価する", image: UIImage(systemName: "star"), color: .systemOrange) {
                     guard let url = URL(string: "https://yorimichi-project.webflow.io/") else {
                         return
@@ -79,8 +79,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             ]
                            ))
         
-        sections.append(SettingsSection(title: "Information", options: [
-            SettingOption(title: "Terms of Service", image: UIImage(systemName: "doc"), color: .systemPink) { [weak self] in
+        sections.append(SettingsSection(title: "ヨリミチアプリについて", options: [
+            SettingOption(title: "サービス利用規約", image: UIImage(systemName: "doc"), color: .systemPink) { [weak self] in
                 DispatchQueue.main.async {
                     guard let url = URL(string: "https://yorimichi-project.webflow.io/image-license-info") else{
                         return
@@ -90,7 +90,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 }
                 
             },
-            SettingOption(title: "Privacy Policy", image: UIImage(systemName: "hand.raised"), color: .systemGreen) { [weak self] in
+            SettingOption(title: "プライバシーポリシー", image: UIImage(systemName: "hand.raised"), color: .systemGreen) { [weak self] in
                 DispatchQueue.main.async {
                     guard let url = URL(string: "https://yorimichi-privacy-policy.webflow.io/") else{
                         return
@@ -101,7 +101,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 
             },
             
-            SettingOption(title: "Get Help", image: UIImage(systemName: "questionmark.circle"), color: .systemPurple) { [weak self] in
+            SettingOption(title: "ヘルプはこちら", image: UIImage(systemName: "questionmark.circle"), color: .systemPurple) { [weak self] in
                 DispatchQueue.main.async {
                     guard let url = URL(string: "https://yorimichi-project.webflow.io/") else{
                         return
@@ -131,7 +131,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         let button = UIButton(frame: footer.bounds)
         footer.addSubview(button)
-        button.setTitle("Sign Out", for: .normal)
+        button.setTitle("ログアウト", for: .normal)
         button.setTitleColor(.systemRed, for: .normal)
         button.addTarget(self, action: #selector(didTapSignOut), for: .touchUpInside)
         

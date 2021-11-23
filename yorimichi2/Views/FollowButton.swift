@@ -9,8 +9,8 @@ import UIKit
 
 final class FollowButton: UIButton {
     enum State : String{
-        case follow = "Follow"
-        case unfollow = "UnFollow"
+        case follow = "フォローする"
+        case unfollow = "フォローを解除する"
         
         var titleColor: UIColor{
             switch self{

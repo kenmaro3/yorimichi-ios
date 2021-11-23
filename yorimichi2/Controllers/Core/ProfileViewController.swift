@@ -7,6 +7,7 @@
 
 import UIKit
 import ProgressHUD
+import SafariServices
 
 class ProfileViewController: UIViewController, UISearchResultsUpdating{
     private let searchVC = UISearchController(searchResultsController: SearchResultsViewController())
@@ -46,7 +47,19 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
         setupSearch()
         configureNavBar()
         configureCollectionView()
-        fetchProfileInfo()
+        
+        guard let currentUserName = UserDefaults.standard.string(forKey: "username") else {
+            return
+        }
+        DatabaseManager.shared.isTargetUserBlocked(for: currentUserName, with: user.username, completion: { [weak self] blocked in
+            if(blocked){
+                
+            }
+            else{
+                self?.fetchProfileInfo()
+            }
+            
+        })
 
         
         if isCurrentUser{
@@ -200,6 +213,71 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
             )
             
         }
+        else{
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                image: UIImage(systemName: "ellipsis"),
+                style: .done,
+                target: self,
+                action: #selector(didTapMore)
+            )
+            
+        }
+    }
+    
+    @objc func didTapMore(){
+        let sheet = UIAlertController(title: "ユーザアクション", message: nil, preferredStyle: .actionSheet)
+        sheet.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
+        sheet.addAction(UIAlertAction(title: "ユーザを通報する", style: .destructive, handler: {[weak self] _ in
+            guard let url = URL(string: "https://yorimichi-privacy-policy.webflow.io/") else {
+                return
+            }
+            let vc = SFSafariViewController(url: url)
+            DispatchQueue.main.async {
+                self?.present(vc, animated: true)
+            }
+        }))
+        
+        guard let currentUserName = UserDefaults.standard.string(forKey: "username") else {
+            return
+        }
+        DatabaseManager.shared.isTargetUserBlocked(for: currentUserName, with: user.username, completion: { blocking in
+            if (blocking){
+                sheet.addAction(UIAlertAction(title: "ユーザのブロックを解除する", style: .default, handler: { [weak self] _ in
+                    guard let targetUserName = self?.user.username else{
+                        return
+                    }
+                    DatabaseManager.shared.updateBlock(state: .notBlock, for: targetUserName, completion: { res in
+                        if (res) {
+                            ProgressHUD.showSuccess("ユーザのブロックを解除しました。")
+                        }
+                        else{
+                            ProgressHUD.showFailed("ユーザのブロック解除ができませんでした。")
+                        }
+                        
+                    })
+                }))
+            }
+            else{
+                sheet.addAction(UIAlertAction(title: "ユーザをブロックする", style: .default, handler: { [weak self] _ in
+                    
+                    guard let targetUserName = self?.user.username else{
+                        return
+                    }
+                    DatabaseManager.shared.updateBlock(state: .block, for: targetUserName, completion: { res in
+                        if (res) {
+                            ProgressHUD.showSuccess("ユーザをブロックしました。")
+                        }
+                        else{
+                            ProgressHUD.showFailed("ユーザのブロックができませんでした。")
+                        }
+                        
+                    })
+                    
+                }))
+            }
+            
+        })
+        present(sheet, animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -475,11 +553,15 @@ extension ProfileViewController: ProfileHeaderCountViewDelegate{
     func profileHeaderCountViewDidTapFollow(_ containerView: ProfileHeaderCountView) {
         DatabaseManager.shared.updateRelationship(state: .follow, for: user.username, completion: { [weak self] success in
             if !success{
+                ProgressHUD.showFailed("フォローに失敗しました。")
                 print("failed to update relationship / follow")
                 DispatchQueue.main.async {
                     print("here called follow")
                     self?.collectionView?.reloadData()
                 }
+            }
+            else{
+                ProgressHUD.showSuccess("フォローしました。")
             }
         })
         
@@ -488,11 +570,16 @@ extension ProfileViewController: ProfileHeaderCountViewDelegate{
     func profileHeaderCountViewDidTapUnFollow(_ containerView: ProfileHeaderCountView) {
         DatabaseManager.shared.updateRelationship(state: .unfollow, for: user.username, completion: { [weak self] success in
             if !success{
+                ProgressHUD.showFailed("フォロー解除に失敗しました。")
                 print("failed to update relationship / unfollow")
                 DispatchQueue.main.async {
                     print("here called unfollow")
                     self?.collectionView?.reloadData()
                 }
+            }
+            else{
+                ProgressHUD.showSuccess("フォローを解除しました。")
+
             }
         })
         

@@ -69,32 +69,29 @@ final class AuthManager{
                        password: String,
                        completion: @escaping (Result<User, Error>) -> Void
     ){
-        DatabaseManager.shared.findUser(with: email){ [weak self] user in
-            guard let user = user else{
-                print("cannot find user0")
+        ProgressHUD.show("サインインしています...")
+        self.auth.signIn(withEmail: email, password: password){ result, error in
+            guard result != nil, error == nil else{
+                ProgressHUD.dismiss()
                 completion(.failure(AuthError.signInFailed))
                 return
             }
             
-            
-            ProgressHUD.show("サインインしています...")
-            self?.auth.signIn(withEmail: email, password: password){ result, error in
-                guard result != nil, error == nil else{
-                    ProgressHUD.dismiss()
+            DatabaseManager.shared.findUser(with: email, completion: { [weak self] user in
+                guard let user = user else{
+                    print("cannot find user")
                     completion(.failure(AuthError.signInFailed))
                     return
                 }
-                
                 UserDefaults.standard.setValue(user.username, forKey: "username")
                 UserDefaults.standard.setValue(user.email, forKey: "email")
                 
                 ProgressHUD.dismiss()
                 completion(.success(user))
-            }
+            })
             
         }
-        
-        
+            
 
     }
     

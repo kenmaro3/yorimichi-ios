@@ -80,7 +80,7 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
         let label = UILabel()
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.text = "check out this video! #foryou"
+        label.text = ""
         label.font = .systemFont(ofSize: 20)
         label.textColor = .white
         
@@ -91,7 +91,7 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
         let label = UILabel()
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.text = "check out this video! #foryou"
+        label.text = ""
         label.font = .systemFont(ofSize: 16)
         label.textColor = .white
         return label

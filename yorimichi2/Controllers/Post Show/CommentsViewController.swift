@@ -206,7 +206,6 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource{
 
 extension CommentsViewController: CommentBarViewDelegate{
     func commentBarViewDidTapComment(_ commentBarView: CommentBarView, withText text: String) {
-        print("at leaset here")
         delegate?.commentsViewControllerDidTapComment(with: self, withText: text)
     }
 }

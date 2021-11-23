@@ -119,6 +119,8 @@ final class DatabaseManager{
         }
     }
     
+    
+    /// Get userName list of username not following
     public func getNotFollowing(username: String, completion: @escaping ([String]) -> Void){
         var res = [String]()
         self.following(for: username, completion: {[weak self] followings in
@@ -133,10 +135,30 @@ final class DatabaseManager{
                 }
                 completion(users)
             }
-           
         })
-        
-        
+    }
+    
+    /// Get userName list of username neither not following nor blocking
+    public func getNotFollowingNotBlocking(username: String, completion: @escaping ([String]) -> Void){
+        var res = [String]()
+        var usersNotIn = [String]()
+        self.following(for: username, completion: {[weak self] followings in
+            self?.blocks(for: username, completion: { blocks in
+                var ref = self?.database.collection("users").limit(to: 20)
+                usersNotIn = usersNotIn + followings
+                usersNotIn = usersNotIn + blocks
+                if (usersNotIn.count > 0){
+                    ref = self?.database.collection("users").whereField("username", notIn: usersNotIn).limit(to: 20)
+                }
+                ref?.getDocuments{ snapshot, error in
+                    guard let users = snapshot?.documents.compactMap({User(with: $0.data())?.username}), error == nil else{
+                        completion([])
+                        return
+                    }
+                    completion(users)
+                }
+            })
+        })
     }
     
     public func isUsernameExist(username: String, completion: @escaping (Bool) -> Void){
@@ -633,7 +655,64 @@ final class DatabaseManager{
         }
     }
     
+    enum BlockState{
+        case block
+        case notBlock
+    }
     
+    /// Get users that username blocks
+    public func blocks(for username: String, completion: @escaping ([String]) -> Void){
+        let ref = database.collection("users").document(username).collection("blocks")
+        ref.getDocuments(completion: { snapshot, error in
+            guard let usernames = snapshot?.documents.compactMap({ $0.documentID }), error == nil else{
+                completion([])
+                return
+            }
+            completion(usernames)
+        })
+        
+    }
+    
+    /// Update Block state of username against targetUser
+    public func updateBlock(state: BlockState, for targetUsername: String, completion: @escaping(Bool) -> Void){
+        guard let currentUsername = UserDefaults.standard.string(forKey: "username") else {
+            completion(false)
+            return
+        }
+        
+        let currentBlocks = database.collection("users").document(currentUsername).collection("blocks")
+        
+        
+        switch state{
+        case .notBlock:
+            // Remove targetUserName from requester blocks list
+            currentBlocks.document(targetUsername).delete()
+            completion(true)
+        case .block:
+            // Add targetUserName to requester blocks list
+            currentBlocks.document(targetUsername).setData(["valid": 1])
+            completion(true)
+        }
+    }
+    
+    
+    /// check if username is blocking targetUser or not
+    public func isTargetUserBlocked(for username: String, with targetUser: String, completion: @escaping(Bool) -> Void){
+        let ref = database.collection("users").document(username).collection("blocks").document(targetUser)
+        ref.getDocument(completion: { snapshot, error in
+            guard snapshot?.data() != nil, error == nil else{
+                // username not blocking targetUser
+                completion(false)
+                return
+            }
+            // username blocking targetUser
+            completion(true)
+        })
+        
+    }
+    
+    
+    /// get counts of post, followings, followers of username
     public func getUserCounts(username: String, complete: @escaping ((followers: Int, following: Int, posts: Int)) -> Void){
         let userRef = database.collection("users").document(username)
         var followers = 0
@@ -704,6 +783,8 @@ final class DatabaseManager{
         }
     }
     
+    
+    /// check username is following targetUsername or not
     public func isFollowing(targetUsername: String, completion: @escaping (Bool) -> Void){
         guard let currentUsername = UserDefaults.standard.string(forKey: "username") else {
             completion(false)
@@ -723,6 +804,8 @@ final class DatabaseManager{
         
     }
     
+    
+    /// Get userInformation about username and bios
     public func getUserInfo(username: String, completion: @escaping (UserInfo?) -> Void){
         let ref = database.collection("users").document(username).collection("information").document("basic")
         ref.getDocument(completion: { snapshot, error in
@@ -739,6 +822,9 @@ final class DatabaseManager{
         })
     }
     
+    
+    
+    /// Set userInformation about username and bios
     public func setUserInfo(userInfo: UserInfo, completion: @escaping (Bool) -> Void){
         guard let username = UserDefaults.standard.string(forKey: "username"),
               let data = userInfo.asDictionary()
@@ -777,6 +863,37 @@ final class DatabaseManager{
                 completion([])
                 return
             }
+            completion(usernames)
+            
+            
+        })
+        
+    }
+    
+    /// Get users that username followes but not blocking
+    public func followingNotBlocking(for username: String, completion: @escaping ([String]) -> Void){
+        let ref = database.collection("users").document(username).collection("following")
+        ref.getDocuments(completion: { snapshot, error in
+            guard let usernames = snapshot?.documents.compactMap({ $0.documentID }), error == nil else{
+                completion([])
+                return
+            }
+            
+            self.blocks(for: username, completion: { blocks in
+                if (blocks.count == 0){
+                    completion(usernames)
+                    return
+                }
+                else{
+                    let filteredUsernames = usernames.filter{
+                        !blocks.contains($0)
+                    }
+                    completion(filteredUsernames)
+                    return
+                }
+                
+            })
+            
             completion(usernames)
             
             

@@ -26,7 +26,7 @@ class MapSettingsViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Map Settings"
+        title = "マップ検索設定"
         configureModels()
         
         view.addSubview(tableView)

@@ -15,7 +15,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
     
     private let emailField: UITextField = {
        let field = TextField()
-        field.placeholder = "Email Address"
+        field.placeholder = "メールアドレス"
         field.keyboardType = .emailAddress
         field.returnKeyType = .continue
         field.autocorrectionType = .no
@@ -24,7 +24,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
     
     private let passwordField: UITextField = {
         let field = TextField()
-        field.placeholder = "Password"
+        field.placeholder = "パスワード"
         field.isSecureTextEntry = true
         field.keyboardType = .default
         field.returnKeyType = .next
@@ -34,7 +34,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
     
     private let signInButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Sign in", for: .normal)
+        button.setTitle("ログイン", for: .normal)
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
@@ -44,13 +44,13 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
     private let createAccountButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.link, for: .normal)
-        button.setTitle("Create an Account", for: .normal)
+        button.setTitle("アカウントを作成する", for: .normal)
         return button
     }()
     
     private let termsButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Terms of Service", for: .normal)
+        button.setTitle("サービス利用規約", for: .normal)
         button.setTitleColor(.link, for: .normal)
         return button
     }()
@@ -58,7 +58,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
     private let privacyButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.link, for: .normal)
-        button.setTitle("Privacy Policy", for: .normal)
+        button.setTitle("プライバシーポリシー", for: .normal)
         return button
     }()
     
@@ -68,7 +68,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Sign In"
+        title = "サインイン"
         view.backgroundColor = .secondarySystemBackground
         
         emailField.delegate = self

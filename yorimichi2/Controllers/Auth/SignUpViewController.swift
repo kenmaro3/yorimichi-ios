@@ -25,7 +25,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     
     private let usernameField: UITextField = {
         let field = TextField()
-        field.placeholder = "Username"
+        field.placeholder = "ユーザーネーム"
         field.returnKeyType = .continue
         field.autocorrectionType = .no
         return field
@@ -33,7 +33,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     
     private let emailField: UITextField = {
         let field = TextField()
-        field.placeholder = "Email Address"
+        field.placeholder = "メールアドレス"
         field.keyboardType = .emailAddress
         field.returnKeyType = .continue
         field.autocorrectionType = .no
@@ -42,7 +42,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     
     private let passwordField: UITextField = {
         let field = TextField()
-        field.placeholder = "Password"
+        field.placeholder = "パスワード"
         field.isSecureTextEntry = true
         field.keyboardType = .default
         field.returnKeyType = .next
@@ -52,7 +52,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     
     private let signUpButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Sign Up", for: .normal)
+        button.setTitle("登録する", for: .normal)
         button.backgroundColor = .systemGreen
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
@@ -62,14 +62,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
     private let termsButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.link, for: .normal)
-        button.setTitle("Terms of Service", for: .normal)
+        button.setTitle("サービス利用規約", for: .normal)
         return button
     }()
     
     private let privacyButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.link, for: .normal)
-        button.setTitle("Privacy Policy", for: .normal)
+        button.setTitle("プライバシーポリシー", for: .normal)
         return button
     }()
     
@@ -80,7 +80,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Create an Account"
+        title = "アカウントの作成"
         view.backgroundColor = .secondarySystemBackground
         
         usernameField.delegate = self
