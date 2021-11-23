@@ -90,7 +90,7 @@ class HomeViewController: UIViewController {
         let group = DispatchGroup()
         
         group.enter()
-        DatabaseManager.shared.getNotFollowing(username: username, completion: { randomUsers in
+        DatabaseManager.shared.getNotFollowingNotBlocking(username: username, completion: { randomUsers in
             defer{
                 group.leave()
             }
@@ -163,7 +163,7 @@ class HomeViewController: UIViewController {
         
         group.enter()
         
-        DatabaseManager.shared.following(for: username, completion: { userStrings in
+        DatabaseManager.shared.followingNotBlocking(for: username, completion: { userStrings in
             defer{
                 group.leave()
             }
@@ -185,8 +185,11 @@ class HomeViewController: UIViewController {
                         print(posts)
                         //self?.posts = posts
                         //self?.posts = posts
-                        posts.forEach{
-                            self?.followingPosts.append((cellType: .photo(viewModel: HomeScrollPhotoViewModel(post: $0)), id: $0.id))
+                        
+                        if(posts.count > 0){
+                            posts.forEach{
+                                self?.followingPosts.append((cellType: .photo(viewModel: HomeScrollPhotoViewModel(post: $0)), id: $0.id))
+                            }
                         }
                         
                     case .failure:
@@ -209,9 +212,11 @@ class HomeViewController: UIViewController {
                         //                self?.posts = posts.map({
                         //                    return .video(viewModel: ProfileVideoCellViewModel(post: $0))
                         //                })
-                        posts.forEach{
-                            self?.followingPosts.append((cellType: .video(viewModel: HomeScrollVideoViewModel(post: $0)), id: $0.id))
-                            
+                        print(posts.count)
+                        if(posts.count > 0){
+                            posts.forEach{
+                                self?.followingPosts.append((cellType: .video(viewModel: HomeScrollVideoViewModel(post: $0)), id: $0.id))
+                            }
                         }
                     case .failure:
                         print("failure======")

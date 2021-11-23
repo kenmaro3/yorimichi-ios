@@ -530,35 +530,50 @@ extension PhotoPostViewController: CommentsViewControllerDeleagate{
             return
         }
         
-        // Find User
-        DatabaseManager.shared.findUser(username: currentUserName, completion: {[weak self] user in
-            guard let user = user else {
-                print("cannot find user aborte")
+        DatabaseManager.shared.isTargetUserBlocked(for: model.user.username, with: currentUserName, completion: { isBlocked in
+            if(isBlocked){
+                ProgressHUD.showFailed("コメントを投稿できませんでした。")
                 return
             }
-            
-            guard let strongSelf = self else {
-                return
-            }
-            
-            DatabaseManager.shared.createComments(postID: strongSelf.model.id,
-                                                  owner: strongSelf.model.user.username,
-                                                  comment: PostComment(text: text,
-                                                                       user: user,
-                                                                       date: Date()
-                                                                      ),
-                                                  completion: { success in
-                DispatchQueue.main.async {
-                    guard success else{
-                        print("failed to add comment")
+            else{
+                // Find User
+                DatabaseManager.shared.findUser(username: currentUserName, completion: {[weak self] user in
+                    guard let user = user else {
+                        print("cannot find user aborte")
+                        ProgressHUD.showFailed("コメントを投稿できませんでした。")
                         return
                     }
-                }
+                    
+                    guard let strongSelf = self else {
+                        ProgressHUD.showFailed("コメントを投稿できませんでした。")
+                        return
+                    }
+                    
+                    DatabaseManager.shared.createComments(postID: strongSelf.model.id,
+                                                          owner: strongSelf.model.user.username,
+                                                          comment: PostComment(text: text,
+                                                                               user: user,
+                                                                               date: Date()
+                                                                              ),
+                                                          completion: { success in
+                        DispatchQueue.main.async {
+                            guard success else{
+                                print("failed to add comment")
+                                ProgressHUD.showFailed("コメントを投稿できませんでした。")
+                                return
+                            }
+                            ProgressHUD.showSuccess("コメントを投稿しました。")
+                        }
+                        
+                    })
+                    
+                    
+                })
                 
-            })
-            
+            }
             
         })
+        
     }
     
     func commentsViewControllerDidTapCloseForComments(with viewController: CommentsViewController) {

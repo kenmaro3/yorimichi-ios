@@ -885,16 +885,25 @@ final class DatabaseManager{
                     return
                 }
                 else{
-                    let filteredUsernames = usernames.filter{
-                        !blocks.contains($0)
+//                    let filteredUsernames = usernames.filter{
+//                        !blocks.contains($0)
+//                    }
+//                    completion(filteredUsernames)
+//                    return
+                    var res = [String]()
+                    usernames.forEach{
+                        if(!blocks.contains($0)){
+                            res.append($0)
+                        }
+                        
                     }
-                    completion(filteredUsernames)
+                    completion(res)
                     return
                 }
                 
             })
             
-            completion(usernames)
+            //completion(usernames)
             
             
         })
