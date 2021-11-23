@@ -138,7 +138,7 @@ final class DatabaseManager{
         })
     }
     
-    /// Get userName list of username neither not following nor blocking
+    /// Get userName list of username neither not following nor blocking nor myself
     public func getNotFollowingNotBlocking(username: String, completion: @escaping ([String]) -> Void){
         var res = [String]()
         var usersNotIn = [String]()
@@ -155,7 +155,11 @@ final class DatabaseManager{
                         completion([])
                         return
                     }
-                    completion(users)
+                    
+                    let usersWithoutMyself = users.filter{
+                        $0 != username
+                    }
+                    completion(usersWithoutMyself)
                 }
             })
         })

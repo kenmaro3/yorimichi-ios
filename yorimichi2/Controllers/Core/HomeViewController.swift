@@ -2,9 +2,17 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    private let emptyLabel: UILabel = {
+    private let emptyLabelForForYou: UILabel = {
         let label = UILabel()
-        label.text =  "No Post Available"
+        label.text =  "投稿がありません"
+        label.textColor = .label
+        label.isHidden = true
+        return label
+    }()
+    
+    private let emptyLabelForFollowings: UILabel = {
+        let label = UILabel()
+        label.text =  "投稿がありません"
         label.textColor = .label
         label.isHidden = true
         return label
@@ -55,7 +63,8 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         view.addSubview(horizontalScrollView)
-        view.addSubview(emptyLabel)
+        view.addSubview(emptyLabelForForYou)
+        view.addSubview(emptyLabelForFollowings)
         
         horizontalScrollView.contentSize = CGSize(width: view.width*2, height: view.height)
         
@@ -144,10 +153,10 @@ class HomeViewController: UIViewController {
             print("\n\nNotify")
             if(self.forYouPosts.isEmpty){
                 print("\n\nEmpty")
-                self.emptyLabel.isHidden = false
+                self.emptyLabelForForYou.isHidden = false
             }
             else{
-                self.emptyLabel.isHidden = true
+                self.emptyLabelForForYou.isHidden = true
             }
             self.setUpForYouFeed()
         }
@@ -234,10 +243,10 @@ class HomeViewController: UIViewController {
         
         group.notify(queue: .main){
             if(self.followingPosts.isEmpty){
-                self.emptyLabel.isHidden = false
+                self.emptyLabelForFollowings.isHidden = false
             }
             else{
-                self.emptyLabel.isHidden = true
+                self.emptyLabelForFollowings.isHidden = true
             }
             self.setUpFollowingFeed()
         }
@@ -251,8 +260,10 @@ class HomeViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         horizontalScrollView.frame = view.bounds
-        emptyLabel.sizeToFit()
-        emptyLabel.center = view.center
+        emptyLabelForForYou.sizeToFit()
+        emptyLabelForForYou.center = view.center
+        emptyLabelForFollowings.sizeToFit()
+        emptyLabelForFollowings.center = view.center
         
         
     }
@@ -565,9 +576,13 @@ extension HomeViewController: UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.x == 0 || scrollView.contentOffset.x <= (view.width/2){
             control.selectedSegmentIndex = 0
+            emptyLabelForForYou.removeFromSuperview()
+            view.addSubview(emptyLabelForFollowings)
         }
         else if scrollView.contentOffset.x > (view.width/2){
             control.selectedSegmentIndex = 1
+            emptyLabelForFollowings.removeFromSuperview()
+            view.addSubview(emptyLabelForForYou)
         }
     }
 }
