@@ -617,9 +617,9 @@ extension PhotoPostViewController: PostHeaderViewDelegate{
     }
     
     func postHeaderViewDidTapMore(_ view: PostHeaderView) {
-        let sheet = UIAlertController(title: "Post Actions", message: nil, preferredStyle: .actionSheet)
-        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        sheet.addAction(UIAlertAction(title: "Share Post", style: .default, handler: {[weak self] _ in
+        let sheet = UIAlertController(title: "投稿アクション", message: nil, preferredStyle: .actionSheet)
+        sheet.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
+        sheet.addAction(UIAlertAction(title: "投稿の共有", style: .default, handler: {[weak self] _ in
             DispatchQueue.main.async {
                 AlertManager.shared.presentError(title: "共有機能", message: "実装予定です。アップデートをお待ちください。", completion: {[weak self] alert in
                     self?.present(alert, animated: true)
@@ -641,7 +641,7 @@ extension PhotoPostViewController: PostHeaderViewDelegate{
         }))
         
         if isCurrentUserOwnsThisPost(){
-            sheet.addAction(UIAlertAction(title: "Delete Post", style: .default, handler: {[weak self] _ in
+            sheet.addAction(UIAlertAction(title: "投稿の削除", style: .default, handler: {[weak self] _ in
                 print("delete called")
                 
                 ProgressHUD.show("ポストを削除しています...")
@@ -723,7 +723,7 @@ extension PhotoPostViewController: PostHeaderViewDelegate{
             }))
             
         }
-        sheet.addAction(UIAlertAction(title: "Report Post", style: .destructive, handler: {[weak self] _ in
+        sheet.addAction(UIAlertAction(title: "投稿を通報する", style: .destructive, handler: {[weak self] _ in
             guard let url = URL(string: "https://yorimichi-privacy-policy.webflow.io/") else {
                 return
             }

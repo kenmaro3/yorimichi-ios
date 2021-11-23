@@ -42,12 +42,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     private func configureModels(){
         sections.append(
-            SettingsSection(title: "Local Storage Settings", options: [
-                SettingOption(title: "Save Photo", image: UIImage(), color: .label, handler: {
+            SettingsSection(title: "デバイスストレージへの保存設定", options: [
+                SettingOption(title: "投稿画像をデバイスに自動保存する", image: UIImage(), color: .label, handler: {
                     
                 }),
                 
-                SettingOption(title: "Save Video", image: UIImage(), color: .label, handler: {
+                SettingOption(title: "投稿動画をデバイスに自動保存する", image: UIImage(), color: .label, handler: {
                     
                 })
             
@@ -57,7 +57,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         sections.append(
             
             SettingsSection(title: "App", options: [
-                SettingOption(title: "Rate App", image: UIImage(systemName: "star"), color: .systemOrange) {
+                SettingOption(title: "アプリを評価する", image: UIImage(systemName: "star"), color: .systemOrange) {
                     guard let url = URL(string: "https://yorimichi-project.webflow.io/") else {
                         return
                     }
@@ -65,7 +65,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                         UIApplication.shared.open(url, options: [:], completionHandler: nil)
                     }
                 },
-                SettingOption(title: "Share App", image: UIImage(systemName: "square.and.arrow.up"), color: .systemBlue) { [weak self] in
+                SettingOption(title: "アプリを共有する", image: UIImage(systemName: "square.and.arrow.up"), color: .systemBlue) { [weak self] in
                     guard let url = URL(string: "https://yorimichi-project.webflow.io/") else {
                         return
                     }
@@ -174,7 +174,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let model = sections[indexPath.section].options[indexPath.row]
         print("\n\n==========")
         print("\(model.title)")
-        if model.title == "Save Photo"{
+        if model.title == "投稿画像をデバイスに自動保存する"{
             print("called here")
             let isOn = UserDefaults.standard.bool(forKey: "save_photo")
             let viewModel = SwitchCellViewModel(title: model.title, isOn: isOn, type: .photo)
@@ -188,7 +188,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             return cell
             
         }
-        else if model.title == "Save Video"{
+        else if model.title == "投稿動画をデバイスに自動保存する"{
             let isOn = UserDefaults.standard.bool(forKey: "save_video")
             let viewModel = SwitchCellViewModel(title: model.title, isOn: isOn, type: .video)
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchTableViewCell.identifier, for: indexPath) as? SwitchTableViewCell else {

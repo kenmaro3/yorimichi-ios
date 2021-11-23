@@ -462,7 +462,7 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         (searchController.searchResultsController as? SearchResultsViewController)?.delegate = self
         
         // MARK: - TODO saerch bar, border, tintcolor
-        searchController.searchBar.placeholder = "Search ..."
+        searchController.searchBar.placeholder = "場所の検索 ..."
         searchController.searchBar.tintColor = .label
         searchController.searchBar.searchBarStyle = .minimal
         searchController.searchBar.barTintColor = .label

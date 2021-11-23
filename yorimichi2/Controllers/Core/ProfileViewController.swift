@@ -227,7 +227,7 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
     private func setupSearch(){
         (searchVC.searchResultsController as? SearchResultsViewController)?.delegate = self
         
-        searchVC.searchBar.placeholder = "Search User ..."
+        searchVC.searchBar.placeholder = "ユーザの検索..."
         navigationItem.searchController = searchVC
         searchVC.searchResultsUpdater = self
     }

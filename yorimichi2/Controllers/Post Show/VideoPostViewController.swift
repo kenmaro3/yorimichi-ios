@@ -727,9 +727,9 @@ extension VideoPostViewController: PostHeaderViewDelegate{
     }
     
     func postHeaderViewDidTapMore(_ view: PostHeaderView) {
-        let sheet = UIAlertController(title: "Post Actions", message: nil, preferredStyle: .actionSheet)
-        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        sheet.addAction(UIAlertAction(title: "Share Post", style: .default, handler: {[weak self] _ in
+        let sheet = UIAlertController(title: "投稿アクション", message: nil, preferredStyle: .actionSheet)
+        sheet.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
+        sheet.addAction(UIAlertAction(title: "投稿の共有", style: .default, handler: {[weak self] _ in
             DispatchQueue.main.async {
 //                let cellType = self?.viewModels[index]
 //                    switch cellType{
@@ -747,7 +747,7 @@ extension VideoPostViewController: PostHeaderViewDelegate{
         }))
         
         if isCurrentUserOwnsThisPost(){
-            sheet.addAction(UIAlertAction(title: "Delete Post", style: .default, handler: {[weak self] _ in
+            sheet.addAction(UIAlertAction(title: "投稿の削除", style: .default, handler: {[weak self] _ in
                 print("delete called")
                 let group = DispatchGroup()
                 group.enter()
@@ -802,7 +802,7 @@ extension VideoPostViewController: PostHeaderViewDelegate{
             }))
         }
         
-        sheet.addAction(UIAlertAction(title: "Report Post", style: .destructive, handler: {[weak self] _ in
+        sheet.addAction(UIAlertAction(title: "投稿を通報する", style: .destructive, handler: {[weak self] _ in
             guard let url = URL(string: "https://yorimichi-privacy-policy.webflow.io/") else {
                 return
             }

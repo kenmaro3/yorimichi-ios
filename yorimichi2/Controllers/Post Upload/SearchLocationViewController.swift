@@ -26,7 +26,7 @@ class SearchLocationViewController: UIViewController, UISearchResultsUpdating{
 //        view.addSubview(tableView)
 //        (searchVC.searchResultsController as? SearchLocationResultsViewController)?.delegate = self
         
-        searchVC.searchBar.placeholder = "Search ..."
+        searchVC.searchBar.placeholder = "場所の検索 ..."
         navigationItem.title = "場所の検索"
         navigationItem.searchController = searchVC
         searchVC.searchResultsUpdater = self

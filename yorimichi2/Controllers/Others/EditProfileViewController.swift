@@ -27,7 +27,7 @@ class EditProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Edit Profile"
+        title = "プロフィールの編集"
         
         view.addSubview(nameField)
         view.addSubview(bioTextView)
