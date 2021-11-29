@@ -68,13 +68,13 @@ class MapSettingsViewController: UIViewController, UITableViewDelegate, UITableV
             genreTitle = "選択中: 無し"
             
         }
-        if let currentMethod = UserDefaults.standard.string(forKey: "methods"){
-            methodTitle = "選択中: \(currentMethod)"
-        }
-        else{
-            methodTitle = "選択中: 無し"
-            
-        }
+//        if let currentMethod = UserDefaults.standard.string(forKey: "methods"){
+//            methodTitle = "選択中: \(currentMethod)"
+//        }
+//        else{
+//            methodTitle = "選択中: 無し"
+//            
+//        }
     }
     
     private func configureModels(){
@@ -98,6 +98,7 @@ class MapSettingsViewController: UIViewController, UITableViewDelegate, UITableV
 //                    let vc = ListGenreViewController(type: .genres(genres: genreList))
 //                    vc.delegate = self
                     let vc = SearchGenreViewController()
+                    vc.configure(isIncludeAll: true)
                     vc.delegate = self
                     self?.present(UINavigationController(rootViewController: vc), animated: true)
                 })
@@ -107,18 +108,18 @@ class MapSettingsViewController: UIViewController, UITableViewDelegate, UITableV
         
         )
         
-        sections.append(
-            SettingsSection(title: "移動手段 設定", options: [
-                SettingOption(title: "\(methodTitle)", image: UIImage(), color: .label, handler: {[weak self] in
-                    let vc = ListMethodsViewController(type: .methods(methods: methodList))
-                    vc.delegate = self
-                    self?.present(UINavigationController(rootViewController: vc), animated: true)
-                })
-                
-            
-            ])
-        
-        )
+//        sections.append(
+//            SettingsSection(title: "移動手段 設定", options: [
+//                SettingOption(title: "\(methodTitle)", image: UIImage(), color: .label, handler: {[weak self] in
+//                    let vc = ListMethodsViewController(type: .methods(methods: methodList))
+//                    vc.delegate = self
+//                    self?.present(UINavigationController(rootViewController: vc), animated: true)
+//                })
+//                
+//            
+//            ])
+//        
+//        )
     }
 
 }

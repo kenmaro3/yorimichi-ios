@@ -787,6 +787,16 @@ extension VideoPostViewController: PostHeaderViewDelegate{
                                 ProgressHUD.showError("削除に失敗しました。")
                             }
                             else{
+                                DatabaseManager.shared.deleteYorimichiVideoPostAtAll(post: post, completion: { res in
+                                    if !res{
+                                        print("error")
+                                        ProgressHUD.showError("削除に失敗しました。")
+                                    }
+                                    else{
+                                    }
+                                    
+                                    
+                                })
                             }
                             
                             

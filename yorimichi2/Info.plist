@@ -5,7 +5,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>12.0</string>
 	<key>MGLMapboxAccessToken</key>
-	<string>pk.eyJ1Ijoia2VubWFybyIsImEiOiJja3R3NDZlczIwcjI1MnFtbWNwdjdjbWwzIn0.1DtI1lAwMay0ipsimAQeSA</string>
+	<string>pk.eyJ1Ijoia2VubWFybyIsImEiOiJja3drZzFzbmwwajB1MnZtdHhwa2Z4ejU3In0.pn6Diwm1OAhd1D_9plyxQw</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

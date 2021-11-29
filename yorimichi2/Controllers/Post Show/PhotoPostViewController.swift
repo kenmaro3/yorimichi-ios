@@ -708,6 +708,16 @@ extension PhotoPostViewController: PostHeaderViewDelegate{
                                 ProgressHUD.showError("削除に失敗しました。")
                             }
                             else{
+                                DatabaseManager.shared.deleteYorimichiPostAtAll(post: post, completion: { res in
+                                    if !res{
+                                        print("error")
+                                        ProgressHUD.showError("削除に失敗しました。")
+                                    }
+                                    else{
+                                    }
+                                    
+                                    
+                        })
                             }
                             
                             

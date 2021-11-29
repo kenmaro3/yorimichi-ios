@@ -7,17 +7,17 @@
 
 import UIKit
 import Mapbox
-import MapboxSearchUI
-import MapboxSearch
+//import MapboxSearchUI
+//import MapboxSearch
 import SDWebImage
 import FloatingPanel
 import StoreKit
 import ProgressHUD
 import MapKit
-import MapboxDirections
-import MapboxCoreNavigation
-import MapboxNavigation
-import Turf
+//import MapboxDirections
+//import MapboxCoreNavigation
+//import MapboxNavigation
+//import Turf
 
 class MyFloatingPanelLayout: FloatingPanelLayout {
     let position: FloatingPanelPosition = .bottom
@@ -33,20 +33,20 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
 
 class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISearchResultsUpdating{
 
-    private var routeOptions: NavigationRouteOptions?
-    private var routes: [Route]?
-    private var route: Route?
-    
-    var currentRoute: Route? {
-        get {
-        return routes?.first
-        }
-        set {
-        guard let selected = newValue else { routes?.remove(at: 0); return }
-        guard let routes = routes else { self.routes = [selected]; return }
-        self.routes = [selected] + routes.filter { $0 != selected }
-        }
-    }
+//    private var routeOptions: NavigationRouteOptions?
+//    private var routes: [Route]?
+//    private var route: Route?
+//
+//    var currentRoute: Route? {
+//        get {
+//        return routes?.first
+//        }
+//        set {
+//        guard let selected = newValue else { routes?.remove(at: 0); return }
+//        guard let routes = routes else { self.routes = [selected]; return }
+//        self.routes = [selected] + routes.filter { $0 != selected }
+//        }
+//    }
     
     
     var exploreFpc: FloatingPanelController!
@@ -127,7 +127,7 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
     private let exploreLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.text = "周辺を検索"
+        label.text = "ユーザ投稿検索"
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.backgroundColor = UIColor.hex(string: "#F2F2F2", alpha: 1.0)
@@ -142,75 +142,153 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         return label
     }()
     
-    private let routeButton: UIButton = {
+    private let exploreHPButton: UIButton = {
         let button = UIButton()
         button.tintColor = .black
-        let image = UIImage(systemName: "map", withConfiguration:  UIImage.SymbolConfiguration(pointSize: 22))
-        button.backgroundColor = UIColor.systemGray.withAlphaComponent(0.5)
-        button.layer.borderColor = UIColor.white.cgColor
+        let image = UIImage(systemName: "globe", withConfiguration:  UIImage.SymbolConfiguration(pointSize: 22))
+        button.backgroundColor = .clear
         button.layer.borderWidth = 5
         button.setImage(image, for: .normal)
-        
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowRadius = 6
         button.layer.shadowOffset = CGSize(width: 0, height: 0)
         button.layer.shadowOpacity = 0.5
+        //button.layer.backgroundColor = UIColor.systemGray.cgColor
         button.layer.backgroundColor = UIColor.hex(string: "#F2F2F2", alpha: 1.0).cgColor
         
         return button
     }()
     
-    private let routeLabel: UILabel = {
+
+    
+    private let exploreHPLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.text = "経路を検索"
+        label.text = "ホットペッパー検索"
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.backgroundColor = UIColor.hex(string: "#F2F2F2", alpha: 1.0)
         label.clipsToBounds = true
         label.textAlignment = .center
+        label.layer.shadowColor = UIColor.black.cgColor
+        label.layer.shadowRadius = 10
+        label.layer.shadowOffset = CGSize(width: 0, height: 0)
+        label.layer.shadowOpacity = 0.5
         label.layer.cornerRadius = 10
         
         return label
     }()
     
-    private let goButton: UIButton = {
-        let button = UIButton()
-        button.tintColor = .black
-        let image = UIImage(systemName: "forward.fill", withConfiguration:  UIImage.SymbolConfiguration(pointSize: 22))
-        button.backgroundColor = UIColor.systemGray.withAlphaComponent(0.5)
-        button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = 5
-        button.setImage(image, for: .normal)
-        
-        button.layer.borderColor = UIColor.white.cgColor
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowRadius = 6
-        button.layer.shadowOffset = CGSize(width: 0, height: 0)
-        button.layer.shadowOpacity = 0.5
-        button.layer.backgroundColor = UIColor.hex(string: "#F2F2F2", alpha: 1.0).cgColor
-        
-        return button
-    }()
+//    private let exploreGoogleButton: UIButton = {
+//        let button = UIButton()
+//        button.tintColor = .black
+//        let image = UIImage(systemName: "globe", withConfiguration:  UIImage.SymbolConfiguration(pointSize: 22))
+//        button.backgroundColor = .clear
+//        button.layer.borderWidth = 5
+//        button.setImage(image, for: .normal)
+//        button.layer.borderColor = UIColor.white.cgColor
+//        button.layer.shadowColor = UIColor.black.cgColor
+//        button.layer.shadowRadius = 6
+//        button.layer.shadowOffset = CGSize(width: 0, height: 0)
+//        button.layer.shadowOpacity = 0.5
+//        //button.layer.backgroundColor = UIColor.systemGray.cgColor
+//        button.layer.backgroundColor = UIColor.hex(string: "#F2F2F2", alpha: 1.0).cgColor
+//
+//        return button
+//    }()
+//
+//
+//
+//    private let exploreGoogleLabel: UILabel = {
+//        let label = UILabel()
+//        label.numberOfLines = 0
+//        label.text = "グーグル検索"
+//        label.textColor = .black
+//        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+//        label.backgroundColor = UIColor.hex(string: "#F2F2F2", alpha: 1.0)
+//        label.clipsToBounds = true
+//        label.textAlignment = .center
+//        label.layer.shadowColor = UIColor.black.cgColor
+//        label.layer.shadowRadius = 10
+//        label.layer.shadowOffset = CGSize(width: 0, height: 0)
+//        label.layer.shadowOpacity = 0.5
+//        label.layer.cornerRadius = 10
+//
+//        return label
+//    }()
     
-    private let goLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.text = "出発する"
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
-        label.backgroundColor = UIColor.hex(string: "#F2F2F2", alpha: 1.0)
-        label.clipsToBounds = true
-        label.textAlignment = .center
-        label.layer.cornerRadius = 10
-        
-        return label
-    }()
+//    private let routeButton: UIButton = {
+//        let button = UIButton()
+//        button.tintColor = .black
+//        let image = UIImage(systemName: "map", withConfiguration:  UIImage.SymbolConfiguration(pointSize: 22))
+//        button.backgroundColor = UIColor.systemGray.withAlphaComponent(0.5)
+//        button.layer.borderColor = UIColor.white.cgColor
+//        button.layer.borderWidth = 5
+//        button.setImage(image, for: .normal)
+//
+//        button.layer.borderColor = UIColor.white.cgColor
+//        button.layer.shadowColor = UIColor.black.cgColor
+//        button.layer.shadowRadius = 6
+//        button.layer.shadowOffset = CGSize(width: 0, height: 0)
+//        button.layer.shadowOpacity = 0.5
+//        button.layer.backgroundColor = UIColor.hex(string: "#F2F2F2", alpha: 1.0).cgColor
+//
+//        return button
+//    }()
+//
+//    private let routeLabel: UILabel = {
+//        let label = UILabel()
+//        label.numberOfLines = 0
+//        label.text = "経路を検索"
+//        label.textColor = .black
+//        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+//        label.backgroundColor = UIColor.hex(string: "#F2F2F2", alpha: 1.0)
+//        label.clipsToBounds = true
+//        label.textAlignment = .center
+//        label.layer.cornerRadius = 10
+//
+//        return label
+//    }()
+//
+//    private let goButton: UIButton = {
+//        let button = UIButton()
+//        button.tintColor = .black
+//        let image = UIImage(systemName: "forward.fill", withConfiguration:  UIImage.SymbolConfiguration(pointSize: 22))
+//        button.backgroundColor = UIColor.systemGray.withAlphaComponent(0.5)
+//        button.layer.borderColor = UIColor.white.cgColor
+//        button.layer.borderWidth = 5
+//        button.setImage(image, for: .normal)
+//
+//        button.layer.borderColor = UIColor.white.cgColor
+//        button.layer.shadowColor = UIColor.black.cgColor
+//        button.layer.shadowRadius = 6
+//        button.layer.shadowOffset = CGSize(width: 0, height: 0)
+//        button.layer.shadowOpacity = 0.5
+//        button.layer.backgroundColor = UIColor.hex(string: "#F2F2F2", alpha: 1.0).cgColor
+//
+//        return button
+//    }()
+//
+//    private let goLabel: UILabel = {
+//        let label = UILabel()
+//        label.numberOfLines = 0
+//        label.text = "出発する"
+//        label.textColor = .black
+//        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+//        label.backgroundColor = UIColor.hex(string: "#F2F2F2", alpha: 1.0)
+//        label.clipsToBounds = true
+//        label.textAlignment = .center
+//        label.layer.cornerRadius = 10
+//
+//        return label
+//    }()
     
     
-    private let mapView: NavigationMapView = {
-        let map = NavigationMapView()
+//    private let mapView: NavigationMapView = {
+    private let mapView: MGLMapView = {
+        //let map = NavigationMapView()
+        let map = MGLMapView()
         let url = URL(string: "mapbox://styles/mapbox/streets-v11")
         map.styleURL = url
         return map
@@ -314,141 +392,141 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         
     }
     
-    func setUpRouteOption(waypoints: [Waypoint]){
-        guard let transportationMethod = UserDefaults.standard.string(forKey: "methods") else {
-            return
-        }
-        
-        if (transportationMethod.lowercased() == "walk"){
-            routeOptions = NavigationRouteOptions(waypoints: waypoints, profileIdentifier: .walking)
-            
-        }
-        else if(transportationMethod.lowercased() == "drive"){
-            routeOptions = NavigationRouteOptions(waypoints: waypoints, profileIdentifier: .automobile)
-            
-        }
-        else if(transportationMethod.lowercased() == "cycling"){
-            routeOptions = NavigationRouteOptions(waypoints: waypoints, profileIdentifier: .cycling)
-            
-        }
-        else{
-            fatalError("unknown transportation method")
-        }
-        
-    }
+//    func setUpRouteOption(waypoints: [Waypoint]){
+//        guard let transportationMethod = UserDefaults.standard.string(forKey: "methods") else {
+//            return
+//        }
+//
+//        if (transportationMethod.lowercased() == "walk"){
+//            routeOptions = NavigationRouteOptions(waypoints: waypoints, profileIdentifier: .walking)
+//
+//        }
+//        else if(transportationMethod.lowercased() == "drive"){
+//            routeOptions = NavigationRouteOptions(waypoints: waypoints, profileIdentifier: .automobile)
+//
+//        }
+//        else if(transportationMethod.lowercased() == "cycling"){
+//            routeOptions = NavigationRouteOptions(waypoints: waypoints, profileIdentifier: .cycling)
+//
+//        }
+//        else{
+//            fatalError("unknown transportation method")
+//        }
+//
+//    }
+//
+//
+//    private func showRoute(){
+//        guard let routeOptions = routeOptions else {
+//            return
+//        }
+//        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+//            switch result {
+//                case .failure(let error):
+//                print(error.localizedDescription)
+//                case .success(let response):
+//                guard let routes = response.routes, let strongSelf = self else {
+//                    return
+//                }
+//                strongSelf.routeOptions = routeOptions
+//                strongSelf.routes = routes
+//                strongSelf.goButton.isHidden = false
+//                strongSelf.mapView.show(routes)
+//                strongSelf.mapView.showWaypoints(on: strongSelf.currentRoute!)
+//            }
+//        }
+//    }
+//
+//    // 描画のための経路検索
+//    func requestRouteNormal() {
+//        // Requirements
+//        // with destination and Yorimichi Both exist
+//
+//        guard let destinationLocation = destinationLocation else {
+//            return
+//        }
+//
+//        let origin = Waypoint(coordinate: userCurrentLocation, name: "start")
+//
+//        let destination = Waypoint(coordinate: destinationLocation, name: "end")
+//
+//        var navigationArray = [Waypoint]()
+//
+//        navigationArray.append(origin)
+//
+//
+//
+//        for (i, location) in zip(selectedAnnotationsLocation.indices, selectedAnnotationsLocation){
+//            let tmp = Waypoint(coordinate: location, name: "yori_\(i)")
+//            navigationArray.append(tmp)
+//        }
+//        navigationArray.append(destination)
+//
+//
+//        setUpRouteOption(waypoints: navigationArray)
+//        showRoute()
+//    }
+//
+//    // 描画のための経路検索
+//    func requestRouteOnlyDestination() {
+//        // Requirements
+//        // with destination and Yorimichi Both exist
+//
+//        guard let destinationLocation = destinationLocation else {
+//            return
+//        }
+//
+//        let origin = Waypoint(coordinate: userCurrentLocation, name: "start")
+//
+//        let destination = Waypoint(coordinate: destinationLocation, name: "end")
+//
+//        var navigationArray = [Waypoint]()
+//        navigationArray.append(origin)
+//        navigationArray.append(destination)
+//
+//        setUpRouteOption(waypoints: navigationArray)
+//        showRoute()
+//    }
+//
+//    // 描画のための経路検索
+//    func requestRouteOnlyYorimichi() {
+//        // Requirements
+//        // with destination and Yorimichi Both exist
+//
+//
+//        let origin = Waypoint(coordinate: userCurrentLocation, name: "start")
+//
+//
+//        var navigationArray = [Waypoint]()
+//
+//        navigationArray.append(origin)
+//
+//
+//
+//        for (i, location) in zip(selectedAnnotationsLocation.indices, selectedAnnotationsLocation){
+//            let tmp = Waypoint(coordinate: location, name: "yori_\(i)")
+//            navigationArray.append(tmp)
+//        }
+//
+//        setUpRouteOption(waypoints: navigationArray)
+//        showRoute()
+//    }
     
-    
-    private func showRoute(){
-        guard let routeOptions = routeOptions else {
-            return
-        }
-        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
-            switch result {
-                case .failure(let error):
-                print(error.localizedDescription)
-                case .success(let response):
-                guard let routes = response.routes, let strongSelf = self else {
-                    return
-                }
-                strongSelf.routeOptions = routeOptions
-                strongSelf.routes = routes
-                strongSelf.goButton.isHidden = false
-                strongSelf.mapView.show(routes)
-                strongSelf.mapView.showWaypoints(on: strongSelf.currentRoute!)
-            }
-        }
-    }
-    
-    // 描画のための経路検索
-    func requestRouteNormal() {
-        // Requirements
-        // with destination and Yorimichi Both exist
-        
-        guard let destinationLocation = destinationLocation else {
-            return
-        }
-        
-        let origin = Waypoint(coordinate: userCurrentLocation, name: "start")
-
-        let destination = Waypoint(coordinate: destinationLocation, name: "end")
-            
-        var navigationArray = [Waypoint]()
-
-        navigationArray.append(origin)
-            
-        
-        
-        for (i, location) in zip(selectedAnnotationsLocation.indices, selectedAnnotationsLocation){
-            let tmp = Waypoint(coordinate: location, name: "yori_\(i)")
-            navigationArray.append(tmp)
-        }
-        navigationArray.append(destination)
-        
-
-        setUpRouteOption(waypoints: navigationArray)
-        showRoute()
-    }
-    
-    // 描画のための経路検索
-    func requestRouteOnlyDestination() {
-        // Requirements
-        // with destination and Yorimichi Both exist
-        
-        guard let destinationLocation = destinationLocation else {
-            return
-        }
-        
-        let origin = Waypoint(coordinate: userCurrentLocation, name: "start")
-
-        let destination = Waypoint(coordinate: destinationLocation, name: "end")
-            
-        var navigationArray = [Waypoint]()
-        navigationArray.append(origin)
-        navigationArray.append(destination)
-
-        setUpRouteOption(waypoints: navigationArray)
-        showRoute()
-    }
-    
-    // 描画のための経路検索
-    func requestRouteOnlyYorimichi() {
-        // Requirements
-        // with destination and Yorimichi Both exist
-        
-
-        let origin = Waypoint(coordinate: userCurrentLocation, name: "start")
-
-            
-        var navigationArray = [Waypoint]()
-
-        navigationArray.append(origin)
-            
-        
-        
-        for (i, location) in zip(selectedAnnotationsLocation.indices, selectedAnnotationsLocation){
-            let tmp = Waypoint(coordinate: location, name: "yori_\(i)")
-            navigationArray.append(tmp)
-        }
-        
-        setUpRouteOption(waypoints: navigationArray)
-        showRoute()
-    }
-    
-    @objc private func didTapLaunch(){
-        // Pass the first generated route to the the NavigationViewController
-        guard let option = routeOptions,
-              let route = currentRoute
-        else {
-            AlertManager.shared.presentError(title: "ナビゲーションエラー", message: "経路が設定されていません。", completion: {[weak self] alert in
-                self?.present(alert, animated: true)
-                
-            })
-            return
-        }
-        let viewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: option)
-        viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true, completion: nil)
-    }
+//    @objc private func didTapLaunch(){
+//        // Pass the first generated route to the the NavigationViewController
+//        guard let option = routeOptions,
+//              let route = currentRoute
+//        else {
+//            AlertManager.shared.presentError(title: "ナビゲーションエラー", message: "経路が設定されていません。", completion: {[weak self] alert in
+//                self?.present(alert, animated: true)
+//
+//            })
+//            return
+//        }
+//        let viewController = NavigationViewController(for: route, routeIndex: 0, routeOptions: option)
+//        viewController.modalPresentationStyle = .fullScreen
+//        present(viewController, animated: true, completion: nil)
+//    }
     
     
     @objc private func didTapSettings(){
@@ -509,57 +587,63 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         view.addSubview(focusButton)
         view.addSubview(exploreButton)
         view.addSubview(exploreLabel)
-        view.addSubview(routeButton)
-        view.addSubview(routeLabel)
-        view.addSubview(goButton)
-        view.addSubview(goLabel)
+        view.addSubview(exploreHPButton)
+        view.addSubview(exploreHPLabel)
+//        view.addSubview(exploreGoogleButton)
+//        view.addSubview(exploreGoogleLabel)
+//        view.addSubview(routeButton)
+//        view.addSubview(routeLabel)
+//        view.addSubview(goButton)
+//        view.addSubview(goLabel)
     }
     
     
     private func addButtonTarget(){
         focusButton.addTarget(self, action: #selector(didTapFocus), for: .touchUpInside)
         exploreButton.addTarget(self, action: #selector(didTapExplore), for: .touchUpInside)
-        routeButton.addTarget(self, action: #selector(didTapRoute), for: .touchUpInside)
-        goButton.addTarget(self, action: #selector(didTapLaunch), for: .touchUpInside)
+        exploreHPButton.addTarget(self, action: #selector(didTapExploreHP), for: .touchUpInside)
+//        exploreGoogleButton.addTarget(self, action: #selector(didTapExploreGoogle), for: .touchUpInside)
+//        routeButton.addTarget(self, action: #selector(didTapRoute), for: .touchUpInside)
+//        goButton.addTarget(self, action: #selector(didTapLaunch), for: .touchUpInside)
     }
     
     
-    @objc private func didTapRoute(){
-        if let routes = routes {
-            self.routes = nil
-            mapView.removeRoutes()
-            return
-        }
-        print("\n\ndidTapRoute=========")
-        print(annotationsSelected)
-
-        if annotationsSelected.count == 0 {
-            if let destinationLocation = destinationLocation {
-                requestRouteOnlyDestination()
-            }
-            else{
-                AlertManager.shared.presentError(title: "経路検索エラー", message: "目的地とヨリミチどちらも設定されていません。", completion: {[weak self] alert in
-                    self?.present(alert, animated: true)
-                    
-                })
-            }
-        }
-        else{
-            
-            selectedAnnotationsLocation = annotationsSelected.map{
-                $0.coordinate
-            }
-
-            if let destinationLocation = destinationLocation {
-                requestRouteNormal()
-                
-            }
-            else{
-                requestRouteOnlyYorimichi()
-            }
-            
-        }
-    }
+//    @objc private func didTapRoute(){
+//        if let routes = routes {
+//            self.routes = nil
+//            mapView.removeRoutes()
+//            return
+//        }
+//        print("\n\ndidTapRoute=========")
+//        print(annotationsSelected)
+//
+//        if annotationsSelected.count == 0 {
+//            if let destinationLocation = destinationLocation {
+//                requestRouteOnlyDestination()
+//            }
+//            else{
+//                AlertManager.shared.presentError(title: "経路検索エラー", message: "目的地とヨリミチどちらも設定されていません。", completion: {[weak self] alert in
+//                    self?.present(alert, animated: true)
+//
+//                })
+//            }
+//        }
+//        else{
+//
+//            selectedAnnotationsLocation = annotationsSelected.map{
+//                $0.coordinate
+//            }
+//
+//            if let destinationLocation = destinationLocation {
+//                requestRouteNormal()
+//
+//            }
+//            else{
+//                requestRouteOnlyYorimichi()
+//            }
+//
+//        }
+//    }
     
     
     @objc private func didTapExplore(){
@@ -567,48 +651,30 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         removeYorimichiAnnotation()
         removeHPAnnotation()
         removeGoogleAnnotation()
-        
-        guard let source = UserDefaults.standard.string(forKey: "source") else {
-            AlertManager.shared.presentError(title: "Transportation Source Error", message: "Please Set Transportation Walk/Drive", completion: {[weak self] alert in
-                self?.present(alert, animated: true)
-                
-            })
-            return
-        }
-        
-        print("here-======")
-        print(source)
-        if source == "Yorimichi DB"{
-            print("yorimichi DB")
-            exploreWithYorimichiDB()
-        }
-        else if source == "Hot Pepper" {
-            print("hot pepper")
-            exploreWithHP()
-            
-        }
-        
-        else if source == "Google" {
-            print("google")
-            exploreWithGoogle()
-
-            
-        }
-        else{
-            AlertManager.shared.presentError(title: "Database Setting Error", message: "Please Set Database For Exploration: YorimichiDB/HotPepper/Google", completion: {[weak self] alert in
-                self?.present(alert, animated: true)
-                
-            })
-            return
-        }
-        
+        exploreWithYorimichiDB()
     }
+    
+    @objc private func didTapExploreHP(){
+        print("tap explore")
+        removeYorimichiAnnotation()
+        removeHPAnnotation()
+        removeGoogleAnnotation()
+        exploreWithHP()
+    }
+    
+//    @objc private func didTapExploreGoogle(){
+//        print("tap explore")
+//        removeYorimichiAnnotation()
+//        removeHPAnnotation()
+//        removeGoogleAnnotation()
+//        exploreWithGoogle()
+//    }
     
     private func exploreWithHP(){
         guard let genre = UserDefaults.standard.string(forKey: "genre") else {
             return
         }
-        if !(foodGenreList.contains(genreDisplayStringToCode(x: genre))){
+        if !(foodGenreList.contains(genreDisplayStringToCode(x: genre))) && !(otherGenreList.contains(genreDisplayStringToCode(x: genre))){
             AlertManager.shared.presentError(title: "検索ジャンルエラー", message: "HotPepper検索はフードジャンルのみ実行可能です。", completion: {[weak self] alert in
                 self?.present(alert, animated: true)
                 return
@@ -657,57 +723,57 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
             })
     }
     
-    private func exploreWithGoogle(){
-        guard let genre = UserDefaults.standard.string(forKey: "genre") else {
-            return
-        }
-        if !(foodGenreList.contains(genreDisplayStringToCode(x: genre))){
-            AlertManager.shared.presentError(title: "検索ジャンルエラー", message: "Google検索はフードジャンルのみ実行可能です。", completion: {[weak self] alert in
-                self?.present(alert, animated: true)
-                return
-            })
-        }
-        
-        ProgressHUD.show("検索しています...")
-        let refLocation = Location(lat: mapView.centerCoordinate.latitude, lng: mapView.centerCoordinate.longitude)
-        GoogleAPIManager.shared.getShops(
-            location: refLocation,
-            genre: GenreInfo(code: genreDisplayStringToCode(x: genre), type: .food),
-            radius: 500,
-            size: 5,
-            completion: {[weak self] shops in
-                self?.googleShopsToAnnotations(shops: shops, completion: {[weak self] annotations in
-                    print("debug0")
-                    print(annotations)
-                    self?.annotationsGoogle.removeAll()
-                    for annotation in annotations{
-                        self?.annotationsGoogle.append(annotation)
-                    }
-                    self?.mapView.addAnnotations(annotations)
-                    let cellTypes = annotations.map({
-                        ListExploreResultCellType.google(viewModel: $0)
-                    })
-                    if (cellTypes.isEmpty){
-                        AlertManager.shared.presentError(title: "場所が見つかりませんでした。", message: "ジャンルもしくは場所を変更して検索してください。", completion: { alert in
-                            
-                            self?.present(alert, animated: true)
-                        })
-                        ProgressHUD.dismiss()
-                        return
-                    }
-                    let vc = ListExploreResultViewController(
-                        viewModels: cellTypes
-                    )
-                    ProgressHUD.dismiss()
-                    guard let listVC = self?.exploreFpc.contentViewController as? ListOnMapViewController else {
-                        fatalError()
-                    }
-                    listVC.updateLeft(with: cellTypes)
-                    
-                    self?.exploreFpc.move(to: .full, animated: true, completion: nil)
-                })
-            })
-    }
+//    private func exploreWithGoogle(){
+//        guard let genre = UserDefaults.standard.string(forKey: "genre") else {
+//            return
+//        }
+//        if !(foodGenreList.contains(genreDisplayStringToCode(x: genre))){
+//            AlertManager.shared.presentError(title: "検索ジャンルエラー", message: "Google検索はフードジャンルのみ実行可能です。", completion: {[weak self] alert in
+//                self?.present(alert, animated: true)
+//                return
+//            })
+//        }
+//
+//        ProgressHUD.show("検索しています...")
+//        let refLocation = Location(lat: mapView.centerCoordinate.latitude, lng: mapView.centerCoordinate.longitude)
+//        GoogleAPIManager.shared.getShops(
+//            location: refLocation,
+//            genre: GenreInfo(code: genreDisplayStringToCode(x: genre), type: .food),
+//            radius: 500,
+//            size: 5,
+//            completion: {[weak self] shops in
+//                self?.googleShopsToAnnotations(shops: shops, completion: {[weak self] annotations in
+//                    print("debug0")
+//                    print(annotations)
+//                    self?.annotationsGoogle.removeAll()
+//                    for annotation in annotations{
+//                        self?.annotationsGoogle.append(annotation)
+//                    }
+//                    self?.mapView.addAnnotations(annotations)
+//                    let cellTypes = annotations.map({
+//                        ListExploreResultCellType.google(viewModel: $0)
+//                    })
+//                    if (cellTypes.isEmpty){
+//                        AlertManager.shared.presentError(title: "場所が見つかりませんでした。", message: "ジャンルもしくは場所を変更して検索してください。", completion: { alert in
+//
+//                            self?.present(alert, animated: true)
+//                        })
+//                        ProgressHUD.dismiss()
+//                        return
+//                    }
+//                    let vc = ListExploreResultViewController(
+//                        viewModels: cellTypes
+//                    )
+//                    ProgressHUD.dismiss()
+//                    guard let listVC = self?.exploreFpc.contentViewController as? ListOnMapViewController else {
+//                        fatalError()
+//                    }
+//                    listVC.updateLeft(with: cellTypes)
+//
+//                    self?.exploreFpc.move(to: .full, animated: true, completion: nil)
+//                })
+//            })
+//    }
     
     private func exploreWithYorimichiDB(){
         guard let genre = UserDefaults.standard.string(forKey: "genre") else {
@@ -723,6 +789,10 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         }
         else if (shopGenreList.contains(genreDisplayStringToCode(x: genre))){
             genreType = GenreType.shop
+        }
+        else if (otherGenreList.contains(genreDisplayStringToCode(x: genre))){
+            genreType = GenreType.other
+            
         }
         else{
             AlertManager.shared.presentError(title: "検索ジャンルエラー", message: "ジャンル情報が無効です。", completion: {[weak self] alert in
@@ -1136,31 +1206,31 @@ extension MapViewController: MKLocalSearchCompleterDelegate {
     }
 }
 
-extension MapViewController: NavigationViewControllerDelegate {
-    // Show an alert when arriving at the waypoint and wait until the user to start next leg.
-    func navigationViewController(_ navigationViewController: NavigationViewController, didArriveAt waypoint: Waypoint) -> Bool {
-        let isFinalLeg = navigationViewController.navigationService.routeProgress.isFinalLeg
-        if isFinalLeg {
-            return true
-        }
-        
-        let alert = UIAlertController(title: "ヨリミチ先 \(waypoint.name ?? "Unknown")　に到着しました。", message: "ナビゲーションを再開しますか?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
-            // Begin the next leg once the driver confirms
-            if !isFinalLeg {
-                navigationViewController.navigationService.routeProgress.legIndex += 1
-                navigationViewController.navigationService.start()
-            }
-        }))
-        navigationViewController.present(alert, animated: true, completion: nil)
-        
-        return false
-    }
-    
-    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
-        dismiss(animated: true, completion: nil)
-    }
-}
+//extension MapViewController: NavigationViewControllerDelegate {
+//    // Show an alert when arriving at the waypoint and wait until the user to start next leg.
+//    func navigationViewController(_ navigationViewController: NavigationViewController, didArriveAt waypoint: Waypoint) -> Bool {
+//        let isFinalLeg = navigationViewController.navigationService.routeProgress.isFinalLeg
+//        if isFinalLeg {
+//            return true
+//        }
+//
+//        let alert = UIAlertController(title: "ヨリミチ先 \(waypoint.name ?? "Unknown")　に到着しました。", message: "ナビゲーションを再開しますか?", preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+//            // Begin the next leg once the driver confirms
+//            if !isFinalLeg {
+//                navigationViewController.navigationService.routeProgress.legIndex += 1
+//                navigationViewController.navigationService.start()
+//            }
+//        }))
+//        navigationViewController.present(alert, animated: true, completion: nil)
+//
+//        return false
+//    }
+//
+//    func navigationViewControllerDidDismiss(_ navigationViewController: NavigationViewController, byCanceling canceled: Bool) {
+//        dismiss(animated: true, completion: nil)
+//    }
+//}
 
 
 
@@ -2153,22 +2223,36 @@ extension MapViewController{
         exploreButton.layer.cornerRadius = exploreButtonSize/2
         exploreLabel.sizeToFit()
         exploreLabel.frame = CGRect(x: 60 - exploreLabel.width/2 + (exploreButton.width - (exploreLabel.width + 20))/2, y: exploreButton.bottom + labelOverlap, width: exploreLabel.width+20, height: exploreLabel.height+5)
-        exploreButton.center.x = view.left + 60
-        exploreLabel.center.x = view.left + 60
+        exploreButton.center.x = view.width/3
+        exploreLabel.center.x = view.width/3
+        
+        exploreHPButton.frame = CGRect(x: view.center.x - routeButtonSize/2, y: view.height*3.7/5, width: routeButtonSize, height: routeButtonSize)
+        exploreHPButton.layer.cornerRadius = routeButtonSize/2
+        exploreHPLabel.sizeToFit()
+        exploreHPLabel.frame = CGRect(x: view.center.x - (exploreHPLabel.width+20)/2, y: exploreHPButton.bottom + labelOverlap, width: exploreHPLabel.width+20, height: exploreHPLabel.height+5)
+        exploreHPButton.center.x = view.width/3*2
+        exploreHPLabel.center.x = view.width/3*2
         
         
-        routeButton.frame = CGRect(x: view.center.x - routeButtonSize/2, y: view.height*3.7/5, width: routeButtonSize, height: routeButtonSize)
-        routeButton.layer.cornerRadius = routeButtonSize/2
-        routeLabel.sizeToFit()
-        routeLabel.frame = CGRect(x: view.center.x - (routeLabel.width+20)/2, y: routeButton.bottom + labelOverlap, width: routeLabel.width+20, height: routeLabel.height+5)
+//        exploreGoogleButton.frame = CGRect(x: view.right - goButtonSize - 40, y: view.height*3.7/5, width: goButtonSize, height: goButtonSize)
+//        exploreGoogleButton.layer.cornerRadius = goButtonSize/2
+//        exploreGoogleLabel.sizeToFit()
+//        exploreGoogleLabel.frame = CGRect(x: view.right - exploreGoogleLabel.width - 10 - 40, y: exploreGoogleButton.bottom + labelOverlap, width: exploreGoogleLabel.width+20, height: exploreGoogleLabel.height+5)
+//        exploreGoogleLabel.center.x = view.right - 60
+//        exploreGoogleLabel.center.x = view.right - 60
         
-        
-        goButton.frame = CGRect(x: view.right - goButtonSize - 40, y: view.height*3.7/5, width: goButtonSize, height: goButtonSize)
-        goButton.layer.cornerRadius = goButtonSize/2
-        goLabel.sizeToFit()
-        goLabel.frame = CGRect(x: view.right - goLabel.width - 10 - 40, y: goButton.bottom + labelOverlap, width: goLabel.width+20, height: goLabel.height+5)
-        goButton.center.x = view.right - 60
-        goLabel.center.x = view.right - 60
+//        routeButton.frame = CGRect(x: view.center.x - routeButtonSize/2, y: view.height*3.7/5, width: routeButtonSize, height: routeButtonSize)
+//        routeButton.layer.cornerRadius = routeButtonSize/2
+//        routeLabel.sizeToFit()
+//        routeLabel.frame = CGRect(x: view.center.x - (routeLabel.width+20)/2, y: routeButton.bottom + labelOverlap, width: routeLabel.width+20, height: routeLabel.height+5)
+//
+//
+//        goButton.frame = CGRect(x: view.right - goButtonSize - 40, y: view.height*3.7/5, width: goButtonSize, height: goButtonSize)
+//        goButton.layer.cornerRadius = goButtonSize/2
+//        goLabel.sizeToFit()
+//        goLabel.frame = CGRect(x: view.right - goLabel.width - 10 - 40, y: goButton.bottom + labelOverlap, width: goLabel.width+20, height: goLabel.height+5)
+//        goButton.center.x = view.right - 60
+//        goLabel.center.x = view.right - 60
         
     }
     

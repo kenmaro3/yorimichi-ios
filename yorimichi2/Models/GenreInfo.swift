@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 enum GenreType: Codable{
+    case other
     case food
     case spot
     case shop
@@ -20,6 +21,9 @@ struct GenreInfo: Codable, Hashable{
 
     var getSearchString: String {
         switch type{
+        case .other:
+            let str = otherGenreCodeToString(x: code)
+            return str
         case .food:
             let str = foodGenreCodeToString(x: code)
             return str
@@ -35,6 +39,10 @@ struct GenreInfo: Codable, Hashable{
     }
 }
 
+
+let otherGenreList = [
+    "A000"
+]
 
 
 let foodGenreList = [
@@ -72,6 +80,15 @@ let shopGenreList = [
     // お買い物情報
     "P001" // セール情報
 ]
+
+func otherGenreCodeToString(x: String) -> String{
+    if(x == "A000"){
+        return "全て"
+    }
+    else{
+        fatalError("Genre Unknown Code")
+    }
+}
 
 func foodGenreCodeToString(x: String) -> String{
     if(x == "G000"){
@@ -141,8 +158,19 @@ func shopGenreCodeToDisplayString(x: String) -> String {
 }
 
 
+func otherGenreCodeToDisplayString(x: String) -> String{
+    if(x == "A000"){
+        return "なんでも"
+    }
+    else{
+        fatalError("Genre Unknown Code")
+    }
+}
+
 func genreCodeToDisplayString(x: String) -> String{
-    if(x == "G000"){
+    if(x == "A000"){
+        return "なんでも"
+    }else if(x == "G000"){
         return "フードおまかせ"
     }else if(x == "G001"){
         return "居酒屋"
@@ -196,7 +224,9 @@ func genreCodeToDisplayString(x: String) -> String{
 }
 
 func genreDisplayStringToCode(x: String) -> String{
-    if (x == "フードおまかせ"){
+    if (x == "なんでも"){
+        return "A000"
+    }else if (x == "フードおまかせ"){
         return "G000"
     }else if(x == "居酒屋"){
         return "G001"

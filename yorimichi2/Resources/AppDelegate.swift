@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.setValue(true, forKey: "save_video")
         
         UserDefaults.standard.setValue("Walk", forKey: "methods")
-        UserDefaults.standard.setValue("フードおまかせ", forKey: "genre")
+        UserDefaults.standard.setValue("なんでも", forKey: "genre")
         UserDefaults.standard.setValue("Yorimichi DB", forKey: "source")
         
 //        // Add dummy notification for current user

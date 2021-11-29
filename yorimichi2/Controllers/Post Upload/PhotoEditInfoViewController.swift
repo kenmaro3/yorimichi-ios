@@ -179,6 +179,15 @@ class PhotoEditInfoViewController: UIViewController {
                             return
                         }
                         
+                        // MARK: Upload for YorimichiData For All Genre
+                        DatabaseManager.shared.createYorimichiPostAtAll(
+                            post: newPost, completion: {[weak self] finished in
+                                guard finished else{
+                                    return
+                                }
+                                
+                            })
+                        
                         // MARK: Upload for YorimichiData
                         DatabaseManager.shared.createYorimichiPost(
                             post: newPost, completion: {[weak self] finished in
@@ -290,6 +299,15 @@ class PhotoEditInfoViewController: UIViewController {
                                                 self?.navigationController?.popToRootViewController(animated: false)
                                                 
                                                 NotificationCenter.default.post(name: .didPostNotification, object: nil)
+                                                
+                                            })
+                                        
+                                        // MARK: Upload for YorimichiData For All Genre
+                                        DatabaseManager.shared.createYorimichiVideoPostAtAll(
+                                            post: newPost, completion: {[weak self] finished in
+                                                guard finished else{
+                                                    return
+                                                }
                                                 
                                             })
                                         

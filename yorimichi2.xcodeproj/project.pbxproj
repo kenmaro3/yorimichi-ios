@@ -8,6 +8,134 @@
 
 /* Begin PBXBuildFile section */
 		0A42DDB9274A0CB600A36B0F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A42DDB8274A0CB600A36B0F /* GoogleService-Info.plist */; };
+		0A841F552754DC970021EA3E /* SourceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD25807272E610000F22274 /* SourceInfo.swift */; };
+		0A841F562754DC970021EA3E /* SwipeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACDA55A27268CC600DA3596 /* SwipeInfo.swift */; };
+		0A841F572754DC970021EA3E /* ListGenreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACDA56D2726A4FA00DA3596 /* ListGenreTableViewCell.swift */; };
+		0A841F582754DC970021EA3E /* CommentBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACED3CE27240A120054398A /* CommentBarView.swift */; };
+		0A841F592754DC970021EA3E /* PhotoEditInfoCollectionLocationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCEF84273A192C00AB4026 /* PhotoEditInfoCollectionLocationViewCell.swift */; };
+		0A841F5A2754DC970021EA3E /* ListOnMapLeftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC8FB33273CDEDC003B327E /* ListOnMapLeftViewController.swift */; };
+		0A841F5B2754DC970021EA3E /* PhotoEditInfoGenreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACB0816273BA20A00CD960C /* PhotoEditInfoGenreViewModel.swift */; };
+		0A841F5C2754DC970021EA3E /* PhotoEditInfoPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC8FB29273CA488003B327E /* PhotoEditInfoPostViewModel.swift */; };
+		0A841F5D2754DC970021EA3E /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD4861027369498005FEF91 /* RecordButton.swift */; };
+		0A841F5E2754DC970021EA3E /* ListGenreTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACDA56927269D9D00DA3596 /* ListGenreTableViewCellViewModel.swift */; };
+		0A841F5F2754DC970021EA3E /* PhotoEditInfoCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCEF7E273A183100AB4026 /* PhotoEditInfoCellType.swift */; };
+		0A841F602754DC970021EA3E /* ProfileVideoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD486262736C968005FEF91 /* ProfileVideoCellViewModel.swift */; };
+		0A841F612754DC970021EA3E /* PostHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD4863027380CDD005FEF91 /* PostHeaderView.swift */; };
+		0A841F622754DC970021EA3E /* NotificationCellViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901ABC2720251600EC0A36 /* NotificationCellViewModels.swift */; };
+		0A841F632754DC970021EA3E /* ListMethodsTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB41D5A272D2EE6000BE8B5 /* ListMethodsTableViewCellViewModel.swift */; };
+		0A841F642754DC970021EA3E /* SearchLocationResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCEF8C273A857600AB4026 /* SearchLocationResultsViewController.swift */; };
+		0A841F652754DC970021EA3E /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD31993271FB84C00734539 /* ListViewController.swift */; };
+		0A841F662754DC970021EA3E /* ListYorimichiLikesCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC82F55274603CD00E58887 /* ListYorimichiLikesCellType.swift */; };
+		0A841F672754DC970021EA3E /* ListExploreResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD2581D272E8FBF00F22274 /* ListExploreResultTableViewCell.swift */; };
+		0A841F682754DC970021EA3E /* PostComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD4861C2736A7E4005FEF91 /* PostComment.swift */; };
+		0A841F692754DC970021EA3E /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACED3C82723F0400054398A /* SettingsModels.swift */; };
+		0A841F6A2754DC970021EA3E /* ListOnMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC8FB31273CDB70003B327E /* ListOnMapViewController.swift */; };
+		0A841F6B2754DC970021EA3E /* ListUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6927B27226D9B005E9737 /* ListUserTableViewCell.swift */; };
+		0A841F6C2754DC970021EA3E /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319AD271FB9B100734539 /* Post.swift */; };
+		0A841F6D2754DC970021EA3E /* PhotoEditInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCEF78273A157700AB4026 /* PhotoEditInfoViewController.swift */; };
+		0A841F6E2754DC970021EA3E /* LikeNotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901ACC2720331900EC0A36 /* LikeNotificationTableViewCell.swift */; };
+		0A841F6F2754DC970021EA3E /* ListGenreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACDA56B2726A47100DA3596 /* ListGenreViewController.swift */; };
+		0A841F702754DC970021EA3E /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319A7271FB8E900734539 /* NotificationManager.swift */; };
+		0A841F712754DC970021EA3E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD31987271FB7B000734539 /* MapViewController.swift */; };
+		0A841F722754DC970021EA3E /* MapSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0FA7D2739334100C121F7 /* MapSettingsViewController.swift */; };
+		0A841F732754DC970021EA3E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319B7271FBA3900734539 /* Extensions.swift */; };
+		0A841F742754DC970021EA3E /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD31985271FB7A200734539 /* CameraViewController.swift */; };
+		0A841F752754DC970021EA3E /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACED3CA272402A40054398A /* CommentCollectionViewCell.swift */; };
+		0A841F762754DC970021EA3E /* PostInfoCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA831C1272791C5002725CF /* PostInfoCollectionViewCellViewModel.swift */; };
+		0A841F772754DC970021EA3E /* HomeScrollPhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD4862A273771D8005FEF91 /* HomeScrollPhotoViewModel.swift */; };
+		0A841F782754DC970021EA3E /* FollowNotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901ACA2720330E00EC0A36 /* FollowNotificationTableViewCell.swift */; };
+		0A841F792754DC970021EA3E /* BudgetInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACDA56027268DA900DA3596 /* BudgetInfo.swift */; };
+		0A841F7A2754DC970021EA3E /* ListYorimichiLikesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC82F572746131600E58887 /* ListYorimichiLikesTableViewCell.swift */; };
+		0A841F7B2754DC970021EA3E /* ProfileHeaderCountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0EF1827211C3B0039FF9F /* ProfileHeaderCountViewModel.swift */; };
+		0A841F7C2754DC970021EA3E /* ListOnMapMiddleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC8FB35273CDEE7003B327E /* ListOnMapMiddleViewController.swift */; };
+		0A841F7D2754DC970021EA3E /* ProfileHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0EF12272112D40039FF9F /* ProfileHeaderCollectionReusableView.swift */; };
+		0A841F7E2754DC970021EA3E /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319BD271FBAF100734539 /* PhotoCollectionViewCell.swift */; };
+		0A841F7F2754DC970021EA3E /* GenreInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACDA55E27268D0F00DA3596 /* GenreInfo.swift */; };
+		0A841F802754DC970021EA3E /* RequestsToBackendUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACDA56527268E6B00DA3596 /* RequestsToBackendUtils.swift */; };
+		0A841F812754DC970021EA3E /* CommentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD486342738CDA6005FEF91 /* CommentsViewModel.swift */; };
+		0A841F822754DC970021EA3E /* CommentNotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901ACE2720332400EC0A36 /* CommentNotificationTableViewCell.swift */; };
+		0A841F832754DC970021EA3E /* ListOnMapRightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC82F532745F9A600E58887 /* ListOnMapRightViewController.swift */; };
+		0A841F842754DC970021EA3E /* ListExploreResultCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD2581F272F91E700F22274 /* ListExploreResultCellType.swift */; };
+		0A841F852754DC970021EA3E /* SearchLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCEF8A273A7B3E00AB4026 /* SearchLocationViewController.swift */; };
+		0A841F862754DC970021EA3E /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD4861A2736A7AD005FEF91 /* CommentsViewController.swift */; };
+		0A841F872754DC970021EA3E /* PostAdditionalLocationCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA831BF272791B5002725CF /* PostAdditionalLocationCollectionViewCellViewModel.swift */; };
+		0A841F882754DC970021EA3E /* PhotoEditInfoCollectionCaptionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCEF82273A191C00AB4026 /* PhotoEditInfoCollectionCaptionViewCell.swift */; };
+		0A841F892754DC970021EA3E /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF3854D273685A900EAF1D4 /* SwitchTableViewCell.swift */; };
+		0A841F8A2754DC970021EA3E /* PostLocationCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA831BD272791A3002725CF /* PostLocationCollectionViewCellViewModel.swift */; };
+		0A841F8B2754DC970021EA3E /* SearchGenreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACB081A273BAAD300CD960C /* SearchGenreViewController.swift */; };
+		0A841F8C2754DC970021EA3E /* FollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0EF202721866E0039FF9F /* FollowButton.swift */; };
+		0A841F8D2754DC970021EA3E /* GoogleAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACDA56F2726BED300DA3596 /* GoogleAPIManager.swift */; };
+		0A841F8E2754DC970021EA3E /* VideoPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD486182736A725005FEF91 /* VideoPostViewController.swift */; };
+		0A841F8F2754DC970021EA3E /* HomeScrollVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD4862C273771EF005FEF91 /* HomeScrollVideoViewModel.swift */; };
+		0A841F902754DC970021EA3E /* PostCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901AB2272024C000EC0A36 /* PostCollectionViewCellViewModel.swift */; };
+		0A841F912754DC970021EA3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD3194B271FB3ED00734539 /* AppDelegate.swift */; };
+		0A841F922754DC970021EA3E /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD3199D271FB8AE00734539 /* AuthManager.swift */; };
+		0A841F932754DC970021EA3E /* PhotoEditInfoCollectionPostViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACCEF80273A190D00AB4026 /* PhotoEditInfoCollectionPostViewCell.swift */; };
+		0A841F942754DC970021EA3E /* PhotoEditInfoLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACB0814273B9B5500CD960C /* PhotoEditInfoLocationViewModel.swift */; };
+		0A841F952754DC970021EA3E /* PhotoEditInfoVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC8FB2B273CA4AE003B327E /* PhotoEditInfoVideoViewModel.swift */; };
+		0A841F962754DC970021EA3E /* ListSourceTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD25805272E60C500F22274 /* ListSourceTableViewCellViewModel.swift */; };
+		0A841F972754DC970021EA3E /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACED3CC272407420054398A /* Comment.swift */; };
+		0A841F982754DC970021EA3E /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD2983C2730F50B00ACE371 /* Address.swift */; };
+		0A841F992754DC970021EA3E /* ProfileCollectionCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD486222736C90E005FEF91 /* ProfileCollectionCellType.swift */; };
+		0A841F9A2754DC970021EA3E /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD3199F271FB8B700734539 /* DatabaseManager.swift */; };
+		0A841F9B2754DC970021EA3E /* SinglePostCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACDA54F27254C6900DA3596 /* SinglePostCellType.swift */; };
+		0A841F9C2754DC970021EA3E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA8325227292E8E002725CF /* LocationManager.swift */; };
+		0A841F9D2754DC970021EA3E /* PhotoEditInfoCollectionVideoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC8FB2D273CA67C003B327E /* PhotoEditInfoCollectionVideoViewCell.swift */; };
+		0A841F9E2754DC970021EA3E /* SwipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACDA5582726843600DA3596 /* SwipeViewController.swift */; };
+		0A841F9F2754DC970021EA3E /* PosterColectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901AB0272024AD00EC0A36 /* PosterColectionViewCellViewModel.swift */; };
+		0A841FA02754DC970021EA3E /* PhotoPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD4862E27380B47005FEF91 /* PhotoPostViewController.swift */; };
+		0A841FA12754DC970021EA3E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319C1271FC0D100734539 /* TabBarViewController.swift */; };
+		0A841FA22754DC970021EA3E /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319B5271FB9EF00734539 /* Shop.swift */; };
+		0A841FA32754DC970021EA3E /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319A5271FB8E000734539 /* HapticsManager.swift */; };
+		0A841FA42754DC970021EA3E /* MethodsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB41D5C272D3046000BE8B5 /* MethodsInfo.swift */; };
+		0A841FA52754DC970021EA3E /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319A1271FB8C400734539 /* StorageManager.swift */; };
+		0A841FA62754DC970021EA3E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD3198F271FB82100734539 /* SignUpViewController.swift */; };
+		0A841FA72754DC970021EA3E /* VideoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD486202736C52D005FEF91 /* VideoPostCollectionViewCell.swift */; };
+		0A841FA82754DC970021EA3E /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD4861E2736A85B005FEF91 /* CommentTableViewCell.swift */; };
+		0A841FA92754DC970021EA3E /* ShopUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACDA56327268E5A00DA3596 /* ShopUtils.swift */; };
+		0A841FAA2754DC970021EA3E /* PostCaptionCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901AB8272024F200EC0A36 /* PostCaptionCollectionViewCellViewModel.swift */; };
+		0A841FAB2754DC970021EA3E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD3194D271FB3ED00734539 /* SceneDelegate.swift */; };
+		0A841FAC2754DC970021EA3E /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319A3271FB8D500734539 /* AnalyticsManager.swift */; };
+		0A841FAD2754DC970021EA3E /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319AF271FB9BC00734539 /* Notification.swift */; };
+		0A841FAE2754DC970021EA3E /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA83254272934F4002725CF /* SearchViewController.swift */; };
+		0A841FAF2754DC970021EA3E /* ListMethodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB41D58272D2DFD000BE8B5 /* ListMethodsViewController.swift */; };
+		0A841FB02754DC970021EA3E /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC8FB2F273CC3A0003B327E /* AlertManager.swift */; };
+		0A841FB12754DC970021EA3E /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0EF1C272154BA0039FF9F /* EditProfileViewController.swift */; };
+		0A841FB22754DC970021EA3E /* PostDatetimeCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901ABA2720250300EC0A36 /* PostDatetimeCollectionViewCellViewModel.swift */; };
+		0A841FB32754DC970021EA3E /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB41D5E272D734F000BE8B5 /* CustomAnnotationView.swift */; };
+		0A841FB42754DC970021EA3E /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0EF1A272152150039FF9F /* UserInfo.swift */; };
+		0A841FB52754DC970021EA3E /* ProfilePhotoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD486242736C954005FEF91 /* ProfilePhotoCellViewModel.swift */; };
+		0A841FB62754DC970021EA3E /* PhotoEditInfoCollectionGenreViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACB0818273BA2B400CD960C /* PhotoEditInfoCollectionGenreViewCell.swift */; };
+		0A841FB72754DC970021EA3E /* SwitchCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF3854F273685E000EAF1D4 /* SwitchCellViewModel.swift */; };
+		0A841FB82754DC970021EA3E /* HomeScrollCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD48628273771A7005FEF91 /* HomeScrollCellType.swift */; };
+		0A841FB92754DC970021EA3E /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACDA55C27268CF000DA3596 /* LocationInfo.swift */; };
+		0A841FBA2754DC970021EA3E /* SignInHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319B9271FBA8100734539 /* SignInHeaderView.swift */; };
+		0A841FBB2754DC970021EA3E /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD3199B271FB8A300734539 /* SearchResultsViewController.swift */; };
+		0A841FBC2754DC970021EA3E /* PostHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD4863227381AEF005FEF91 /* PostHeaderViewModel.swift */; };
+		0A841FBD2754DC970021EA3E /* ListExploreResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD2580B272E6BB200F22274 /* ListExploreResultViewController.swift */; };
+		0A841FBE2754DC970021EA3E /* ListSourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD25803272E5F7700F22274 /* ListSourceViewController.swift */; };
+		0A841FBF2754DC970021EA3E /* PostActionsCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901AB4272024D100EC0A36 /* PostActionsCollectionViewCellViewModel.swift */; };
+		0A841FC02754DC970021EA3E /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319BB271FBACC00734539 /* TextField.swift */; };
+		0A841FC12754DC970021EA3E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD31997271FB86000734539 /* SettingsViewController.swift */; };
+		0A841FC22754DC970021EA3E /* ListUserTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6927D27226FDC005E9737 /* ListUserTableViewCellViewModel.swift */; };
+		0A841FC32754DC970021EA3E /* ProfileHeaderCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0EF16272118100039FF9F /* ProfileHeaderCountView.swift */; };
+		0A841FC42754DC970021EA3E /* HotPepperAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD25823272FA93E00F22274 /* HotPepperAPIManager.swift */; };
+		0A841FC52754DC970021EA3E /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD3198D271FB81600734539 /* SignInViewController.swift */; };
+		0A841FC62754DC970021EA3E /* PostEditFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD31999271FB86600734539 /* PostEditFilterViewController.swift */; };
+		0A841FC72754DC970021EA3E /* GeocoderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD2983A2730F3DB00ACE371 /* GeocoderManager.swift */; };
+		0A841FC82754DC970021EA3E /* PostNameCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA831BB2727918B002725CF /* PostNameCollectionViewCellViewModel.swift */; };
+		0A841FC92754DC970021EA3E /* PostLikesCollectionVIewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901AB6272024E500EC0A36 /* PostLikesCollectionVIewCellViewModel.swift */; };
+		0A841FCA2754DC970021EA3E /* ProfileHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0EF14272113550039FF9F /* ProfileHeaderViewModel.swift */; };
+		0A841FCB2754DC970021EA3E /* HomeFeedCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319B1271FB9DB00734539 /* HomeFeedCellType.swift */; };
+		0A841FCC2754DC970021EA3E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD3198B271FB7C300734539 /* ProfileViewController.swift */; };
+		0A841FCD2754DC970021EA3E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD31983271FB79200734539 /* HomeViewController.swift */; };
+		0A841FCE2754DC970021EA3E /* PostRatingCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA831B927279170002725CF /* PostRatingCollectionViewCellViewModel.swift */; };
+		0A841FCF2754DC970021EA3E /* CustomAnnotationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB41D62272E30F7000BE8B5 /* CustomAnnotationViewModel.swift */; };
+		0A841FD02754DC970021EA3E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319AB271FB9AB00734539 /* User.swift */; };
+		0A841FD12754DC970021EA3E /* NotificationCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD319B3271FB9E300734539 /* NotificationCellType.swift */; };
+		0A841FD62754DC970021EA3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AD31956271FB3EE00734539 /* LaunchScreen.storyboard */; };
+		0A841FD72754DC970021EA3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AD31954271FB3EE00734539 /* Assets.xcassets */; };
+		0A841FE32754E0090021EA3E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A841FE02754DEC60021EA3E /* GoogleService-Info.plist */; };
 		0A901AB1272024AD00EC0A36 /* PosterColectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901AB0272024AD00EC0A36 /* PosterColectionViewCellViewModel.swift */; };
 		0A901AB3272024C000EC0A36 /* PostCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901AB2272024C000EC0A36 /* PostCollectionViewCellViewModel.swift */; };
 		0A901AB5272024D100EC0A36 /* PostActionsCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901AB4272024D100EC0A36 /* PostActionsCollectionViewCellViewModel.swift */; };
@@ -138,7 +266,9 @@
 		0AF0FA7E2739334100C121F7 /* MapSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0FA7D2739334100C121F7 /* MapSettingsViewController.swift */; };
 		0AF3854E273685A900EAF1D4 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF3854D273685A900EAF1D4 /* SwitchTableViewCell.swift */; };
 		0AF38550273685E000EAF1D4 /* SwitchCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF3854F273685E000EAF1D4 /* SwitchCellViewModel.swift */; };
+		644FF6AFA41501BE193AF9CA /* Pods_yorimichi2_dev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836729183AA19DB1D6AD2A0D /* Pods_yorimichi2_dev.framework */; };
 		8CA981D909056D0E43DB64A7 /* Pods_yorimichi2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4D929B24ADB45271D0E22B /* Pods_yorimichi2.framework */; };
+		FD698CC4E05C01D820150A6F /* Pods_yorimichi2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A4D929B24ADB45271D0E22B /* Pods_yorimichi2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +291,8 @@
 /* Begin PBXFileReference section */
 		0A42DDB52747BD6D00A36B0F /* yorimichi2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = yorimichi2.entitlements; sourceTree = "<group>"; };
 		0A42DDB8274A0CB600A36B0F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0A841FDC2754DC970021EA3E /* yorimichi2-dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "yorimichi2-dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A841FE02754DEC60021EA3E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0A901AB0272024AD00EC0A36 /* PosterColectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterColectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		0A901AB2272024C000EC0A36 /* PostCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		0A901AB4272024D100EC0A36 /* PostActionsCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostActionsCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -296,17 +428,29 @@
 		0AF0FA7D2739334100C121F7 /* MapSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSettingsViewController.swift; sourceTree = "<group>"; };
 		0AF3854D273685A900EAF1D4 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
 		0AF3854F273685E000EAF1D4 /* SwitchCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchCellViewModel.swift; sourceTree = "<group>"; };
+		1768F5D078A0A1A9561DC943 /* Pods-yorimichi2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yorimichi2.release.xcconfig"; path = "Target Support Files/Pods-yorimichi2/Pods-yorimichi2.release.xcconfig"; sourceTree = "<group>"; };
+		56F0C91FB9B46F77B7B2F5F0 /* Pods-yorimichi2-dev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yorimichi2-dev.release.xcconfig"; path = "Target Support Files/Pods-yorimichi2-dev/Pods-yorimichi2-dev.release.xcconfig"; sourceTree = "<group>"; };
 		5A4D929B24ADB45271D0E22B /* Pods_yorimichi2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yorimichi2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		89E3D9350BE9ABB2B3DC6035 /* Pods-yorimichi2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yorimichi2.release.xcconfig"; path = "Target Support Files/Pods-yorimichi2/Pods-yorimichi2.release.xcconfig"; sourceTree = "<group>"; };
-		B0E432DDE5E87CFE7A2B265A /* Pods-yorimichi2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yorimichi2.debug.xcconfig"; path = "Target Support Files/Pods-yorimichi2/Pods-yorimichi2.debug.xcconfig"; sourceTree = "<group>"; };
+		631B2872B471F202B38F3113 /* Pods-yorimichi2-dev.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yorimichi2-dev.debug.xcconfig"; path = "Target Support Files/Pods-yorimichi2-dev/Pods-yorimichi2-dev.debug.xcconfig"; sourceTree = "<group>"; };
+		836729183AA19DB1D6AD2A0D /* Pods_yorimichi2_dev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yorimichi2_dev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A623CB85C39E32CD215518D /* Pods-yorimichi2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yorimichi2.debug.xcconfig"; path = "Target Support Files/Pods-yorimichi2/Pods-yorimichi2.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0A841FD22754DC970021EA3E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				644FF6AFA41501BE193AF9CA /* Pods_yorimichi2_dev.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0AD31945271FB3ED00734539 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8CA981D909056D0E43DB64A7 /* Pods_yorimichi2.framework in Frameworks */,
+				FD698CC4E05C01D820150A6F /* Pods_yorimichi2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +471,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A841FDE2754DE7E0021EA3E /* GoogleService-info-Production */ = {
+			isa = PBXGroup;
+			children = (
+				0A42DDB8274A0CB600A36B0F /* GoogleService-Info.plist */,
+			);
+			path = "GoogleService-info-Production";
+			sourceTree = "<group>";
+		};
+		0A841FDF2754DE930021EA3E /* GoogleService-info-Dev */ = {
+			isa = PBXGroup;
+			children = (
+				0A841FE02754DEC60021EA3E /* GoogleService-Info.plist */,
+			);
+			path = "GoogleService-info-Dev";
+			sourceTree = "<group>";
+		};
 		0AA831B82727913D002725CF /* Post Edit */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,6 +571,7 @@
 				0AD31948271FB3ED00734539 /* yorimichi2.app */,
 				0AD3195E271FB3EF00734539 /* yorimichi2Tests.xctest */,
 				0AD31968271FB3EF00734539 /* yorimichi2UITests.xctest */,
+				0A841FDC2754DC970021EA3E /* yorimichi2-dev.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -572,7 +733,8 @@
 		0AD31980271FB74800734539 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				0A42DDB8274A0CB600A36B0F /* GoogleService-Info.plist */,
+				0A841FDF2754DE930021EA3E /* GoogleService-info-Dev */,
+				0A841FDE2754DE7E0021EA3E /* GoogleService-info-Production */,
 				0AD3194D271FB3ED00734539 /* SceneDelegate.swift */,
 				0AD31954271FB3EE00734539 /* Assets.xcassets */,
 				0AD3194B271FB3ED00734539 /* AppDelegate.swift */,
@@ -643,8 +805,10 @@
 		A2FD45D5B38C2DD5D4662B65 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B0E432DDE5E87CFE7A2B265A /* Pods-yorimichi2.debug.xcconfig */,
-				89E3D9350BE9ABB2B3DC6035 /* Pods-yorimichi2.release.xcconfig */,
+				9A623CB85C39E32CD215518D /* Pods-yorimichi2.debug.xcconfig */,
+				1768F5D078A0A1A9561DC943 /* Pods-yorimichi2.release.xcconfig */,
+				631B2872B471F202B38F3113 /* Pods-yorimichi2-dev.debug.xcconfig */,
+				56F0C91FB9B46F77B7B2F5F0 /* Pods-yorimichi2-dev.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -653,6 +817,7 @@
 			isa = PBXGroup;
 			children = (
 				5A4D929B24ADB45271D0E22B /* Pods_yorimichi2.framework */,
+				836729183AA19DB1D6AD2A0D /* Pods_yorimichi2_dev.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -660,6 +825,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0A841F522754DC970021EA3E /* yorimichi2-dev */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A841FD92754DC970021EA3E /* Build configuration list for PBXNativeTarget "yorimichi2-dev" */;
+			buildPhases = (
+				9733A4F19FF8224C059B0323 /* [CP] Check Pods Manifest.lock */,
+				0A841F542754DC970021EA3E /* Sources */,
+				0A841FD22754DC970021EA3E /* Frameworks */,
+				0A841FD42754DC970021EA3E /* Resources */,
+				4AAC51970B241BDA7EEEE331 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "yorimichi2-dev";
+			productName = yorimichi2;
+			productReference = 0A841FDC2754DC970021EA3E /* yorimichi2-dev.app */;
+			productType = "com.apple.product-type.application";
+		};
 		0AD31947271FB3ED00734539 /* yorimichi2 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0AD31972271FB3EF00734539 /* Build configuration list for PBXNativeTarget "yorimichi2" */;
@@ -754,11 +938,22 @@
 				0AD31947271FB3ED00734539 /* yorimichi2 */,
 				0AD3195D271FB3EF00734539 /* yorimichi2Tests */,
 				0AD31967271FB3EF00734539 /* yorimichi2UITests */,
+				0A841F522754DC970021EA3E /* yorimichi2-dev */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0A841FD42754DC970021EA3E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A841FE32754E0090021EA3E /* GoogleService-Info.plist in Resources */,
+				0A841FD62754DC970021EA3E /* LaunchScreen.storyboard in Resources */,
+				0A841FD72754DC970021EA3E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0AD31946271FB3ED00734539 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -786,6 +981,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4AAC51970B241BDA7EEEE331 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-yorimichi2-dev/Pods-yorimichi2-dev-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-yorimichi2-dev/Pods-yorimichi2-dev-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-yorimichi2-dev/Pods-yorimichi2-dev-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7EE73AF6FB986F538A8A4577 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -825,9 +1037,163 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		9733A4F19FF8224C059B0323 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-yorimichi2-dev-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0A841F542754DC970021EA3E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A841F552754DC970021EA3E /* SourceInfo.swift in Sources */,
+				0A841F562754DC970021EA3E /* SwipeInfo.swift in Sources */,
+				0A841F572754DC970021EA3E /* ListGenreTableViewCell.swift in Sources */,
+				0A841F582754DC970021EA3E /* CommentBarView.swift in Sources */,
+				0A841F592754DC970021EA3E /* PhotoEditInfoCollectionLocationViewCell.swift in Sources */,
+				0A841F5A2754DC970021EA3E /* ListOnMapLeftViewController.swift in Sources */,
+				0A841F5B2754DC970021EA3E /* PhotoEditInfoGenreViewModel.swift in Sources */,
+				0A841F5C2754DC970021EA3E /* PhotoEditInfoPostViewModel.swift in Sources */,
+				0A841F5D2754DC970021EA3E /* RecordButton.swift in Sources */,
+				0A841F5E2754DC970021EA3E /* ListGenreTableViewCellViewModel.swift in Sources */,
+				0A841F5F2754DC970021EA3E /* PhotoEditInfoCellType.swift in Sources */,
+				0A841F602754DC970021EA3E /* ProfileVideoCellViewModel.swift in Sources */,
+				0A841F612754DC970021EA3E /* PostHeaderView.swift in Sources */,
+				0A841F622754DC970021EA3E /* NotificationCellViewModels.swift in Sources */,
+				0A841F632754DC970021EA3E /* ListMethodsTableViewCellViewModel.swift in Sources */,
+				0A841F642754DC970021EA3E /* SearchLocationResultsViewController.swift in Sources */,
+				0A841F652754DC970021EA3E /* ListViewController.swift in Sources */,
+				0A841F662754DC970021EA3E /* ListYorimichiLikesCellType.swift in Sources */,
+				0A841F672754DC970021EA3E /* ListExploreResultTableViewCell.swift in Sources */,
+				0A841F682754DC970021EA3E /* PostComment.swift in Sources */,
+				0A841F692754DC970021EA3E /* SettingsModels.swift in Sources */,
+				0A841F6A2754DC970021EA3E /* ListOnMapViewController.swift in Sources */,
+				0A841F6B2754DC970021EA3E /* ListUserTableViewCell.swift in Sources */,
+				0A841F6C2754DC970021EA3E /* Post.swift in Sources */,
+				0A841F6D2754DC970021EA3E /* PhotoEditInfoViewController.swift in Sources */,
+				0A841F6E2754DC970021EA3E /* LikeNotificationTableViewCell.swift in Sources */,
+				0A841F6F2754DC970021EA3E /* ListGenreViewController.swift in Sources */,
+				0A841F702754DC970021EA3E /* NotificationManager.swift in Sources */,
+				0A841F712754DC970021EA3E /* MapViewController.swift in Sources */,
+				0A841F722754DC970021EA3E /* MapSettingsViewController.swift in Sources */,
+				0A841F732754DC970021EA3E /* Extensions.swift in Sources */,
+				0A841F742754DC970021EA3E /* CameraViewController.swift in Sources */,
+				0A841F752754DC970021EA3E /* CommentCollectionViewCell.swift in Sources */,
+				0A841F762754DC970021EA3E /* PostInfoCollectionViewCellViewModel.swift in Sources */,
+				0A841F772754DC970021EA3E /* HomeScrollPhotoViewModel.swift in Sources */,
+				0A841F782754DC970021EA3E /* FollowNotificationTableViewCell.swift in Sources */,
+				0A841F792754DC970021EA3E /* BudgetInfo.swift in Sources */,
+				0A841F7A2754DC970021EA3E /* ListYorimichiLikesTableViewCell.swift in Sources */,
+				0A841F7B2754DC970021EA3E /* ProfileHeaderCountViewModel.swift in Sources */,
+				0A841F7C2754DC970021EA3E /* ListOnMapMiddleViewController.swift in Sources */,
+				0A841F7D2754DC970021EA3E /* ProfileHeaderCollectionReusableView.swift in Sources */,
+				0A841F7E2754DC970021EA3E /* PhotoCollectionViewCell.swift in Sources */,
+				0A841F7F2754DC970021EA3E /* GenreInfo.swift in Sources */,
+				0A841F802754DC970021EA3E /* RequestsToBackendUtils.swift in Sources */,
+				0A841F812754DC970021EA3E /* CommentsViewModel.swift in Sources */,
+				0A841F822754DC970021EA3E /* CommentNotificationTableViewCell.swift in Sources */,
+				0A841F832754DC970021EA3E /* ListOnMapRightViewController.swift in Sources */,
+				0A841F842754DC970021EA3E /* ListExploreResultCellType.swift in Sources */,
+				0A841F852754DC970021EA3E /* SearchLocationViewController.swift in Sources */,
+				0A841F862754DC970021EA3E /* CommentsViewController.swift in Sources */,
+				0A841F872754DC970021EA3E /* PostAdditionalLocationCollectionViewCellViewModel.swift in Sources */,
+				0A841F882754DC970021EA3E /* PhotoEditInfoCollectionCaptionViewCell.swift in Sources */,
+				0A841F892754DC970021EA3E /* SwitchTableViewCell.swift in Sources */,
+				0A841F8A2754DC970021EA3E /* PostLocationCollectionViewCellViewModel.swift in Sources */,
+				0A841F8B2754DC970021EA3E /* SearchGenreViewController.swift in Sources */,
+				0A841F8C2754DC970021EA3E /* FollowButton.swift in Sources */,
+				0A841F8D2754DC970021EA3E /* GoogleAPIManager.swift in Sources */,
+				0A841F8E2754DC970021EA3E /* VideoPostViewController.swift in Sources */,
+				0A841F8F2754DC970021EA3E /* HomeScrollVideoViewModel.swift in Sources */,
+				0A841F902754DC970021EA3E /* PostCollectionViewCellViewModel.swift in Sources */,
+				0A841F912754DC970021EA3E /* AppDelegate.swift in Sources */,
+				0A841F922754DC970021EA3E /* AuthManager.swift in Sources */,
+				0A841F932754DC970021EA3E /* PhotoEditInfoCollectionPostViewCell.swift in Sources */,
+				0A841F942754DC970021EA3E /* PhotoEditInfoLocationViewModel.swift in Sources */,
+				0A841F952754DC970021EA3E /* PhotoEditInfoVideoViewModel.swift in Sources */,
+				0A841F962754DC970021EA3E /* ListSourceTableViewCellViewModel.swift in Sources */,
+				0A841F972754DC970021EA3E /* Comment.swift in Sources */,
+				0A841F982754DC970021EA3E /* Address.swift in Sources */,
+				0A841F992754DC970021EA3E /* ProfileCollectionCellType.swift in Sources */,
+				0A841F9A2754DC970021EA3E /* DatabaseManager.swift in Sources */,
+				0A841F9B2754DC970021EA3E /* SinglePostCellType.swift in Sources */,
+				0A841F9C2754DC970021EA3E /* LocationManager.swift in Sources */,
+				0A841F9D2754DC970021EA3E /* PhotoEditInfoCollectionVideoViewCell.swift in Sources */,
+				0A841F9E2754DC970021EA3E /* SwipeViewController.swift in Sources */,
+				0A841F9F2754DC970021EA3E /* PosterColectionViewCellViewModel.swift in Sources */,
+				0A841FA02754DC970021EA3E /* PhotoPostViewController.swift in Sources */,
+				0A841FA12754DC970021EA3E /* TabBarViewController.swift in Sources */,
+				0A841FA22754DC970021EA3E /* Shop.swift in Sources */,
+				0A841FA32754DC970021EA3E /* HapticsManager.swift in Sources */,
+				0A841FA42754DC970021EA3E /* MethodsInfo.swift in Sources */,
+				0A841FA52754DC970021EA3E /* StorageManager.swift in Sources */,
+				0A841FA62754DC970021EA3E /* SignUpViewController.swift in Sources */,
+				0A841FA72754DC970021EA3E /* VideoPostCollectionViewCell.swift in Sources */,
+				0A841FA82754DC970021EA3E /* CommentTableViewCell.swift in Sources */,
+				0A841FA92754DC970021EA3E /* ShopUtils.swift in Sources */,
+				0A841FAA2754DC970021EA3E /* PostCaptionCollectionViewCellViewModel.swift in Sources */,
+				0A841FAB2754DC970021EA3E /* SceneDelegate.swift in Sources */,
+				0A841FAC2754DC970021EA3E /* AnalyticsManager.swift in Sources */,
+				0A841FAD2754DC970021EA3E /* Notification.swift in Sources */,
+				0A841FAE2754DC970021EA3E /* SearchViewController.swift in Sources */,
+				0A841FAF2754DC970021EA3E /* ListMethodsViewController.swift in Sources */,
+				0A841FB02754DC970021EA3E /* AlertManager.swift in Sources */,
+				0A841FB12754DC970021EA3E /* EditProfileViewController.swift in Sources */,
+				0A841FB22754DC970021EA3E /* PostDatetimeCollectionViewCellViewModel.swift in Sources */,
+				0A841FB32754DC970021EA3E /* CustomAnnotationView.swift in Sources */,
+				0A841FB42754DC970021EA3E /* UserInfo.swift in Sources */,
+				0A841FB52754DC970021EA3E /* ProfilePhotoCellViewModel.swift in Sources */,
+				0A841FB62754DC970021EA3E /* PhotoEditInfoCollectionGenreViewCell.swift in Sources */,
+				0A841FB72754DC970021EA3E /* SwitchCellViewModel.swift in Sources */,
+				0A841FB82754DC970021EA3E /* HomeScrollCellType.swift in Sources */,
+				0A841FB92754DC970021EA3E /* LocationInfo.swift in Sources */,
+				0A841FBA2754DC970021EA3E /* SignInHeaderView.swift in Sources */,
+				0A841FBB2754DC970021EA3E /* SearchResultsViewController.swift in Sources */,
+				0A841FBC2754DC970021EA3E /* PostHeaderViewModel.swift in Sources */,
+				0A841FBD2754DC970021EA3E /* ListExploreResultViewController.swift in Sources */,
+				0A841FBE2754DC970021EA3E /* ListSourceViewController.swift in Sources */,
+				0A841FBF2754DC970021EA3E /* PostActionsCollectionViewCellViewModel.swift in Sources */,
+				0A841FC02754DC970021EA3E /* TextField.swift in Sources */,
+				0A841FC12754DC970021EA3E /* SettingsViewController.swift in Sources */,
+				0A841FC22754DC970021EA3E /* ListUserTableViewCellViewModel.swift in Sources */,
+				0A841FC32754DC970021EA3E /* ProfileHeaderCountView.swift in Sources */,
+				0A841FC42754DC970021EA3E /* HotPepperAPIManager.swift in Sources */,
+				0A841FC52754DC970021EA3E /* SignInViewController.swift in Sources */,
+				0A841FC62754DC970021EA3E /* PostEditFilterViewController.swift in Sources */,
+				0A841FC72754DC970021EA3E /* GeocoderManager.swift in Sources */,
+				0A841FC82754DC970021EA3E /* PostNameCollectionViewCellViewModel.swift in Sources */,
+				0A841FC92754DC970021EA3E /* PostLikesCollectionVIewCellViewModel.swift in Sources */,
+				0A841FCA2754DC970021EA3E /* ProfileHeaderViewModel.swift in Sources */,
+				0A841FCB2754DC970021EA3E /* HomeFeedCellType.swift in Sources */,
+				0A841FCC2754DC970021EA3E /* ProfileViewController.swift in Sources */,
+				0A841FCD2754DC970021EA3E /* HomeViewController.swift in Sources */,
+				0A841FCE2754DC970021EA3E /* PostRatingCollectionViewCellViewModel.swift in Sources */,
+				0A841FCF2754DC970021EA3E /* CustomAnnotationViewModel.swift in Sources */,
+				0A841FD02754DC970021EA3E /* User.swift in Sources */,
+				0A841FD12754DC970021EA3E /* NotificationCellType.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0AD31944271FB3ED00734539 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1004,6 +1370,80 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		0A841FDA2754DC970021EA3E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 631B2872B471F202B38F3113 /* Pods-yorimichi2-dev.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = yorimichi2/yorimichi2.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B4C7245FA7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = yorimichi2/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Yorimichi Dev";
+				INFOPLIST_KEY_NSCameraUsageDescription = "画像の投稿、ユーザプロファイル画像の設定のために、カメラへのアクセスを許可してください。ヨリミチへの画像投稿、プロフィール画像のアップロード時にカメラの起動を行います。";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "ヨリミチがユーザの現在地をマップ上に表示するために、位置情報取得の許可をしてください。ユーザの現在地に応じてパーソナライズ化されたヨリミチ先の提案を行うこともあります。";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "ヨリミチがユーザの現在地をマップ上に表示するために、位置情報取得の許可をしてください。ユーザの現在地に応じてパーソナライズ化されたヨリミチ先の提案を行うこともあります。";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "ビデオを投稿するために、マイクへのアクセス許可をしてください。ヨリミチへの動画投稿を行う際にアクセスを行います。";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "画像の投稿、ユーザプロファイル画像の設定のために、画像フォルダへのアクセスを許可してください。ヨリミチへの画像投稿、プロフィール画像のアップロード時に画像ライブラリを参照します。";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.agrimetal.yorimichi2-dev";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		0A841FDB2754DC970021EA3E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 56F0C91FB9B46F77B7B2F5F0 /* Pods-yorimichi2-dev.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = yorimichi2/yorimichi2.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B4C7245FA7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = yorimichi2/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Yorimichi Dev";
+				INFOPLIST_KEY_NSCameraUsageDescription = "画像の投稿、ユーザプロファイル画像の設定のために、カメラへのアクセスを許可してください。ヨリミチへの画像投稿、プロフィール画像のアップロード時にカメラの起動を行います。";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "ヨリミチがユーザの現在地をマップ上に表示するために、位置情報取得の許可をしてください。ユーザの現在地に応じてパーソナライズ化されたヨリミチ先の提案を行うこともあります。";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "ヨリミチがユーザの現在地をマップ上に表示するために、位置情報取得の許可をしてください。ユーザの現在地に応じてパーソナライズ化されたヨリミチ先の提案を行うこともあります。";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "ビデオを投稿するために、マイクへのアクセス許可をしてください。ヨリミチへの動画投稿を行う際にアクセスを行います。";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "画像の投稿、ユーザプロファイル画像の設定のために、画像フォルダへのアクセスを許可してください。ヨリミチへの画像投稿、プロフィール画像のアップロード時に画像ライブラリを参照します。";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.agrimetal.yorimichi2-dev";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 		0AD31970271FB3EF00734539 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1122,13 +1562,13 @@
 		};
 		0AD31973271FB3EF00734539 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B0E432DDE5E87CFE7A2B265A /* Pods-yorimichi2.debug.xcconfig */;
+			baseConfigurationReference = 9A623CB85C39E32CD215518D /* Pods-yorimichi2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = yorimichi2/yorimichi2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = B4C7245FA7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = yorimichi2/Info.plist;
@@ -1159,13 +1599,13 @@
 		};
 		0AD31974271FB3EF00734539 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89E3D9350BE9ABB2B3DC6035 /* Pods-yorimichi2.release.xcconfig */;
+			baseConfigurationReference = 1768F5D078A0A1A9561DC943 /* Pods-yorimichi2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = yorimichi2/yorimichi2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = B4C7245FA7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = yorimichi2/Info.plist;
@@ -1297,6 +1737,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0A841FD92754DC970021EA3E /* Build configuration list for PBXNativeTarget "yorimichi2-dev" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A841FDA2754DC970021EA3E /* Debug */,
+				0A841FDB2754DC970021EA3E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		0AD31943271FB3ED00734539 /* Build configuration list for PBXProject "yorimichi2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

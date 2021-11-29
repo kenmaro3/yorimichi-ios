@@ -66,13 +66,13 @@ class ListMethodsViewController: UIViewController {
         view.addSubview(label)
         view.addSubview(tableView)
         
-        if let currentMethod = UserDefaults.standard.string(forKey: "methods"){
-            label.text = "現在選択中の移動手段: \(currentMethod)"
-  
-        } else{
-            label.text = "移動手段を選択してください。"
-            
-        }
+//        if let currentMethod = UserDefaults.standard.string(forKey: "methods"){
+//            label.text = "現在選択中の移動手段: \(currentMethod)"
+//
+//        } else{
+//            label.text = "移動手段を選択してください。"
+//
+//        }
         
         title = type.title
         tableView.delegate = self
@@ -121,7 +121,7 @@ class ListMethodsViewController: UIViewController {
         
         
         sections.append(
-            MethodsSection(title: "デフォルトオプション", options: options)
+            MethodsSection(title: "データベースオプション", options: options)
         
         )
 

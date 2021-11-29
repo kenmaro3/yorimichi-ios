@@ -44,7 +44,7 @@ class ListSourceViewController: UIViewController {
         var title: String {
             switch self{
             case .sources:
-                return "Information Sources"
+                return "検索に使うデータベース"
             }
         }
     }
@@ -116,18 +116,18 @@ class ListSourceViewController: UIViewController {
             title: "Hot Pepper",
             image: UIImage()
         )
-        var optionGoogle: SourceOption = SourceOption(
-            title: "Google",
-            image: UIImage()
-        )
+//        var optionGoogle: SourceOption = SourceOption(
+//            title: "Google",
+//            image: UIImage()
+//        )
         
         options.append(optionYorimichiDB)
         options.append(optionHP)
-        options.append(optionGoogle)
+//        options.append(optionGoogle)
         
         
         sections.append(
-            SourceSection(title: "デフォルトオプション", options: options)
+            SourceSection(title: "データベースオプション", options: options)
         
         )
 

@@ -42,8 +42,11 @@ final class AuthManager{
                 return
             }
             
+            print("here debug1")
+            
             DatabaseManager.shared.createUser(newUser: newUser) { success in
                 if success{
+                    print("here debug1 success")
                     ProgressHUD.dismiss()
                     StorageManager.shared.uploadProfilePicture(username: newUser.username, data: profilePicture, completion: { uploadSuccess in
                         if uploadSuccess{
@@ -55,6 +58,7 @@ final class AuthManager{
                     })
                 }
                 else{
+                    print("here debug1 failed")
                     ProgressHUD.dismiss()
                     completion(.failure(AuthError.newUserCreation))
                 }

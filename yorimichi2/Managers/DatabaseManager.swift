@@ -280,8 +280,40 @@ final class DatabaseManager{
         })
     }
     
+    public func deleteYorimichiPostAtAll(post: Post, completion: @escaping(Bool) -> Void){
+        let reference = database.document("yorimichiPost/A000/posts/\(post.id)")
+        reference.delete(completion: {error in
+            if let error = error{
+                completion(false)
+                return
+            }
+            else{
+                completion(true)
+                return
+                
+            }
+            
+        })
+    }
+    
     public func deleteYorimichiVideoPost(post: Post, completion: @escaping(Bool) -> Void){
         let reference = database.document("yorimichiPost/\(post.genre.code)/videos/\(post.id)")
+        reference.delete(completion: {error in
+            if let error = error{
+                completion(false)
+                return
+            }
+            else{
+                completion(true)
+                return
+                
+            }
+            
+        })
+    }
+    
+    public func deleteYorimichiVideoPostAtAll(post: Post, completion: @escaping(Bool) -> Void){
+        let reference = database.document("yorimichiPost/A000/videos/\(post.id)")
         reference.delete(completion: {error in
             if let error = error{
                 completion(false)
@@ -308,8 +340,32 @@ final class DatabaseManager{
         }
     }
     
+    public func createYorimichiPostAtAll(post: Post, completion: @escaping(Bool) -> Void){
+        let reference = database.document("yorimichiPost/A000/posts/\(post.id)")
+        guard let data = post.asDictionary() else {
+            completion(false)
+            return
+        }
+        
+        reference.setData(data){ error in
+            completion(error == nil)
+        }
+    }
+    
     public func createYorimichiVideoPost(post: Post, completion: @escaping(Bool) -> Void){
         let reference = database.document("yorimichiPost/\(post.genre.code)/videos/\(post.id)")
+        guard let data = post.asDictionary() else {
+            completion(false)
+            return
+        }
+        
+        reference.setData(data){ error in
+            completion(error == nil)
+        }
+    }
+    
+    public func createYorimichiVideoPostAtAll(post: Post, completion: @escaping(Bool) -> Void){
+        let reference = database.document("yorimichiPost/A000/videos/\(post.id)")
         guard let data = post.asDictionary() else {
             completion(false)
             return

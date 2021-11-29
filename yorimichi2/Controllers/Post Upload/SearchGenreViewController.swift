@@ -44,13 +44,23 @@ class SearchGenreViewController: UIViewController {
     
     private var modelObjects: [GenreHeaderItem] = [GenreHeaderItem]()
     
+    private var isIncludeAll: Bool = false
+    
 
     
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<GenreHeaderItem, GenreInfo>!
     
+    public func configure(isIncludeAll: Bool){
+        self.isIncludeAll = isIncludeAll
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let allSymbols = otherGenreList.map{
+            return GenreInfo(code: $0, type: .other)
+        }
         
         let foodSymbols = foodGenreList.map{
             return GenreInfo(code: $0, type: .food)
@@ -64,11 +74,21 @@ class SearchGenreViewController: UIViewController {
             return GenreInfo(code: $0, type: .shop)
         }
         
-        modelObjects = [
-            GenreHeaderItem(title: "Food",symbols: foodSymbols),
-            GenreHeaderItem(title: "Spot", symbols: spotSymbols),
-            GenreHeaderItem(title: "Shop", symbols: shopSymbols)
-        ]
+        if(isIncludeAll){
+            modelObjects = [
+                GenreHeaderItem(title: "なんでも", symbols: allSymbols),
+                GenreHeaderItem(title: "Food",symbols: foodSymbols),
+                GenreHeaderItem(title: "Spot", symbols: spotSymbols),
+                GenreHeaderItem(title: "Shop", symbols: shopSymbols)
+            ]
+        }else{
+            modelObjects = [
+                GenreHeaderItem(title: "Food",symbols: foodSymbols),
+                GenreHeaderItem(title: "Spot", symbols: spotSymbols),
+                GenreHeaderItem(title: "Shop", symbols: shopSymbols)
+            ]
+            
+        }
 
         
         self.title = "ヨリミチジャンル"

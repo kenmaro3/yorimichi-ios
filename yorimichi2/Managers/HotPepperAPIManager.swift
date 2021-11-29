@@ -28,7 +28,7 @@ final class HotPepperAPIManager{
         var url = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=\(key)&lat=\(currentLocation.lat)&lng=\(currentLocation.lng)&range=2&order=4"
         
         // もしジャンルがお任せであれば=G000, genreは空白としてクエリを送る
-        if(genre.code != "G000"){
+        if(genre.code != "G000" && genre.code != "A000"){
             url += "&genre=\(genre.code)"
         }
 

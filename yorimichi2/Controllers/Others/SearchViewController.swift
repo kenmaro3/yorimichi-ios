@@ -7,8 +7,8 @@
 
 import UIKit
 import Mapbox
-import MapboxSearchUI
-import MapboxSearch
+//import MapboxSearchUI
+//import MapboxSearch
 
 protocol SearchViewControllerDelegate: AnyObject{
     func searchViewControllerDidTapLeave()
@@ -18,8 +18,8 @@ class SearchViewController: UIViewController {
     
     weak var delegate: SearchViewControllerDelegate?
     
-    var searchController = MapboxSearchController()
-    lazy var panelController = MapboxPanelController(rootViewController: searchController)
+//    var searchController = MapboxSearchController()
+//    lazy var panelController = MapboxPanelController(rootViewController: searchController)
     
     private var centeringCurrentLocation: Bool = true
     
@@ -90,8 +90,8 @@ class SearchViewController: UIViewController {
 
         focusButton.addTarget(self, action: #selector(didTapFocus), for: .touchUpInside)
         
-        searchController.delegate = self
-        addChild(panelController)
+//        searchController.delegate = self
+//        addChild(panelController)
 
         
     }
@@ -213,36 +213,36 @@ extension SearchViewController{
     }
 }
 
-extension SearchViewController: SearchControllerDelegate {
-    func categorySearchResultsReceived(results: [SearchResult]) {
-        let annotations = results.map { searchResult -> MGLPointAnnotation in
-            let annotation = MGLPointAnnotation()
-            annotation.coordinate = searchResult.coordinate
-            annotation.title = searchResult.name
-            annotation.subtitle = searchResult.address?.formattedAddress(style: .medium)
-            return annotation
-    }
-     
-    showAnnotation(annotations, isPOI: false)
-    }
-     
-    func searchResultSelected(_ searchResult: SearchResult) {
-        let annotation = MGLPointAnnotation()
-        annotation.coordinate = searchResult.coordinate
-        annotation.title = searchResult.name
-        annotation.subtitle = searchResult.address?.formattedAddress(style: .medium)
-        updateYorimichiNameAndLocation(name: searchResult.name, location: searchResult.coordinate)
-         
-        showAnnotation([annotation], isPOI: searchResult.type == .POI)
-    }
-     
-    func userFavoriteSelected(_ userFavorite: FavoriteRecord) {
-        let annotation = MGLPointAnnotation()
-        annotation.coordinate = userFavorite.coordinate
-        annotation.title = userFavorite.name
-        annotation.subtitle = userFavorite.address?.formattedAddress(style: .medium)
-         
-        showAnnotation([annotation], isPOI: true)
-        updateYorimichiNameAndLocation(name: userFavorite.name, location: userFavorite.coordinate)
-    }
-}
+//extension SearchViewController: SearchControllerDelegate {
+//    func categorySearchResultsReceived(results: [SearchResult]) {
+//        let annotations = results.map { searchResult -> MGLPointAnnotation in
+//            let annotation = MGLPointAnnotation()
+//            annotation.coordinate = searchResult.coordinate
+//            annotation.title = searchResult.name
+//            annotation.subtitle = searchResult.address?.formattedAddress(style: .medium)
+//            return annotation
+//    }
+//
+//    showAnnotation(annotations, isPOI: false)
+//    }
+//
+//    func searchResultSelected(_ searchResult: SearchResult) {
+//        let annotation = MGLPointAnnotation()
+//        annotation.coordinate = searchResult.coordinate
+//        annotation.title = searchResult.name
+//        annotation.subtitle = searchResult.address?.formattedAddress(style: .medium)
+//        updateYorimichiNameAndLocation(name: searchResult.name, location: searchResult.coordinate)
+//
+//        showAnnotation([annotation], isPOI: searchResult.type == .POI)
+//    }
+//
+//    func userFavoriteSelected(_ userFavorite: FavoriteRecord) {
+//        let annotation = MGLPointAnnotation()
+//        annotation.coordinate = userFavorite.coordinate
+//        annotation.title = userFavorite.name
+//        annotation.subtitle = userFavorite.address?.formattedAddress(style: .medium)
+//
+//        showAnnotation([annotation], isPOI: true)
+//        updateYorimichiNameAndLocation(name: userFavorite.name, location: userFavorite.coordinate)
+//    }
+//}
