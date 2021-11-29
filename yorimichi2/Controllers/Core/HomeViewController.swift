@@ -107,7 +107,7 @@ class HomeViewController: UIViewController {
             randomUsers.forEach{ user in
                 // Fetch User posts images
                 group.enter()
-                DatabaseManager.shared.posts(for: user, completion: {[weak self] result in
+                DatabaseManager.shared.postsRecent(for: user, completion: {[weak self] result in
                     defer{
                         group.leave()
                     }
@@ -127,7 +127,7 @@ class HomeViewController: UIViewController {
                 
                 // Fetch User video posts
                 group.enter()
-                DatabaseManager.shared.videoPosts(for: user, completion: {[weak self] result in
+                DatabaseManager.shared.videoPostsRecent(for: user, completion: {[weak self] result in
                     defer{
                         group.leave()
                     }
@@ -182,7 +182,7 @@ class HomeViewController: UIViewController {
 
                 // Fetch User posts images
                 group.enter()
-                DatabaseManager.shared.posts(for: userString, completion: {[weak self] result in
+                DatabaseManager.shared.postsRecent(for: userString, completion: {[weak self] result in
                     defer{
                         group.leave()
                     }
@@ -209,7 +209,7 @@ class HomeViewController: UIViewController {
                 
                 // Fetch User video posts
                 group.enter()
-                DatabaseManager.shared.videoPosts(for: userString, completion: {[weak self] result in
+                DatabaseManager.shared.videoPostsRecent(for: userString, completion: {[weak self] result in
                     defer{
                         group.leave()
                     }

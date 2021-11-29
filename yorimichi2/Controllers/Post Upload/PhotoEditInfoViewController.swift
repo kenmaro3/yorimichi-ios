@@ -114,7 +114,13 @@ class PhotoEditInfoViewController: UIViewController {
     
     
     @objc private func didTapPost(){
-        print("tapped")
+        if (caption == ""){
+            AlertManager.shared.presentError(title: "キャプションが入力されていません。", message: "キャプション入力後に、キーボードの確定ボタンを押してください。", completion: { alert in
+                self.present(alert, animated: true)
+                return
+            })
+        }
+        
         
         guard let username = UserDefaults.standard.string(forKey: "username") else {
             return
@@ -439,6 +445,9 @@ extension PhotoEditInfoViewController: UICollectionViewDelegate, UICollectionVie
             return cell
             
         }
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+           print("選択しました: \(indexPath.row)")
     }
 }
 

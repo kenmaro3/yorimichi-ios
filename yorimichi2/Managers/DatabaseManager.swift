@@ -61,7 +61,81 @@ final class DatabaseManager{
         
     }
     
+    
+    public func postsRecent(for username: String, completion: @escaping (Result<[Post], Error>) -> Void){
+        let ref = database.collection("users")
+            .document(username)
+            .collection("posts")
+        ref.getDocuments{ snapshot, error in
+            guard let posts = snapshot?.documents.compactMap({
+                Post(with: $0.data())
+            }).sorted(by: { first, second in
+                return first.date > second.date
+                
+            }),
+                  error == nil else{
+                return
+            }
+            
+            let now = Date()
+            let modifiedDate = Calendar.current.date(byAdding: .day, value: -3, to: now)!
+            
+            let recentPosts = posts.filter{
+                $0.date > modifiedDate
+                
+            }
+            
+            if recentPosts.count > 3{
+                let limitedPosts = recentPosts[..<3]
+                completion(.success(Array(limitedPosts)))
+            }else{
+                completion(.success(recentPosts))
+            }
+            
+            
+            
+        }
+        
+    }
+    
     public func videoPosts(for username: String, completion: @escaping (Result<[Post], Error>) -> Void){
+        let ref = database.collection("users")
+            .document(username)
+            .collection("videos")
+        ref.getDocuments{ snapshot, error in
+            guard let posts = snapshot?.documents.compactMap({
+                Post(with: $0.data())
+            }).sorted(by: { first, second in
+                return first.date > second.date
+                
+            }),
+                  error == nil else{
+                return
+            }
+            
+
+            let now = Date()
+            let modifiedDate = Calendar.current.date(byAdding: .day, value: -3, to: now)!
+            
+            let recentPosts = posts.filter{
+                $0.date > modifiedDate
+                
+            }
+            
+            if recentPosts.count > 3{
+                let limitedPosts = recentPosts[..<3]
+                completion(.success(Array(limitedPosts)))
+            }else{
+                completion(.success(recentPosts))
+            }
+            
+            
+            
+        }
+        
+    }
+    
+    public func videoPostsRecent(for username: String, completion: @escaping (Result<[Post], Error>) -> Void){
         let ref = database.collection("users")
             .document(username)
             .collection("videos")
