@@ -10,7 +10,7 @@ import Foundation
 
 enum ListExploreResultCellType{
     case yorimichiDB(viewModel: YorimichiAnnotationViewModel)
-    case google(viewModel: GoogleAnnotationViewModel)
+    //case google(viewModel: GoogleAnnotationViewModel)
     case hp(viewModel: HPAnnotationViewModel)
     
 }

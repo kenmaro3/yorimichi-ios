@@ -97,10 +97,6 @@ extension ListOnMapMiddleViewController: UITableViewDelegate, UITableViewDataSou
             cell.delegate = self
             return cell
         
-        case .google(let viewModel):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ListExploreResultGoogleTableViewCell.identifier, for: indexPath) as? ListExploreResultGoogleTableViewCell else {
-                fatalError()
-            }
 //            cell.accessoryType = .disclosureIndicator
             cell.configure(with: viewModel)
             cell.delegate = self

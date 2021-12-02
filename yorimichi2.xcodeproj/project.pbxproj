@@ -122,7 +122,6 @@
 		0A841FC42754DC970021EA3E /* HotPepperAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD25823272FA93E00F22274 /* HotPepperAPIManager.swift */; };
 		0A841FC52754DC970021EA3E /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD3198D271FB81600734539 /* SignInViewController.swift */; };
 		0A841FC62754DC970021EA3E /* PostEditFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD31999271FB86600734539 /* PostEditFilterViewController.swift */; };
-		0A841FC72754DC970021EA3E /* GeocoderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD2983A2730F3DB00ACE371 /* GeocoderManager.swift */; };
 		0A841FC82754DC970021EA3E /* PostNameCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA831BB2727918B002725CF /* PostNameCollectionViewCellViewModel.swift */; };
 		0A841FC92754DC970021EA3E /* PostLikesCollectionVIewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901AB6272024E500EC0A36 /* PostLikesCollectionVIewCellViewModel.swift */; };
 		0A841FCA2754DC970021EA3E /* ProfileHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB0EF14272113550039FF9F /* ProfileHeaderViewModel.swift */; };
@@ -211,7 +210,6 @@
 		0AD2581E272E8FBF00F22274 /* ListExploreResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD2581D272E8FBF00F22274 /* ListExploreResultTableViewCell.swift */; };
 		0AD25820272F91E700F22274 /* ListExploreResultCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD2581F272F91E700F22274 /* ListExploreResultCellType.swift */; };
 		0AD25824272FA93E00F22274 /* HotPepperAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD25823272FA93E00F22274 /* HotPepperAPIManager.swift */; };
-		0AD2983B2730F3DB00ACE371 /* GeocoderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD2983A2730F3DB00ACE371 /* GeocoderManager.swift */; };
 		0AD2983D2730F50B00ACE371 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD2983C2730F50B00ACE371 /* Address.swift */; };
 		0AD3194C271FB3ED00734539 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD3194B271FB3ED00734539 /* AppDelegate.swift */; };
 		0AD3194E271FB3ED00734539 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD3194D271FB3ED00734539 /* SceneDelegate.swift */; };
@@ -369,7 +367,6 @@
 		0AD2581D272E8FBF00F22274 /* ListExploreResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExploreResultTableViewCell.swift; sourceTree = "<group>"; };
 		0AD2581F272F91E700F22274 /* ListExploreResultCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListExploreResultCellType.swift; sourceTree = "<group>"; };
 		0AD25823272FA93E00F22274 /* HotPepperAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotPepperAPIManager.swift; sourceTree = "<group>"; };
-		0AD2983A2730F3DB00ACE371 /* GeocoderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocoderManager.swift; sourceTree = "<group>"; };
 		0AD2983C2730F50B00ACE371 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		0AD31948271FB3ED00734539 /* yorimichi2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yorimichi2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AD3194B271FB3ED00734539 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -724,7 +721,6 @@
 				0ACDA56F2726BED300DA3596 /* GoogleAPIManager.swift */,
 				0AA8325227292E8E002725CF /* LocationManager.swift */,
 				0AD25823272FA93E00F22274 /* HotPepperAPIManager.swift */,
-				0AD2983A2730F3DB00ACE371 /* GeocoderManager.swift */,
 				0AC8FB2F273CC3A0003B327E /* AlertManager.swift */,
 			);
 			path = Managers;
@@ -1180,7 +1176,6 @@
 				0A841FC42754DC970021EA3E /* HotPepperAPIManager.swift in Sources */,
 				0A841FC52754DC970021EA3E /* SignInViewController.swift in Sources */,
 				0A841FC62754DC970021EA3E /* PostEditFilterViewController.swift in Sources */,
-				0A841FC72754DC970021EA3E /* GeocoderManager.swift in Sources */,
 				0A841FC82754DC970021EA3E /* PostNameCollectionViewCellViewModel.swift in Sources */,
 				0A841FC92754DC970021EA3E /* PostLikesCollectionVIewCellViewModel.swift in Sources */,
 				0A841FCA2754DC970021EA3E /* ProfileHeaderViewModel.swift in Sources */,
@@ -1312,7 +1307,6 @@
 				0AD25824272FA93E00F22274 /* HotPepperAPIManager.swift in Sources */,
 				0AD3198E271FB81600734539 /* SignInViewController.swift in Sources */,
 				0AD3199A271FB86600734539 /* PostEditFilterViewController.swift in Sources */,
-				0AD2983B2730F3DB00ACE371 /* GeocoderManager.swift in Sources */,
 				0AA831BC2727918B002725CF /* PostNameCollectionViewCellViewModel.swift in Sources */,
 				0A901AB7272024E500EC0A36 /* PostLikesCollectionVIewCellViewModel.swift in Sources */,
 				0AB0EF15272113550039FF9F /* ProfileHeaderViewModel.swift in Sources */,
@@ -1398,7 +1392,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agrimetal.yorimichi2-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1435,7 +1429,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agrimetal.yorimichi2-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1568,7 +1562,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = yorimichi2/yorimichi2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = B4C7245FA7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = yorimichi2/Info.plist;
@@ -1588,7 +1582,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.agrimetal.yorimichi2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1605,7 +1599,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = yorimichi2/yorimichi2.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = B4C7245FA7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = yorimichi2/Info.plist;
@@ -1625,7 +1619,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.agrimetal.yorimichi2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -79,23 +79,34 @@ extension SearchLocationResultsViewController: UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let place = places[indexPath.row]
-        print(place.subtitle)
-        GeocoderManager.shared.getLocationFromAddress(address: "\(place.title) \(place.subtitle)", completion: {[weak self] location in
-            
-            guard let location = location else{
+        print("\n\nplace===========================================")
+        let request: MKLocalSearch.Request =  MKLocalSearch.Request(completion: places[indexPath.row])
+        let search = MKLocalSearch(request: request)
+
+        search.start(completionHandler: {[weak self] response, error in
+            if let response = response {
+                if (response.mapItems.count > 0){
+                    let location = Location(lat: response.mapItems[0].placemark.coordinate.latitude, lng: response.mapItems[0].placemark.coordinate.longitude)
+                    self?.delegate?.searchResultsViewControllerDidSelected(title: place.title, subTitle: place.subtitle, location: location)
+                    
+                    self?.dismiss(animated: true, completion: nil)
+                    
+                }else{
+                    AlertManager.shared.presentError(title: "場所検索エラー", message: "場所から座標が検出できませんでした。別の場所で登録してください。", completion: {[weak self] alert in
+                        self?.present(alert, animated: true)
+                    })
+                    return
+
+                }
+            }else{
                 AlertManager.shared.presentError(title: "場所検索エラー", message: "場所から座標が検出できませんでした。別の場所で登録してください。", completion: {[weak self] alert in
                     self?.present(alert, animated: true)
-                    
                 })
                 return
+
             }
-            self?.delegate?.searchResultsViewControllerDidSelected(title: place.title, subTitle: place.subtitle, location: location)
-            
-            self?.dismiss(animated: true, completion: nil)
-       
+
         })
-        
-        
         
         
     }
