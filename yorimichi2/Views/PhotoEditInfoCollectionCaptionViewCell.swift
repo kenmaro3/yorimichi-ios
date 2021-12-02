@@ -21,7 +21,7 @@ class PhotoEditInfoCollectionCaptionViewCell: UICollectionViewListCell {
 
         textView.layer.masksToBounds = true
         textView.font = .systemFont(ofSize: 16)
-        textView.returnKeyType = .next
+        textView.returnKeyType = .done
         textView.autocorrectionType = .no
         textView.autocapitalizationType = .none
         textView.borderStyle = .none

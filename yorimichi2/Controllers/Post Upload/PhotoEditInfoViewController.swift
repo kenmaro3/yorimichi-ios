@@ -115,10 +115,17 @@ class PhotoEditInfoViewController: UIViewController {
     
     @objc private func didTapPost(){
         if (caption == ""){
-            AlertManager.shared.presentError(title: "キャプションが入力されていません。", message: "キャプション入力後に、キーボードの確定ボタンを押してください。", completion: { alert in
-                self.present(alert, animated: true)
+            let alert = UIAlertController(title: "キャプションが入力されていません。", message: "キャプション入力後に、キーボードの確定ボタンを押してください。", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
                 return
-            })
+                
+            }))
+            present(alert, animated: true)
+            return
+        }
+        else{
+            print("\n\nhere caption=================")
+            print(caption)
         }
         
         
