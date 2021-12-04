@@ -98,7 +98,7 @@ final class DatabaseManager{
         
     }
     
-    public func videoPosts(for username: String, completion: @escaping (Result<[Post], Error>) -> Void){
+    public func videoPostsRecent(for username: String, completion: @escaping (Result<[Post], Error>) -> Void){
         let ref = database.collection("users")
             .document(username)
             .collection("videos")
@@ -135,7 +135,7 @@ final class DatabaseManager{
         
     }
     
-    public func videoPostsRecent(for username: String, completion: @escaping (Result<[Post], Error>) -> Void){
+    public func videoPosts(for username: String, completion: @escaping (Result<[Post], Error>) -> Void){
         let ref = database.collection("users")
             .document(username)
             .collection("videos")
