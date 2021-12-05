@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol SearchResultsViewControllerDelegate: AnyObject{
-    func searchResultsViewController(_ vc: SearchResultsViewController, didSelectResultsUser user: User)
+protocol SearchUserResultsViewControllerDelegate: AnyObject{
+    func searchUserResultsViewController(_ vc: SearchUserResultsViewController, didSelectResultsUser user: User)
 }
 
-class SearchResultsViewController: UIViewController {
+class SearchUserResultsViewController: UIViewController {
     private var users = [User]()
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -22,7 +22,7 @@ class SearchResultsViewController: UIViewController {
     }()
     
     
-    public weak var delegate: SearchResultsViewControllerDelegate?
+    public weak var delegate: SearchUserResultsViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +45,7 @@ class SearchResultsViewController: UIViewController {
     }
 }
 
-extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSource{
+extension SearchUserResultsViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }
@@ -59,7 +59,7 @@ extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        delegate?.searchResultsViewController(self, didSelectResultsUser: users[indexPath.row])
+        delegate?.searchUserResultsViewController(self, didSelectResultsUser: users[indexPath.row])
     }
     
 }
