@@ -79,18 +79,18 @@ class MapSettingsViewController: UIViewController, UITableViewDelegate, UITableV
     
     private func configureModels(){
         updateTitle()
-        sections.append(
-            SettingsSection(title: "検索データベース", options: [
-                SettingOption(title: "\(sourceTitle)", image: UIImage(), color: .label, handler: {[weak self] in
-                    let vc = ListSourceViewController(type: .sources(sources: sourceList))
-                    vc.delegate = self
-                    self?.present(UINavigationController(rootViewController: vc), animated: true)
-                })
-                
-            
-            ])
-        
-        )
+//        sections.append(
+//            SettingsSection(title: "検索データベース", options: [
+//                SettingOption(title: "\(sourceTitle)", image: UIImage(), color: .label, handler: {[weak self] in
+//                    let vc = ListSourceViewController(type: .sources(sources: sourceList))
+//                    vc.delegate = self
+//                    self?.present(UINavigationController(rootViewController: vc), animated: true)
+//                })
+//
+//
+//            ])
+//
+//        )
         
         sections.append(
             SettingsSection(title: "検索ジャンル", options: [
