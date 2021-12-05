@@ -176,7 +176,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
     }
     
     @objc private func didTapPrivacy(){
-        guard let url = URL(string: "") else{
+        guard let url = URL(string: "https://yorimichi-privacy-policy.webflow.io/") else{
             return
         }
         let vc = SFSafariViewController(url: url)
