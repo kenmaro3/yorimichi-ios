@@ -142,7 +142,7 @@ final class DatabaseManager{
             }
             
             let now = Date()
-            let modifiedDate = Calendar.current.date(byAdding: .day, value: -3, to: now)!
+            let modifiedDate = Calendar.current.date(byAdding: .day, value: -7, to: now)!
             
             let recentPosts = posts.filter{
                 $0.date > modifiedDate
@@ -179,7 +179,7 @@ final class DatabaseManager{
             
 
             let now = Date()
-            let modifiedDate = Calendar.current.date(byAdding: .day, value: -3, to: now)!
+            let modifiedDate = Calendar.current.date(byAdding: .day, value: -7, to: now)!
             
             let recentPosts = posts.filter{
                 $0.date > modifiedDate
