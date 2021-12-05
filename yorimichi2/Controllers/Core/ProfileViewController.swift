@@ -10,7 +10,7 @@ import ProgressHUD
 import SafariServices
 
 class ProfileViewController: UIViewController, UISearchResultsUpdating{
-    private let searchVC = UISearchController(searchResultsController: SearchResultsViewController())
+    private let searchVC = UISearchController(searchResultsController: SearchUserResultsViewController())
     
     private let user: User
     
@@ -303,7 +303,7 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
     }
     
     private func setupSearch(){
-        (searchVC.searchResultsController as? SearchResultsViewController)?.delegate = self
+        (searchVC.searchResultsController as? SearchUserResultsViewController)?.delegate = self
         
         searchVC.searchBar.placeholder = "ユーザの検索..."
         navigationItem.searchController = searchVC
@@ -312,7 +312,7 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
     
     /// when user hit the keyboard key
     func updateSearchResults(for searchController: UISearchController) {
-        guard let resultsVC = searchController.searchResultsController as? SearchResultsViewController,
+        guard let resultsVC = searchController.searchResultsController as? SearchUserResultsViewController,
               let query = searchController.searchBar.text,
               !query.trimmingCharacters(in: .whitespaces).isEmpty
         else {
@@ -326,8 +326,8 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
 
 }
 
-extension ProfileViewController: SearchResultsViewControllerDelegate{
-    func searchResultsViewController(_ vc: SearchResultsViewController, didSelectResultsUser user: User) {
+extension ProfileViewController: SearchUserResultsViewControllerDelegate{
+    func searchUserResultsViewController(_ vc: SearchUserResultsViewController, didSelectResultsUser user: User) {
         let vc = ProfileViewController(user: user)
         navigationController?.pushViewController(vc, animated: true)
     }

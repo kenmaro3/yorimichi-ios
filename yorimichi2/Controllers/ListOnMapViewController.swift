@@ -11,13 +11,10 @@ protocol ListOnMapViewControllerDelegate: AnyObject{
     func listOnMapViewControllerDidSelect(index: Int, viewModel: ListExploreResultCellType)
     func listOnMapViewControllerDidSelectSelected(index: Int, viewModel: ListExploreResultCellType)
     func listOnMapViewControllerDidSelectLiked(index: Int, viewModel: ListYorimichiLikesCellType)
-    func listOnMapViewControllerDidTapYorimichiButton(id: String, viewModel: ListExploreResultCellType)
     func listOnMapLeftViewControllerDidHPDoubleTapped(_ cell: ListExploreResultHPTableViewCell, didTapPostWith viewModel: HPAnnotationViewModel)
-    func listOnMapLeftViewControllerDidGoogleDoubleTapped(_ cell: ListExploreResultGoogleTableViewCell, didTapPostWith viewModel: GoogleAnnotationViewModel)
     
     func ListOnMapMiddleViewControllerDidYorimichiDoubleTapped(_ cell: ListExploreResultYorimichiTableViewCell, didTapPostWith viewModel: YorimichiAnnotationViewModel)
     func ListOnMapMiddleViewControllerDidHPDoubleTapped(_ cell: ListExploreResultHPTableViewCell, didTapPostWith viewModel: HPAnnotationViewModel)
-    func ListOnMapMiddleViewControllerDidGoogleDoubleTapped(_ cell: ListExploreResultGoogleTableViewCell, didTapPostWith viewModel: GoogleAnnotationViewModel)
     
 }
 
@@ -210,29 +207,20 @@ extension ListOnMapViewController: ListOnMapLeftViewControllerDelegate{
         delegate?.listOnMapLeftViewControllerDidHPDoubleTapped(cell, didTapPostWith: viewModel)
     }
     
-    func listOnMapLeftViewControllerDidGoogleDoubleTapped(_ cell: ListExploreResultGoogleTableViewCell, didTapPostWith viewModel: GoogleAnnotationViewModel) {
-        delegate?.listOnMapLeftViewControllerDidGoogleDoubleTapped(cell, didTapPostWith: viewModel)
-    }
-    
     func listOnMapLeftViewControllerDidSelect(index: Int, viewModel: ListExploreResultCellType) {
         delegate?.listOnMapViewControllerDidSelect(index: index, viewModel: viewModel)
     }
     
-    func listOnMapLeftViewControllerDidTapYorimichiButton(id: String, viewModel: ListExploreResultCellType) {
-        delegate?.listOnMapViewControllerDidTapYorimichiButton(id: id, viewModel: viewModel)
-    }
     
     
 }
 
 extension ListOnMapViewController: ListOnMapMiddleViewControllerDelegate{
+    
     func ListOnMapMiddleViewControllerDidDoubleTapYorimichi(_ cell: ListExploreResultYorimichiTableViewCell, didTapPostWith viewModel: YorimichiAnnotationViewModel) {
         delegate?.ListOnMapMiddleViewControllerDidYorimichiDoubleTapped(cell, didTapPostWith: viewModel)
     }
     
-    func ListOnMapMiddleViewControllerDidDoubleTapGoogle(_ cell: ListExploreResultGoogleTableViewCell, didTapPostWith viewModel: GoogleAnnotationViewModel) {
-        delegate?.ListOnMapMiddleViewControllerDidGoogleDoubleTapped(cell, didTapPostWith: viewModel)
-    }
     
     func ListOnMapMiddleViewControllerDidDoubleTapHP(_ cell: ListExploreResultHPTableViewCell, didTapPostWith viewModel: HPAnnotationViewModel) {
         delegate?.ListOnMapMiddleViewControllerDidHPDoubleTapped(cell, didTapPostWith: viewModel)

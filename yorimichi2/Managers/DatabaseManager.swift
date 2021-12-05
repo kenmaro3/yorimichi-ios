@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import Mapbox
 
 final class DatabaseManager{
     static let shared = DatabaseManager()
@@ -14,6 +15,29 @@ final class DatabaseManager{
     private init(){}
     
     let database = Firestore.firestore()
+    
+    public func getMapStyle(completion: @escaping(String) -> MGLMapView){
+        let ref = database.collection("customMaps").document("currentMap")
+        
+        ref.getDocument { (document, error) in
+            if let document = document, document.exists {
+                guard let data = document.data() else {
+                    completion("mapbox://styles/mapbox/streets-v11")
+                    return
+                }
+                guard let styleUrl = data["styleUrl"] as? String else {
+                    completion("mapbox://styles/mapbox/streets-v11")
+                    return
+                    
+                }
+                completion(styleUrl)
+            } else {
+                completion("mapbox://styles/mapbox/streets-v11")
+                return
+                
+            }
+        }
+    }
     
     
     public func findUsers(with usernamePrefix: String, completion: @escaping([User]) -> Void){
@@ -33,6 +57,46 @@ final class DatabaseManager{
             })
             
             completion(subset)
+        }
+        
+    }
+    
+    public func findPlacesSubString(with prefix: String, completion: @escaping([String]) -> Void){
+        let ref = database.collection("yorimichiPost").document("A000").collection("posts")
+        ref.getDocuments{ snapshot, error in
+//            guard let users = snapshot?.documents, error == nil else{
+            guard let posts = snapshot?.documents.compactMap({Post(with: $0.data())}), error == nil else{
+                completion([])
+                return
+            }
+            
+            
+            let subset = posts.filter({
+                $0.locationTitle.lowercased().contains(prefix.lowercased()) || $0.locationSubTitle.lowercased().contains(prefix.lowercased())
+                //$0.locationTitle.lowercased().hasPrefix(prefix.lowercased())
+            })
+            
+            let subsetString = subset.map{
+                $0.locationTitle
+            }
+            let uniqueResult = subsetString.reduce([], { $0.contains($1) ? $0 : $0 + [$1] })
+            completion(uniqueResult)
+
+            
+        }
+        
+    }
+    
+    public func findPlaces(with keyword: String, completion: @escaping([Post]) -> Void){
+        let ref = database.collection("yorimichiPost").document("A000").collection("posts")
+        let query = ref.whereField("locationTitle", isEqualTo: keyword)
+        query.getDocuments{ snapshot, error in
+            guard let posts = snapshot?.documents.compactMap({Post(with: $0.data())}), error == nil else{
+                completion([])
+                return
+            }
+            completion(posts)
+
             
         }
         
@@ -477,40 +541,23 @@ final class DatabaseManager{
     }
     
     
-    public func explorePosts(completion: @escaping ([(post: Post, user: User)]) -> Void){
-        let ref = database.collection("users")
+    public func explorePosts(completion: @escaping ([Post]) -> Void){
+        let ref = database.collection("yorimichiPost").document("A000").collection("posts")
         ref.getDocuments{ snapshot, error in
 //            guard let users = snapshot?.documents, error == nil else{
-            guard let users = snapshot?.documents.compactMap({User(with: $0.data())}), error == nil else{
+            guard var posts = snapshot?.documents.compactMap({Post(with: $0.data())}), error == nil else{
                 completion([])
                 return
             }
             
-            let group = DispatchGroup()
-            var aggregatePosts = [(post: Post, user: User)]()
-            users.forEach{ user in
-                let username = user.username
-                let postRef = self.database.collection("users/\(username)/posts")
-                group.enter()
-                
-                postRef.getDocuments{ snapshot, error in
-                    defer{
-                        group.leave()
-                    }
-                    
-                    guard let posts = snapshot?.documents.compactMap({Post(with: $0.data())}), error == nil else{
-                        completion([])
-                        return
-                    }
-                    aggregatePosts.append(contentsOf: posts.compactMap({
-                        (post: $0, user: user)
-                    }))
-                }
+            //posts.shuffle()
+            if posts.count > 16{
+                let limitedPosts = posts[..<16]
+                completion(Array(limitedPosts))
+            }else{
+                completion(posts)
             }
             
-            group.notify(queue: .main){
-                completion(aggregatePosts)
-            }
         }
     }
     

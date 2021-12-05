@@ -7,17 +7,11 @@
 
 import UIKit
 import Mapbox
-//import MapboxSearchUI
-//import MapboxSearch
 import SDWebImage
 import FloatingPanel
 import StoreKit
 import ProgressHUD
 import MapKit
-//import MapboxDirections
-//import MapboxCoreNavigation
-//import MapboxNavigation
-//import Turf
 
 class MyFloatingPanelLayout: FloatingPanelLayout {
     let position: FloatingPanelPosition = .bottom
@@ -32,6 +26,10 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
 }
 
 class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISearchResultsUpdating{
+    func updateSearchResults(for searchController: UISearchController) {
+        
+    }
+    
 
     var exploreFpc: FloatingPanelController!
     
@@ -203,6 +201,13 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
     private let mapView: MGLMapView = {
         //let map = NavigationMapView()
         let map = MGLMapView()
+        DatabaseManager.shared.getMapStyle(completion: { styleUrl in
+            
+            let url = URL(string: styleUrl)
+            map.styleURL = url
+            return map
+            
+        })
         let url = URL(string: "mapbox://styles/mapbox/streets-v11")
         map.styleURL = url
         return map
@@ -233,7 +238,6 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
             determineMyCurrentLocation()
         }
         
-        resetDestinationNameAndLocation()
         
         addSubViews()
         addButtonTarget()
@@ -295,6 +299,7 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         
         addCandidateObserver = NotificationCenter.default.addObserver(forName: .didAddCandidateNotification, object: nil, queue: .main) { [weak self] _ in
             print("notified")
+            self?.removeSelectedAnnotation()
             self?.removeOnlyCandidateYorimichi()
             self?.addCandidatesAnnotation()
         }
@@ -316,15 +321,23 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
             let destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: destinationLocation.latitude, longitude: destinationLocation.longitude)))
             destination.name = "目的地"
             
-            if annotationsSelected.count > 0 {
-                for yorimichi in annotationsSelected{
-                    let yorimichiLocation = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: yorimichi.coordinate.latitude, longitude: yorimichi.coordinate.longitude)))
-                    yorimichiLocation.name = yorimichi.title
-                    wayPoints.append(yorimichiLocation)
+            if middleListCells.count > 0 {
+                for yorimichi in middleListCells{
+                    switch yorimichi {
+                    case .yorimichiDB(let viewModel):
+                        let yorimichiLocation = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: viewModel.post.location.lat, longitude: viewModel.post.location.lng)))
+                        yorimichiLocation.name = viewModel.post.locationTitle
+                        wayPoints.append(yorimichiLocation)
+
+                    case .hp(let viewModel):
+                        let yorimichiLocation = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: viewModel.shop.location.lat, longitude: viewModel.shop.location.lng)))
+                        yorimichiLocation.name = viewModel.shop.name
+                        wayPoints.append(yorimichiLocation)
+                    }
                 }
                     wayPoints.append(destination)
-                    let alert = UIAlertController(title: "経路検索", message: "目的地と寄り道先どちらも設定されています。この場合、1つ目の寄り道先まで経路検索しまう。", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+                    let alert = UIAlertController(title: "経路検索", message: "目的地と寄り道先どちらも設定されています。この場合、1つ目の寄り道先まで経路検索します。", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
                         MKMapItem.openMaps(
                             with: wayPoints,
                             launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
@@ -344,15 +357,23 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
             
         }
         else{
-            if annotationsSelected.count > 1 {
-                for yorimichi in annotationsSelected{
-                    let yorimichiLocation = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: yorimichi.coordinate.latitude, longitude: yorimichi.coordinate.longitude)))
-                    yorimichiLocation.name = yorimichi.title
-                    wayPoints.append(yorimichiLocation)
+            if middleListCells.count > 1 {
+                for yorimichi in middleListCells{
+                    switch yorimichi {
+                    case .yorimichiDB(let viewModel):
+                        let yorimichiLocation = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: viewModel.post.location.lat, longitude: viewModel.post.location.lng)))
+                        yorimichiLocation.name = viewModel.post.locationTitle
+                        wayPoints.append(yorimichiLocation)
+
+                    case .hp(let viewModel):
+                        let yorimichiLocation = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: viewModel.shop.location.lat, longitude: viewModel.shop.location.lng)))
+                        yorimichiLocation.name = viewModel.shop.name
+                        wayPoints.append(yorimichiLocation)
+                    }
                 }
                 
                 let alert = UIAlertController(title: "経路検索", message: "寄り道先が複数選択されています。この場合１つ目の寄り道に誘導します。", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
                     MKMapItem.openMaps(
                         with: wayPoints,
                         launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
@@ -362,11 +383,19 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
                 
                 present(alert, animated: true)
 
-            }else if( annotationsSelected.count==1){
-                for yorimichi in annotationsSelected{
-                    let yorimichiLocation = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: yorimichi.coordinate.latitude, longitude: yorimichi.coordinate.longitude)))
-                    yorimichiLocation.name = yorimichi.title
-                    wayPoints.append(yorimichiLocation)
+            }else if( middleListCells.count==1){
+                for yorimichi in middleListCells{
+                    switch yorimichi {
+                    case .yorimichiDB(let viewModel):
+                        let yorimichiLocation = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: viewModel.post.location.lat, longitude: viewModel.post.location.lng)))
+                        yorimichiLocation.name = viewModel.post.locationTitle
+                        wayPoints.append(yorimichiLocation)
+
+                    case .hp(let viewModel):
+                        let yorimichiLocation = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: viewModel.shop.location.lat, longitude: viewModel.shop.location.lng)))
+                        yorimichiLocation.name = viewModel.shop.name
+                        wayPoints.append(yorimichiLocation)
+                    }
                 }
                 MKMapItem.openMaps(
                     with: wayPoints,
@@ -399,7 +428,7 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
     }
     
     private func setupSearch(){
-        (searchController.searchResultsController as? SearchResultsViewController)?.delegate = self
+        (searchController.searchResultsController as? SearchLocationResultsViewController)?.delegate = self
         
         // MARK: - TODO saerch bar, border, tintcolor
         searchController.searchBar.placeholder = "場所の検索 ..."
@@ -433,9 +462,12 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        destinationLocation = nil
         removeOnlyCandidateYorimichi()
+        removeDestinationAnnotation()
         addCandidatesAnnotation()
         addYorimichiLikesAnnotation()
+        
     }
     
     
@@ -451,10 +483,6 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         view.addSubview(exploreLabel)
         view.addSubview(exploreHPButton)
         view.addSubview(exploreHPLabel)
-//        view.addSubview(exploreGoogleButton)
-//        view.addSubview(exploreGoogleLabel)
-//        view.addSubview(routeButton)
-//        view.addSubview(routeLabel)
         view.addSubview(goButton)
         view.addSubview(goLabel)
     }
@@ -464,8 +492,6 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         focusButton.addTarget(self, action: #selector(didTapFocus), for: .touchUpInside)
         exploreButton.addTarget(self, action: #selector(didTapExplore), for: .touchUpInside)
         exploreHPButton.addTarget(self, action: #selector(didTapExploreHP), for: .touchUpInside)
-//        exploreGoogleButton.addTarget(self, action: #selector(didTapExploreGoogle), for: .touchUpInside)
-//        routeButton.addTarget(self, action: #selector(didTapRoute), for: .touchUpInside)
         goButton.addTarget(self, action: #selector(didTapLaunch), for: .touchUpInside)
     }
     
@@ -476,7 +502,6 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         print("tap explore")
         removeYorimichiAnnotation()
         removeHPAnnotation()
-        removeGoogleAnnotation()
         exploreWithYorimichiDB()
     }
     
@@ -484,7 +509,6 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         print("tap explore")
         removeYorimichiAnnotation()
         removeHPAnnotation()
-        removeGoogleAnnotation()
         exploreWithHP()
     }
     
@@ -828,7 +852,6 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
     @objc func didTapSearch(){
         removeYorimichiAnnotation()
         removeHPAnnotation()
-        removeGoogleAnnotation()
         exploreFpc.removePanelFromParent(animated: true, completion: nil)
     }
 
@@ -837,7 +860,6 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
     @objc private func didTapFriends(){
         removeYorimichiAnnotation()
         removeHPAnnotation()
-        removeGoogleAnnotation()
         exploreFpc.removePanelFromParent(animated: true, completion: nil)
         
     }
@@ -857,26 +879,6 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
 
 }
 
-extension MapViewController: SearchResultsViewControllerDelegate{
-    func searchResultsViewController(_ vc: SearchResultsViewController, didSelectResultsUser user: User) {
-        let vc = ProfileViewController(user: user)
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    /// when user hit the keyboard key
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let resultsVC = searchController.searchResultsController as? SearchLocationResultsViewController,
-              let query = searchController.searchBar.text,
-              !query.trimmingCharacters(in: .whitespaces).isEmpty
-        else {
-            return
-        }
-        
-        searchCompleter.queryFragment = query
-        
-    }
-    
-}
 
 extension MapViewController: SearchLocationResultsViewControllerDelegate{
     func searchResultsViewControllerDidSelected(title: String, subTitle: String, location: Location) {
@@ -1113,121 +1115,13 @@ extension MapViewController: ListOnMapViewControllerDelegate{
         
     }
     
-    func ListOnMapMiddleViewControllerDidGoogleDoubleTapped(_ cell: ListExploreResultGoogleTableViewCell, didTapPostWith viewModel: GoogleAnnotationViewModel) {
-        print("google tapped")
-        let actionSheet = UIAlertController(
-            title: "ヨリミチ先の消去",
-            message: "ヨリミチ候補を消去しますか？",
-            preferredStyle: .actionSheet
-        )
-        
-        actionSheet.addAction(UIAlertAction(title: "いいえ", style: .cancel, handler: nil))
-        actionSheet.addAction(UIAlertAction(title: "はい", style: .destructive, handler: { [weak self] _ in
-            DispatchQueue.main.async {
-                guard let cellTitle = viewModel.title
-                else {
-                    return
-                }
-                // Removing Annotation from Map
-                if let annotations = self?.mapView.annotations {
-                    annotations.forEach{
-                        if let title = $0.title as? String {
-                            if(title == cellTitle){
-                                self?.mapView.removeAnnotation($0)
-                                
-                            }
-                        }
-                        else{
-//
-                        }
-                    }
-                }
-                
-                var tmpMiddleListCells: [ListExploreResultCellType] = []
-                
-                self?.middleListCells.forEach{
-                    switch $0{
-                    case .yorimichiDB(let vm):
-                        if(vm.id == viewModel.id){
-                        }
-                        else{
-                            tmpMiddleListCells.append(.yorimichiDB(viewModel: vm))
-                        }
-                    case .hp(let vm):
-                        if(vm.id == viewModel.id){
-                        }
-                        else{
-                            tmpMiddleListCells.append(.hp(viewModel: vm))
-                        }
-                    }
-                }
-                self?.annotationsSelected = self?.annotationsSelected.filter{
-                    $0.id != viewModel.id
-                } ?? []
-                guard let listVC = self?.exploreFpc.contentViewController as? ListOnMapViewController else {
-                    fatalError()
-                }
-                self?.middleListCells = tmpMiddleListCells
-                listVC.updateMiddle(with: tmpMiddleListCells)
-                
-            }
-        }))
-        present(actionSheet, animated: true)
-   
-    }
-    
-    
-    
     
     func listOnMapLeftViewControllerDidHPDoubleTapped(_ cell: ListExploreResultHPTableViewCell, didTapPostWith viewModel: HPAnnotationViewModel) {
         ProgressHUD.showAdded("ヨリミチ候補に追加されました。")
         addHPCandidateAnnotation(shop: viewModel.shop)
     }
     
-    func listOnMapLeftViewControllerDidGoogleDoubleTapped(_ cell: ListExploreResultGoogleTableViewCell, didTapPostWith viewModel: GoogleAnnotationViewModel) {
-        ProgressHUD.showAdded("ヨリミチ候補に追加されました。")
-        //addGoogleCandidateAnnotation(shop: viewModel.shop)
-    }
     
-    func listOnMapViewControllerDidTapYorimichiButton(id: String, viewModel: ListExploreResultCellType) {
-        
-        switch viewModel{
-        case .yorimichiDB(viewModel: let viewModel):
-            findIndexFromIdYorimichi(id: id, completion: {[weak self] index in
-                self?.mapView.selectAnnotation(
-                    annotationsYorimichi[index],
-                    animated: true,
-                    completionHandler: nil)
-                
-                guard let listVC = self?.exploreFpc.contentViewController as? ListOnMapViewController else {
-                    fatalError()
-                }
-                
-                
-            })
-                
-            
-        case .hp(viewModel: let viewModel):
-            findIndexFromIdHP(id: id, completion: {[weak self] index in
-                self?.mapView.selectAnnotation(
-                    annotationsYorimichi[index],
-                    animated: true,
-                    completionHandler: nil)
-                
-                let annotation = SelectedAnnotationViewModel(id: viewModel.id)
-                annotation.title = self?.annotationsYorimichi[index].title
-                annotation.subtitle = self?.annotationsYorimichi[index].subtitle
-                guard let coordinate = self?.annotationsYorimichi[index].coordinate else {
-                    return
-                }
-                annotation.coordinate = coordinate
-                
-                self?.mapView.addAnnotation(annotation)
-                
-            })
-            
-        }
-    }
     
     private func findIndexFromIdYorimichi(id: String, completion: (Int) -> Void){
         for (i, el) in zip(annotationsYorimichi.indices, annotationsYorimichi){
@@ -1238,13 +1132,6 @@ extension MapViewController: ListOnMapViewControllerDelegate{
         }
     }
                             
-//    private func findIndexFromIdGoogle(id: String, completion: (Int) -> Void){
-//        for (i, el) in zip(annotationsGoogle.indices, annotationsGoogle){
-//            if id == el.shop.id {
-//                completion(i)
-//            }
-//        }
-//    }
                             
     private func findIndexFromIdHP(id: String, completion: (Int) -> Void){
         for (i, el) in zip(annotationsHP.indices, annotationsHP){
@@ -1268,17 +1155,6 @@ extension MapViewController: ListOnMapViewControllerDelegate{
                 mapView.selectAnnotation(targetAnnotation, animated: true, completionHandler: nil)
                 
             }
-            
-//        case .google(let viewModel):
-////            mapView.selectAnnotation(annotationsGoogle[index], animated: true, completionHandler: nil)
-//
-//            let targetAnnotations = annotationsGoogle.filter{
-//                $0.id == viewModel.id
-//            } as? [GoogleAnnotationViewModel]
-//            if let targetAnnotation = targetAnnotations?[0] {
-//                mapView.selectAnnotation(targetAnnotation, animated: true, completionHandler: nil)
-//
-//            }
             
         case .hp(let viewModel):
 //            mapView.selectAnnotation(annotationsHP[index], animated: true, completionHandler: nil)
@@ -1384,19 +1260,6 @@ extension MapViewController: MGLMapViewDelegate{
                 annotationView!.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
                 return annotationView
                 
-            }
-            else if annotation is GoogleAnnotationViewModel{
-                // Use the point annotation’s longitude value (as a string) as the reuse identifier for its view.
-                let tmpAnnotation = annotation as! GoogleAnnotationViewModel
-                let reuseIdentifier = "\(annotation.coordinate.longitude)"
-                
-                // For better performance, always try to reuse existing annotations.
-                var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: GoogleAnnotationView.identifier) as? GoogleAnnotationView
-                
-                annotationView = GoogleAnnotationView(reuseIdentifier: reuseIdentifier)
-                annotationView?.configure(with: tmpAnnotation.image)
-                annotationView!.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
-                return annotationView
             }
             else if annotation is DestinationAnnotationViewModel{
             // Use the point annotation’s longitude value (as a string) as the reuse identifier for its view.
@@ -1579,6 +1442,16 @@ extension MapViewController: MGLMapViewDelegate{
         }
     }
     
+    private func removeSelectedAnnotation(){
+        if let existingAnnotations = mapView.annotations{
+            existingAnnotations.forEach{ annotation in
+                if annotation is SelectedAnnotationViewModel{
+                    mapView.removeAnnotation(annotation)
+                }
+            }
+        }
+    }
+    
     private func removeYorimichiAnnotation(){
         if let existingAnnotations = mapView.annotations{
             existingAnnotations.forEach{ annotation in
@@ -1603,17 +1476,6 @@ extension MapViewController: MGLMapViewDelegate{
         
     }
     
-    private func removeGoogleAnnotation(){
-        if let existingAnnotations = mapView.annotations{
-            existingAnnotations.forEach{ annotation in
-                if annotation is GoogleAnnotationViewModel {
-                    mapView.removeAnnotation(annotation)
-                }
-                    
-            }
-        }
-        
-    }
     
     private func removeDestinationAnnotation(){
         if let existingAnnotations = mapView.annotations{
@@ -1719,110 +1581,7 @@ extension MapViewController: CLLocationManagerDelegate{
     {
         print("Error \(error)")
     }
-    
 }
-
-
-extension MapViewController{
-    private func putGradient(){
-        
-        // Parse GeoJSON data. This example uses all M1.0+ earthquakes from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-        guard let url = URL(string: "https://www.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson") else { return }
-        let source = MGLShapeSource(identifier: "earthquakes", url: url, options: nil)
-        mapView.style?.addSource(source)
-         
-        // Create a heatmap layer.
-        let heatmapLayer = MGLHeatmapStyleLayer(identifier: "earthquakes", source: source)
-         
-        // Adjust the color of the heatmap based on the point density.
-        let colorDictionary: [NSNumber: UIColor] = [
-        0.0: .clear,
-        0.01: .white,
-        0.15: UIColor(red: 0.19, green: 0.30, blue: 0.80, alpha: 1.0),
-        0.5: UIColor(red: 0.73, green: 0.23, blue: 0.25, alpha: 1.0),
-        1: .yellow
-        ]
-        heatmapLayer.heatmapColor = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($heatmapDensity, 'linear', nil, %@)", colorDictionary)
-         
-        // Heatmap weight measures how much a single data point impacts the layer's appearance.
-        heatmapLayer.heatmapWeight = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:(mag, 'linear', nil, %@)",
-        [0: 0,
-        6: 1])
-         
-        // Heatmap intensity multiplies the heatmap weight based on zoom level.
-        heatmapLayer.heatmapIntensity = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($zoomLevel, 'linear', nil, %@)",
-        [0: 1,
-        9: 3])
-        heatmapLayer.heatmapRadius = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:($zoomLevel, 'linear', nil, %@)",
-        [0: 4,
-        9: 30])
-         
-        // The heatmap layer should be visible up to zoom level 9.
-        heatmapLayer.heatmapOpacity = NSExpression(format: "mgl_step:from:stops:($zoomLevel, 0.75, %@)", [0: 0.75, 9: 0])
-        mapView.style?.addLayer(heatmapLayer)
-         
-        // Add a circle layer to represent the earthquakes at higher zoom levels.
-        let circleLayer = MGLCircleStyleLayer(identifier: "circle-layer", source: source)
-         
-        let magnitudeDictionary: [NSNumber: UIColor] = [
-        0: .white,
-        0.5: .yellow,
-        2.5: UIColor(red: 0.73, green: 0.23, blue: 0.25, alpha: 1.0),
-        5: UIColor(red: 0.19, green: 0.30, blue: 0.80, alpha: 1.0)
-        ]
-        circleLayer.circleColor = NSExpression(format: "mgl_interpolate:withCurveType:parameters:stops:(mag, 'linear', nil, %@)", magnitudeDictionary)
-         
-        // The heatmap layer will have an opacity of 0.75 up to zoom level 9, when the opacity becomes 0.
-        circleLayer.circleOpacity = NSExpression(format: "mgl_step:from:stops:($zoomLevel, 0, %@)", [0: 0, 9: 0.75])
-        circleLayer.circleRadius = NSExpression(forConstantValue: 20)
-        mapView.style?.addLayer(circleLayer)
-        
-        var coordinates: [CLLocationCoordinate2D] = [
-            CLLocationCoordinate2D(latitude: 35.6880488, longitude: 139.702560),
-            CLLocationCoordinate2D(latitude: 35.91, longitude: 139.902560),
-        ]
-        let polyline = MGLPolylineFeature(coordinates: &coordinates, count: UInt(coordinates.count))
-        let source2 = MGLShapeSource(identifier: "lines", features: [polyline], options: nil)
-        mapView.style?.addSource(source2)
-        let layerm = MGLLineStyleLayer(identifier: "my-style", source: source2)
-        mapView.style?.addLayer(layerm)
-        
-        let source3 = MGLVectorTileSource(identifier: "trees", configurationURL: URL(string: "mapbox://examples.2uf7qges")!)
-         
-        mapView.style?.addSource(source3)
-         
-        let layer = MGLCircleStyleLayer(identifier: "tree-style", source: source3)
-         
-        // The source name from the source's TileJSON metadata: mapbox.com/api-documentation/maps/#retrieve-tilejson-metadata
-        layer.sourceLayerIdentifier = "yoshino-trees-a0puw5"
-         
-        // Stops based on age of tree in years.
-        let stops = [
-        0: UIColor(red: 1.00, green: 0.72, blue: 0.85, alpha: 1.0),
-        2: UIColor(red: 0.69, green: 0.48, blue: 0.73, alpha: 1.0),
-        4: UIColor(red: 0.61, green: 0.31, blue: 0.47, alpha: 1.0),
-        7: UIColor(red: 0.43, green: 0.20, blue: 0.38, alpha: 1.0),
-        16: UIColor(red: 0.33, green: 0.17, blue: 0.25, alpha: 1.0)
-        ]
-         
-        // Style the circle layer color based on the above stops dictionary.
-        layer.circleColor = NSExpression(format: "mgl_step:from:stops:(AGE, %@, %@)", UIColor(red: 1.0, green: 0.72, blue: 0.85, alpha: 1.0), stops)
-         
-        layer.circleRadius = NSExpression(forConstantValue: 3)
-         
-        mapView.style?.addLayer(layer)
-
-    }
-    
-    private func resetDestinationNameAndLocation(){
-        UserDefaults.standard.setValue(nil, forKey: "destinationName")
-        UserDefaults.standard.setValue(nil, forKey: "destinationCoordinateLat")
-        UserDefaults.standard.setValue(nil, forKey: "destinationCoordinateLng")
-        
-    }
-}
-
-
 
 
 extension MapViewController{

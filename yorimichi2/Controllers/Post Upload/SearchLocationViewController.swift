@@ -48,8 +48,8 @@ class SearchLocationViewController: UIViewController, UISearchResultsUpdating{
 
 }
 
-extension SearchLocationViewController: SearchResultsViewControllerDelegate{
-    func searchResultsViewController(_ vc: SearchResultsViewController, didSelectResultsUser user: User) {
+extension SearchLocationViewController: SearchUserResultsViewControllerDelegate{
+    func searchUserResultsViewController(_ vc: SearchUserResultsViewController, didSelectResultsUser user: User) {
         let vc = ProfileViewController(user: user)
         navigationController?.pushViewController(vc, animated: true)
     }

@@ -11,9 +11,9 @@ import SafariServices
  
 protocol ListOnMapLeftViewControllerDelegate: AnyObject{
     func listOnMapLeftViewControllerDidSelect(index: Int, viewModel: ListExploreResultCellType)
-    func listOnMapLeftViewControllerDidTapYorimichiButton(id: String, viewModel: ListExploreResultCellType)
+    //func listOnMapLeftViewControllerDidTapYorimichiButton(id: String, viewModel: ListExploreResultCellType)
     func listOnMapLeftViewControllerDidHPDoubleTapped(_ cell: ListExploreResultHPTableViewCell, didTapPostWith viewModel: HPAnnotationViewModel)
-    func listOnMapLeftViewControllerDidGoogleDoubleTapped(_ cell: ListExploreResultGoogleTableViewCell, didTapPostWith viewModel: GoogleAnnotationViewModel)
+    //func listOnMapLeftViewControllerDidGoogleDoubleTapped(_ cell: ListExploreResultGoogleTableViewCell, didTapPostWith viewModel: GoogleAnnotationViewModel)
 }
 
 class ListOnMapLeftViewController: UIViewController {
@@ -26,9 +26,7 @@ class ListOnMapLeftViewController: UIViewController {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.isHidden = false
         tableView.register(ListExploreResultYorimichiTableViewCell.self, forCellReuseIdentifier: ListExploreResultYorimichiTableViewCell.identifier)
-        tableView.register(ListExploreResultGoogleTableViewCell.self, forCellReuseIdentifier: ListExploreResultGoogleTableViewCell.identifier)
         tableView.register(ListExploreResultHPTableViewCell.self, forCellReuseIdentifier: ListExploreResultHPTableViewCell.identifier)
-//        tableView.contentInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 0)
         
         return tableView
     }()
@@ -147,13 +145,6 @@ extension ListOnMapLeftViewController: ListExploreResultHPTableViewCellDelegate{
     }
 }
 
-extension ListOnMapLeftViewController: ListExploreResultGoogleTableViewCellDelegate{
-    func listExploreResultGoogleTableViewCell(_ cell: ListExploreResultGoogleTableViewCell, didTapPostWith viewModel: GoogleAnnotationViewModel) {
-        delegate?.listOnMapLeftViewControllerDidGoogleDoubleTapped(cell, didTapPostWith: viewModel)
-    }
-    
-    
-}
 
 extension ListOnMapLeftViewController: ListExploreResultYorimichiTableViewCellDelegate{
     func listExploreResultYorimichiTableViewCellDidTapYorimichiImageView(_ cell: ListExploreResultYorimichiTableViewCell, didTapWith viewModel: YorimichiAnnotationViewModel) {

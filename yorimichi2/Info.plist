@@ -11,6 +11,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>SERVER_KEY</key>
+	<string>AAAA9hloA14:APA91bGDCa5w5s-rDkCYZ4qlXsRuaUtgNyBSRuUtIrPtmSUrV7sAcgHcXvTuywRilMOipwY14ShkEP2FwWKny9lerS5khCUHY3249oYDja6IsbK7ako_leq8g0WyVt2nfPhdTVvHusKM</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

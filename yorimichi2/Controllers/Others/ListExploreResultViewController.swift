@@ -24,9 +24,7 @@ class ListExploreResultViewController: UIViewController {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.isHidden = false
         tableView.register(ListExploreResultYorimichiTableViewCell.self, forCellReuseIdentifier: ListExploreResultYorimichiTableViewCell.identifier)
-        tableView.register(ListExploreResultGoogleTableViewCell.self, forCellReuseIdentifier: ListExploreResultGoogleTableViewCell.identifier)
         tableView.register(ListExploreResultHPTableViewCell.self, forCellReuseIdentifier: ListExploreResultHPTableViewCell.identifier)
-//        tableView.contentInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 0)
         
         return tableView
     }()
