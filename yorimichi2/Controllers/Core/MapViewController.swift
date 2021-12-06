@@ -26,9 +26,22 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
 }
 
 class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISearchResultsUpdating{
+    /// when user hit the keyboard key
     func updateSearchResults(for searchController: UISearchController) {
+        guard let resultsVC = searchController.searchResultsController as? SearchLocationResultsViewController,
+              let query = searchController.searchBar.text,
+              !query.trimmingCharacters(in: .whitespaces).isEmpty
+        else {
+            return
+        }
         
+        searchCompleter.queryFragment = query
+        
+//        DatabaseManager.shared.findUsers(with: query){ results in
+//            resultsVC.update(with: results)
+//        }
     }
+
     
 
     var exploreFpc: FloatingPanelController!
@@ -900,11 +913,13 @@ extension MapViewController: MKLocalSearchCompleterDelegate {
     
     // 正常に検索結果が更新されたとき
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        print("\n\n======results")
         print(completer.results)
         guard let resultsVC = searchController
                 .searchResultsController as? SearchLocationResultsViewController else {
-            return
-        }
+                    print("\n\n\n============here111")
+                    return
+                }
         print(completer.results)
         resultsVC.delegate = self
         resultsVC.update(with: completer.results)

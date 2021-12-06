@@ -13,21 +13,22 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         
         guard let email = UserDefaults.standard.string(forKey: "email"),
-              let username = UserDefaults.standard.string(forKey: "username") else{
-                  print("falling here")
-                  return
-              }
+              let username = UserDefaults.standard.string(forKey: "username")
+        else{
+            print("\n\n\n===========================")
+            print("cannot find email or username from UserDefault")
+            return
+            
+        }
         
-        let currentUser = User(username: username,
-                               email: email)
-        
+        let currentUser: User = User(username: username, email: email)
         
         // Define VC
         let home = HomeViewController()
         let explore = ExploreViewController()
         let camera = CameraViewController()
         let map = MapViewController()
-//        let activity = NotificationViewController()
+        //        let activity = NotificationViewController()
         let profile = ProfileViewController(user: currentUser)
         
         let nav1 = UINavigationController(rootViewController: home)
@@ -44,10 +45,10 @@ class TabBarViewController: UITabBarController {
         //nav5.navigationItem.backButtonDisplayMode = .minimal
         nav6.navigationItem.backButtonDisplayMode = .minimal
         home.navigationItem.backButtonDisplayMode = .minimal
-//        explore.navigationItem.backButtonDisplayMode = .minimal
+        //        explore.navigationItem.backButtonDisplayMode = .minimal
         camera.navigationItem.backButtonDisplayMode = .minimal
         map.navigationItem.backButtonDisplayMode = .minimal
-//        activity.navigationItem.backButtonDisplayMode = .minimal
+        //        activity.navigationItem.backButtonDisplayMode = .minimal
         profile.navigationItem.backButtonDisplayMode = .minimal
         
         nav1.navigationBar.tintColor = .label
@@ -70,8 +71,13 @@ class TabBarViewController: UITabBarController {
         
         self.setViewControllers([nav1, nav2, nav3, nav4, nav6], animated: false)
         self.selectedIndex = 2
-
-
+        
+        
+        
+        
+        
+        
+        
     }
-
+    
 }

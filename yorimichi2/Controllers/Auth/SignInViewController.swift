@@ -128,7 +128,20 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
             DispatchQueue.main.async {
                 switch result{
                 case .success:
-                    HapticManager.shared.vibrate(for: .success)
+                    UserDefaults.standard.setValue(email, forKey: "email")
+                    
+                    DatabaseManager.shared.findUser(with: email, completion: { user in
+                        print("\n\n\n===========================")
+                        print("user: \(user)")
+                        guard let user = user else {
+                            print("\n\n\n===========================")
+                            print("cannot find user from Database with this email: \(email)")
+                            return
+                        }
+                        UserDefaults.standard.setValue(user.username, forKey: "username")
+                        
+                    })
+                        HapticManager.shared.vibrate(for: .success)
                     let vc = TabBarViewController()
                     vc.modalPresentationStyle = .fullScreen
                     self?.present(vc, animated: true, completion: nil)

@@ -156,8 +156,6 @@ final class DatabaseManager{
                 completion(.success(recentPosts))
             }
             
-            
-            
         }
         
     }
