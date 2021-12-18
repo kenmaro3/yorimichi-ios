@@ -48,6 +48,19 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         return button
     }()
     
+    private let yorimichiCount: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.text = "0"
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = .white
+        
+        return label
+    }()
+    
+    
+    
     private let likeButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(systemName: "heart.fill"), for: .normal)
@@ -56,12 +69,35 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         return button
     }()
     
+    private let likeCount: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.text = "0"
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = .white
+        
+        return label
+    }()
+    
+    
     private let commentButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(UIImage(systemName: "text.bubble.fill"), for: .normal)
         button.tintColor = .white
         button.imageView?.contentMode = .scaleAspectFit
         return button
+    }()
+    
+    private let commentCount: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.text = "0"
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = .white
+        
+        return label
     }()
     
     private let shareButton: UIButton = {
@@ -160,12 +196,23 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         setUpLikeButton()
         setUpYorimichiButton()
         setUpFPC()
+        setUpCount()
 
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         fpc.removePanelFromParent(animated: true, completion: nil)
+    }
+    
+    private func setUpCount(){
+        likeCount.text = "\(model.likers.count)"
+        
+        DatabaseManager.shared.getComments(postID: model.id, owner: model.user.username, completion: {[weak self] comments in
+            self?.commentCount.text = "\(comments.count)"
+            
+            
+        })
     }
     
     
@@ -195,6 +242,20 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         // Assign self as the delegate of the controller.
         fpc.delegate = self // Optional
         fpc.view.frame = CGRect(x: 6, y: 0, width: view.width-12, height: view.height/2)
+    }
+    
+    private func setUpLikeCountTap(){
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapLikeCount(_:)))
+        tap.numberOfTapsRequired = 1
+        
+        likeCount.addGestureRecognizer(tap)
+        likeCount.isUserInteractionEnabled = true
+    }
+    
+    
+    @objc private func didTapLikeCount(_ gesture: UITapGestureRecognizer){
+        print("didTapLikeCount")
+        
     }
     
     private func setUpLikeButton(){
@@ -264,10 +325,29 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         let locationHeight:  CGFloat = 50
         
         
-        let yStart: CGFloat = view.height - (size * 5) - 30 - view.safeAreaInsets.bottom - tabBarHeight
+        let yStart: CGFloat = view.height - (size * 6) - 30 - view.safeAreaInsets.bottom - tabBarHeight
         for(index, button) in [yorimichiButton, likeButton, commentButton, shareButton].enumerated(){
             button.frame = CGRect(x: view.width-size-10, y: yStart + CGFloat(index) * size + CGFloat(index) * 10, width: size, height: size)
         }
+        
+        yorimichiButton.frame = CGRect(x: view.width-size-10, y: yStart, width: size, height: size)
+        
+        likeButton.frame = CGRect(x: view.width-size-10, y: yorimichiButton.bottom + 20, width: size, height: size)
+        
+        commentButton.frame = CGRect(x: view.width-size-10, y: likeButton.bottom + 20, width: size, height: size)
+        
+        shareButton.frame = CGRect(x: view.width-size-10, y: commentButton.bottom + 20, width: size, height: size)
+        
+        yorimichiCount.sizeToFit()
+        likeCount.sizeToFit()
+        commentCount.sizeToFit()
+        
+        yorimichiCount.frame = CGRect(x: view.width-size-10, y: yorimichiButton.bottom, width: likeCount.width, height: likeCount.height)
+        yorimichiCount.center.x = yorimichiButton.center.x
+        likeCount.frame = CGRect(x: view.width-size-10, y: likeButton.bottom, width: likeCount.width, height: likeCount.height)
+        likeCount.center.x = likeButton.center.x
+        commentCount.frame = CGRect(x: view.width-size-10, y: commentButton.bottom, width: commentCount.width, height: commentCount.height)
+        commentCount.center.x = commentButton.center.x
         
         yorimichiButton.layer.cornerRadius = size/2
         
@@ -315,6 +395,9 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         view.addSubview(commentButton)
         view.addSubview(shareButton)
         view.addSubview(yorimichiButton)
+        view.addSubview(likeCount)
+        view.addSubview(commentCount)
+        view.addSubview(yorimichiCount)
         
         likeButton.addTarget(self, action: #selector(didTapLike), for: .touchUpInside)
         commentButton.addTarget(self, action: #selector(didTapComment), for: .touchUpInside)
