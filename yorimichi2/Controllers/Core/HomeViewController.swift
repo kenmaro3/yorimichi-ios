@@ -650,7 +650,6 @@ extension HomeViewController: VideoPostViewControllerDelegate{
 
 extension HomeViewController: CommentsViewControllerDeleagate{
     func commentsViewControllerDidTapComment(with viewController: CommentsViewController, withText text: String) {
-        
     }
     
     func commentsViewControllerDidTapCloseForComments(with viewController: CommentsViewController) {

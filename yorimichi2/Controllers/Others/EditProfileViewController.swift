@@ -24,6 +24,28 @@ class EditProfileViewController: UIViewController {
         textView.backgroundColor = .secondarySystemBackground
         return textView
     }()
+    
+    private let twitterIdField: TextField = {
+        let field = TextField()
+        field.placeholder = "Twitter ID..."
+        return field
+    }()
+    
+    private let instagramIdField: TextField = {
+        let field = TextField()
+        field.placeholder = "Instagram ID..."
+        return field
+    }()
+    
+    private let twitterIcon: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "twitter"))
+        return imageView
+    }()
+    
+    private let instagramIcon: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "instagram"))
+        return imageView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +53,10 @@ class EditProfileViewController: UIViewController {
         
         view.addSubview(nameField)
         view.addSubview(bioTextView)
+        view.addSubview(twitterIdField)
+        view.addSubview(instagramIdField)
+        view.addSubview(twitterIcon)
+        view.addSubview(instagramIcon)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .close,
@@ -53,6 +79,8 @@ class EditProfileViewController: UIViewController {
                 if let info = info {
                     self?.nameField.text = info.name
                     self?.bioTextView.text = info.bio
+                    self?.twitterIdField.text = info.twitterId
+                    self?.instagramIdField.text = info.instagramId
                 }
             }
         })
@@ -75,6 +103,23 @@ class EditProfileViewController: UIViewController {
             width: view.width-40,
             height: 120
         )
+        let iconSize: CGFloat = 20
+        twitterIcon.frame = CGRect(x: 20, y: bioTextView.bottom+10, width: iconSize, height: iconSize)
+        twitterIdField.frame = CGRect(
+            x: twitterIcon.right+20,
+            y: bioTextView.bottom + 10,
+            width: view.width-40 - iconSize - 20,
+            height: 50
+        )
+        instagramIcon.frame = CGRect(x: 20, y: twitterIdField.bottom+10, width: iconSize, height: iconSize)
+        instagramIdField.frame = CGRect(
+            x: instagramIcon.right+20,
+            y: twitterIdField.bottom + 10,
+            width: view.width-40 - iconSize - 20,
+            height: 50
+        )
+        twitterIcon.center.y = twitterIdField.center.y
+        instagramIcon.center.y = instagramIdField.center.y
         
     }
     
@@ -86,7 +131,7 @@ class EditProfileViewController: UIViewController {
     @objc private func didTapSave(){
         let name = nameField.text ?? ""
         let bio = bioTextView.text ?? ""
-        let newInfo = UserInfo(name: name, bio: bio)
+        let newInfo = UserInfo(name: name, bio: bio, twitterId: twitterIdField.text, instagramId: instagramIdField.text)
         DatabaseManager.shared.setUserInfo(userInfo: newInfo, completion: {[weak self] success in
             DispatchQueue.main.async {
                 if success{

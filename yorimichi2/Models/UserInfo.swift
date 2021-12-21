@@ -10,5 +10,7 @@ import Foundation
 struct UserInfo : Codable{
     let name: String?
     let bio: String?
+    let twitterId: String?
+    let instagramId: String?
     
 }

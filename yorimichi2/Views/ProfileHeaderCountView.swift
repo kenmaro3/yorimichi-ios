@@ -61,7 +61,7 @@ class ProfileHeaderCountView: UIView {
         return button
     }()
     
-    private let actionButton = FollowButton()
+    public let actionButton = FollowButton()
     
 //    private let actionButton: UIButton = {
 //        let button = UIButton()
@@ -122,7 +122,6 @@ class ProfileHeaderCountView: UIView {
             }
             
             self.isFollowing = !isFollowing
-            actionButton.configure(for: isFollowing ? .unfollow : .follow)
         }
     }
     

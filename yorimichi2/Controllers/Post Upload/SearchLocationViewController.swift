@@ -10,6 +10,7 @@ import MapKit
 
 protocol SearchLocationViewControllerDelegate: AnyObject{
     func searchLocationViewControllerDidSelected(title: String, subTitle: String, location: Location)
+    func searchLocationViewControllerDidEnterDirectLocation(text: String?)
 }
 
 class SearchLocationViewController: UIViewController, UISearchResultsUpdating{
@@ -19,6 +20,22 @@ class SearchLocationViewController: UIViewController, UISearchResultsUpdating{
     
     
     private let searchVC = UISearchController(searchResultsController: SearchLocationResultsViewController())
+    
+    public let field: UITextField = {
+        let textView = TextField()
+
+        textView.layer.masksToBounds = true
+        textView.font = .systemFont(ofSize: 14)
+        textView.returnKeyType = .done
+        textView.autocorrectionType = .no
+        textView.autocapitalizationType = .none
+        textView.borderStyle = .none
+        textView.keyboardType = .default
+        textView.backgroundColor = .systemBackground
+        textView.placeholder = "名称を自分で手入力する。(投稿には現在地が紐つきます。)"
+        
+        return textView
+    }()
     
     
     override func viewDidLoad() {
@@ -36,6 +53,9 @@ class SearchLocationViewController: UIViewController, UISearchResultsUpdating{
         searchCompleter.filterType = .locationsOnly
         
         view.backgroundColor = .systemBackground
+        
+        view.addSubview(field)
+        field.delegate = self
 
 
     }
@@ -43,6 +63,8 @@ class SearchLocationViewController: UIViewController, UISearchResultsUpdating{
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 //        tableView.frame = CGRect(x: 0, y: 200, width: view.width, height: 300)
+        field.frame = CGRect(x: 20, y: view.safeAreaInsets.bottom+100, width: view.width-40, height: 50)
+        
     }
     
 
@@ -100,5 +122,19 @@ extension SearchLocationViewController: SearchLocationResultsViewControllerDeleg
     }
     
     
+}
+
+extension SearchLocationViewController: UITextFieldDelegate{
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        field.resignFirstResponder()
+        delegate?.searchLocationViewControllerDidEnterDirectLocation(text: textField.text)
+        dismiss(animated: true, completion: nil)
+        return true
+    }
 }
 

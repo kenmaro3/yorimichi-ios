@@ -28,11 +28,11 @@ class ListViewController: UIViewController{
         var title: String {
             switch self{
             case .followers:
-                return "Followers"
+                return "フォロワー"
             case .following:
-                return "Following"
+                return "フォロー中"
             case .likers:
-                return "Liked By"
+                return "いいねをしたユーザー"
             }
         }
         

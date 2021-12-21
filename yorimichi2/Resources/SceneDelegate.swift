@@ -10,8 +10,28 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-
+    
+    private func showRequiredVersionAlertIfNeeded() {
+        DatabaseManager.shared.getRequiredUpdateVersion(completion: {[weak self] requiredVersion in
+            guard let requiredVersion = requiredVersion else {
+                return
+            }
+            
+            if let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+               requiredVersion.compare(currentVersion) == .orderedDescending {
+                let alert = UIAlertController(title: "アップデートのお知らせ", message: "YorimichiAppの新規バージョンがご利用になれます。今すぐ\(requiredVersion)にアップデートしてください。", preferredStyle: .alert)
+                alert.addAction(.init(title: "アップデート", style: .default, handler: { _ in
+                    // MARK: Force unwrap🚨
+                    let url = URL(string: "https://apps.apple.com/jp/app/apple-store/id1596625712")!
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }))
+                self?.window?.rootViewController?.present(alert, animated: true, completion: nil)
+            }
+            
+        })
+    }
+    
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -45,6 +65,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window.makeKeyAndVisible()
         self.window = window
+        showRequiredVersionAlertIfNeeded()
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

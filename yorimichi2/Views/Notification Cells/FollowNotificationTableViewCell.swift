@@ -16,8 +16,6 @@ class FollowNotificationTableViewCell: UITableViewCell {
     
     weak var delegate: FollowNotificationTableViewCellDelegate?
     
-    private var isFollowing: Bool = false
-    
     private var viewModel: FollowNotificationCellViewModel?
     
     private let profilePictureImageView: UIImageView = {
@@ -45,7 +43,7 @@ class FollowNotificationTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let followButton = FollowButton()
+    //private let followButton = FollowButton()
     
     
     // MARK: - Init
@@ -56,21 +54,21 @@ class FollowNotificationTableViewCell: UITableViewCell {
         contentView.clipsToBounds = true
         contentView.addSubview(profilePictureImageView)
         contentView.addSubview(label)
-        contentView.addSubview(followButton)
+        //contentView.addSubview(followButton)
         contentView.addSubview(dateLabel)
-        followButton.addTarget(self, action: #selector(didTapFollowButton), for: .touchUpInside)
+        //followButton.addTarget(self, action: #selector(didTapFollowButton), for: .touchUpInside)
     }
     
-    @objc private func didTapFollowButton(){
-        guard let vm = viewModel else{
-            return
-        }
-        delegate?.followNotificationTableViewCell(self, didTapButton: !isFollowing, viewModel: vm)
-        isFollowing = !isFollowing
-        
-        followButton.configure(for: isFollowing ? .unfollow : .follow)
-        
-    }
+//    @objc private func didTapFollowButton(){
+//        guard let vm = viewModel else{
+//            return
+//        }
+//        delegate?.followNotificationTableViewCell(self, didTapButton: !isFollowing, viewModel: vm)
+//        isFollowing = !isFollowing
+//
+//        followButton.configure(for: isFollowing ? .unfollow : .follow)
+//
+//    }
     
     
     required init?(coder: NSCoder) {
@@ -85,12 +83,12 @@ class FollowNotificationTableViewCell: UITableViewCell {
         profilePictureImageView.layer.cornerRadius = imageSize/2
         
         
-        followButton.sizeToFit()
-        let buttonWidth : CGFloat = max(followButton.width, 75)
-        followButton.frame = CGRect(x: contentView.width - buttonWidth - 12, y: (contentView.height - followButton.height)/2, width: buttonWidth, height: followButton.height)
+        //followButton.sizeToFit()
+        //let buttonWidth : CGFloat = max(followButton.width, 75)
+        //followButton.frame = CGRect(x: contentView.width - buttonWidth - 12, y: (contentView.height - followButton.height)/2, width: buttonWidth, height: followButton.height)
         
         let labelSize = label.sizeThatFits(
-            CGSize(width: contentView.width-profilePictureImageView.width-buttonWidth-44, height: contentView.height)
+            CGSize(width: contentView.width-profilePictureImageView.width-44, height: contentView.height)
         
         )
         
@@ -106,19 +104,18 @@ class FollowNotificationTableViewCell: UITableViewCell {
         super.prepareForReuse()
         label.text = nil
         profilePictureImageView.image = nil
-        followButton.setTitle(nil, for: .normal)
-        followButton.backgroundColor = nil
+        //followButton.setTitle(nil, for: .normal)
+        //followButton.backgroundColor = nil
         dateLabel.text = nil
     }
     
     public func configure(with viewModel: FollowNotificationCellViewModel){
         self.viewModel = viewModel
-        label.text = "\(viewModel.username) started following you."
+        label.text = "\(viewModel.username) があなたをフォローしました。"
         profilePictureImageView.sd_setImage(with: viewModel.profilePictureUrl, completed: nil)
-        isFollowing = viewModel.isCurrentUserFollowing
+        //isFollowing = viewModel.isCurrentUserFollowing
         dateLabel.text = viewModel.date
         
-        followButton.configure(for: isFollowing ? .unfollow : .follow)
         
         
     }

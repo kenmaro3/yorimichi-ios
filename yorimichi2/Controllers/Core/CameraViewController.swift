@@ -60,16 +60,43 @@ class CameraViewController: SwiftyCamViewController{
         
     }()
     
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .secondarySystemBackground
         cameraDelegate = self
         
         setUpButtons()
         setUpNavBar()
         setUpCamera()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setUpButtons()
         
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if let layer = previewLayer{
+            layer.removeFromSuperlayer()
+            recordButton.isHidden = false
+            
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+        
+    }
+    @objc private func didTapClose(){
+        tabBarController?.selectedIndex = 2
+        tabBarController?.tabBar.isHidden = false
+    }
+
     
     private func setUpButtons(){
         recordButton.delegate = self
@@ -108,20 +135,6 @@ class CameraViewController: SwiftyCamViewController{
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setUpButtons()
-        
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        if let layer = previewLayer{
-            layer.removeFromSuperlayer()
-            recordButton.isHidden = false
-      
-        }
-    }
     
     private func setUpCamera(){
         maximumVideoDuration = 5.0
@@ -141,15 +154,6 @@ class CameraViewController: SwiftyCamViewController{
         changeFlashButton.frame = CGRect(x: view.center.x - buttonSize/6, y: view.safeAreaInsets.top+10, width: buttonSize/3, height: buttonSize/3)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        tabBarController?.tabBar.isHidden = true
-        
-    }
-    @objc private func didTapClose(){
-        tabBarController?.selectedIndex = 1
-        tabBarController?.tabBar.isHidden = false
-    }
     
     @objc func didTapPickPhoto(){
         let picker = UIImagePickerController()
@@ -161,7 +165,8 @@ class CameraViewController: SwiftyCamViewController{
     }
     
     private func setUpNavBar(){
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(didTapClose))
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(didTapClose))
+        navigationItem.leftBarButtonItem = barButtonItem
     }
     
 }

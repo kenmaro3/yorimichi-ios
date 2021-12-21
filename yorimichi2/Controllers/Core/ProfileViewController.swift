@@ -8,6 +8,7 @@
 import UIKit
 import ProgressHUD
 import SafariServices
+import CryptoKit
 
 class ProfileViewController: UIViewController, UISearchResultsUpdating{
     private let searchVC = UISearchController(searchResultsController: SearchUserResultsViewController())
@@ -135,7 +136,8 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
         
         var name: String?
         var bio: String?
-        
+        var twitterId: String?
+        var instagramId: String?
         
         // Count (3)
         group.enter()
@@ -156,6 +158,9 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
             }
             name = userInfo?.name
             bio = userInfo?.bio
+            twitterId = userInfo?.twitterId
+            instagramId = userInfo?.instagramId
+            
         })
         // Profile picture url
         group.enter()
@@ -189,7 +194,9 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
                 postsCount: posts,
                 bio: bio,
                 name: name,
-                buttonType: buttonType
+                buttonType: buttonType,
+                twitterId: twitterId,
+                instagramId: instagramId
             )
             
             self.collectionView?.reloadData()
@@ -205,12 +212,21 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
     
     private func configureNavBar(){
         if isCurrentUser{
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
+            let settingButton = UIBarButtonItem(
                 image: UIImage(systemName: "gear"),
                 style: .done,
                 target: self,
                 action: #selector(didTapSettings)
             )
+            
+            let notificationButton = UIBarButtonItem(
+                image: UIImage(systemName: "heart"),
+                style: .done,
+                target: self,
+                action: #selector(didTapNotification)
+            )
+            
+            navigationItem.rightBarButtonItems = [settingButton, notificationButton]
             
         }
         else{
@@ -222,6 +238,14 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
             )
             
         }
+    }
+    
+    @objc func didTapNotification(){
+        print("notification tapped")
+        let vc = NotificationViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+        //self.present(vc, animated: true)
+        
     }
     
     @objc func didTapMore(){
@@ -477,6 +501,10 @@ extension ProfileViewController: ProfileHeaderCollectionReusableViewDelegate{
         present(sheet, animated: true)
         
     }
+    
+    func profileHeaderCollectionReusableViewShowAlert(alert: UIAlertController){
+        present(alert, animated: true)
+    }
 }
 
 
@@ -562,6 +590,28 @@ extension ProfileViewController: ProfileHeaderCountViewDelegate{
             }
             else{
                 ProgressHUD.showSuccess("フォローしました。")
+                
+                guard let username = UserDefaults.standard.string(forKey: "username") else {
+                    return
+                }
+                
+                let identifier = NotificationManager.newIdentifier()
+                StorageManager.shared.profilePictureURL(for: username, completion: { [weak self] profilePictureUrl in
+                    
+                    guard let profilePictureUrl = profilePictureUrl else {
+                        return
+                    }
+                    guard let strongSelf = self else {
+                        return
+                    }
+                    
+                    let notification = IGNotification(
+                        notificationType: 3, identifier: identifier, profilePictureUrl: profilePictureUrl.absoluteString, username: username, dateString: String.date(from: Date()) ?? "", postId: nil, postUrl: nil, postType: nil
+                    )
+                    NotificationManager.shared.create(notification: notification, for: strongSelf.user.username)
+                    containerView.actionButton.configure(for: .unfollow)
+                    
+                })
             }
         })
         
@@ -579,6 +629,7 @@ extension ProfileViewController: ProfileHeaderCountViewDelegate{
             }
             else{
                 ProgressHUD.showSuccess("フォローを解除しました。")
+                containerView.actionButton.configure(for: .follow)
 
             }
         })

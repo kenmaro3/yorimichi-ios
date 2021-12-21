@@ -16,6 +16,29 @@ final class DatabaseManager{
     
     let database = Firestore.firestore()
     
+    public func getRequiredUpdateVersion(completion: @escaping(String?) -> Void){
+        let ref = database.collection("configure").document("config")
+        
+        ref.getDocument { (document, error) in
+            if let document = document, document.exists {
+                guard let data = document.data() else {
+                    completion(nil)
+                    return
+                }
+                guard let version = data["updateRequiredVersion"] as? String else {
+                    completion(nil)
+                    return
+                    
+                }
+                completion(version)
+            } else {
+                completion(nil)
+                return
+                
+            }
+        }
+    }
+    
     public func getMapStyle(completion: @escaping(String) -> MGLMapView){
         let ref = database.collection("customMaps").document("currentMap")
         
@@ -676,6 +699,36 @@ final class DatabaseManager{
         ref.getDocuments{ snapshot, error in
             guard let notifications = snapshot?.documents.compactMap({
                 IGNotification(with: $0.data())
+            }).sorted(by: { first, second in
+                return first.date > second.date
+                
+            }),
+                  error == nil else{
+                      completion([])
+                      return
+                  }
+            
+            let now = Date()
+            let modifiedDate = Calendar.current.date(byAdding: .day, value: -7, to: now)!
+            
+            let recentNotifications = notifications.filter{
+                $0.date > modifiedDate
+                
+            }
+            
+            completion(recentNotifications)
+        }
+    }
+    
+    public func getNotificationsRecent(completion: @escaping ([IGNotification]) -> Void){
+        guard let username = UserDefaults.standard.string(forKey: "username") else {
+            completion([])
+            return
+        }
+        let ref = database.collection("users").document(username).collection("notifications")
+        ref.getDocuments{ snapshot, error in
+            guard let notifications = snapshot?.documents.compactMap({
+                IGNotification(with: $0.data())
             }),
                   error == nil else{
                       completion([])
@@ -970,6 +1023,19 @@ final class DatabaseManager{
             return
         }
         let ref = database.collection("users").document(targetUsername).collection("followers").document(currentUsername)
+        ref.getDocument(completion: { snapshot, error in
+            guard snapshot?.data() != nil, error == nil else{
+                // Not following
+                completion(false)
+                return
+            }
+            // Following
+            completion(true)
+        })
+    }
+    
+    public func isFollowingSpecific(followFrom: String, followTo: String, completion: @escaping (Bool) -> Void){
+        let ref = database.collection("users").document(followTo).collection("followers").document(followFrom)
         ref.getDocument(completion: { snapshot, error in
             guard snapshot?.data() != nil, error == nil else{
                 // Not following

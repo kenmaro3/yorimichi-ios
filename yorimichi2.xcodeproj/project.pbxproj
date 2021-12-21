@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A052FF727701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A052FF627701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift */; };
+		0A052FF827701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A052FF627701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift */; };
 		0A1CA0A5275C591700F2C22D /* SearchPlaceResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CA0A4275C591700F2C22D /* SearchPlaceResultsViewController.swift */; };
 		0A1CA0A6275C591700F2C22D /* SearchPlaceResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CA0A4275C591700F2C22D /* SearchPlaceResultsViewController.swift */; };
 		0A1CA0A8275C593500F2C22D /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CA0A7275C593500F2C22D /* ExploreViewController.swift */; };
@@ -151,6 +153,8 @@
 		0A901ACB2720330E00EC0A36 /* FollowNotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901ACA2720330E00EC0A36 /* FollowNotificationTableViewCell.swift */; };
 		0A901ACD2720331900EC0A36 /* LikeNotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901ACC2720331900EC0A36 /* LikeNotificationTableViewCell.swift */; };
 		0A901ACF2720332400EC0A36 /* CommentNotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A901ACE2720332400EC0A36 /* CommentNotificationTableViewCell.swift */; };
+		0A9E1D69276DF4B50044DA20 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9E1D68276DF4B50044DA20 /* NotificationViewController.swift */; };
+		0A9E1D6A276DF4B50044DA20 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9E1D68276DF4B50044DA20 /* NotificationViewController.swift */; };
 		0AA831BA27279170002725CF /* PostRatingCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA831B927279170002725CF /* PostRatingCollectionViewCellViewModel.swift */; };
 		0AA831BC2727918B002725CF /* PostNameCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA831BB2727918B002725CF /* PostNameCollectionViewCellViewModel.swift */; };
 		0AA831BE272791A3002725CF /* PostLocationCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA831BD272791A3002725CF /* PostLocationCollectionViewCellViewModel.swift */; };
@@ -293,6 +297,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A052FF627701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditInfoCollectionLocationDirectViewCell.swift; sourceTree = "<group>"; };
 		0A1CA0A4275C591700F2C22D /* SearchPlaceResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceResultsViewController.swift; sourceTree = "<group>"; };
 		0A1CA0A7275C593500F2C22D /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		0A1CA0AA275C61DF00F2C22D /* SpecificPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificPostsViewController.swift; sourceTree = "<group>"; };
@@ -310,6 +315,7 @@
 		0A901ACA2720330E00EC0A36 /* FollowNotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowNotificationTableViewCell.swift; sourceTree = "<group>"; };
 		0A901ACC2720331900EC0A36 /* LikeNotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeNotificationTableViewCell.swift; sourceTree = "<group>"; };
 		0A901ACE2720332400EC0A36 /* CommentNotificationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentNotificationTableViewCell.swift; sourceTree = "<group>"; };
+		0A9E1D68276DF4B50044DA20 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		0AA831B927279170002725CF /* PostRatingCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRatingCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		0AA831BB2727918B002725CF /* PostNameCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostNameCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		0AA831BD272791A3002725CF /* PostLocationCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocationCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -685,6 +691,7 @@
 				0ACB0818273BA2B400CD960C /* PhotoEditInfoCollectionGenreViewCell.swift */,
 				0AC8FB2D273CA67C003B327E /* PhotoEditInfoCollectionVideoViewCell.swift */,
 				0AC82F572746131600E58887 /* ListYorimichiLikesTableViewCell.swift */,
+				0A052FF627701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -757,6 +764,7 @@
 				0AD3198B271FB7C300734539 /* ProfileViewController.swift */,
 				0AD319C1271FC0D100734539 /* TabBarViewController.swift */,
 				0A1CA0A7275C593500F2C22D /* ExploreViewController.swift */,
+				0A9E1D68276DF4B50044DA20 /* NotificationViewController.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1080,6 +1088,7 @@
 				0A841F582754DC970021EA3E /* CommentBarView.swift in Sources */,
 				0A841F592754DC970021EA3E /* PhotoEditInfoCollectionLocationViewCell.swift in Sources */,
 				0A841F5A2754DC970021EA3E /* ListOnMapLeftViewController.swift in Sources */,
+				0A052FF827701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift in Sources */,
 				0A841F5B2754DC970021EA3E /* PhotoEditInfoGenreViewModel.swift in Sources */,
 				0A841F5C2754DC970021EA3E /* PhotoEditInfoPostViewModel.swift in Sources */,
 				0A841F5D2754DC970021EA3E /* RecordButton.swift in Sources */,
@@ -1140,6 +1149,7 @@
 				0A841F922754DC970021EA3E /* AuthManager.swift in Sources */,
 				0A841F932754DC970021EA3E /* PhotoEditInfoCollectionPostViewCell.swift in Sources */,
 				0A841F942754DC970021EA3E /* PhotoEditInfoLocationViewModel.swift in Sources */,
+				0A9E1D6A276DF4B50044DA20 /* NotificationViewController.swift in Sources */,
 				0A841F952754DC970021EA3E /* PhotoEditInfoVideoViewModel.swift in Sources */,
 				0A841F962754DC970021EA3E /* ListSourceTableViewCellViewModel.swift in Sources */,
 				0A841F972754DC970021EA3E /* Comment.swift in Sources */,
@@ -1214,6 +1224,7 @@
 				0ACED3CF27240A120054398A /* CommentBarView.swift in Sources */,
 				0ACCEF85273A192C00AB4026 /* PhotoEditInfoCollectionLocationViewCell.swift in Sources */,
 				0AC8FB34273CDEDC003B327E /* ListOnMapLeftViewController.swift in Sources */,
+				0A052FF727701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift in Sources */,
 				0ACB0817273BA20A00CD960C /* PhotoEditInfoGenreViewModel.swift in Sources */,
 				0AC8FB2A273CA488003B327E /* PhotoEditInfoPostViewModel.swift in Sources */,
 				0AD4861127369498005FEF91 /* RecordButton.swift in Sources */,
@@ -1274,6 +1285,7 @@
 				0ACCEF81273A190D00AB4026 /* PhotoEditInfoCollectionPostViewCell.swift in Sources */,
 				0ACB0815273B9B5500CD960C /* PhotoEditInfoLocationViewModel.swift in Sources */,
 				0AC8FB2C273CA4AE003B327E /* PhotoEditInfoVideoViewModel.swift in Sources */,
+				0A9E1D69276DF4B50044DA20 /* NotificationViewController.swift in Sources */,
 				0AD25806272E60C500F22274 /* ListSourceTableViewCellViewModel.swift in Sources */,
 				0ACED3CD272407420054398A /* Comment.swift in Sources */,
 				0AD2983D2730F50B00ACE371 /* Address.swift in Sources */,
@@ -1405,12 +1417,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agrimetal.yorimichi2-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1442,12 +1454,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agrimetal.yorimichi2-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1595,12 +1607,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.agrimetal.yorimichi2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1632,12 +1644,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.agrimetal.yorimichi2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -20,8 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        
         Appirater.appLaunched(true)
-        Appirater.setAppId("123456789012345")
+        Appirater.setAppId("1596625712")
         Appirater.setDebug(false)
         Appirater.setDaysUntilPrompt(3)
         

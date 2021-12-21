@@ -115,7 +115,7 @@ class LikeNotificationTableViewCell: UITableViewCell {
 //        label.text = viewModel.username + " commented on your post"
         profilePictureImageView.sd_setImage(with: viewModel.profilePictureUrl, completed: nil)
         postImageView.sd_setImage(with: viewModel.postUrl, completed: nil)
-        label.text = viewModel.username + " liked your post"
+        label.text = viewModel.username + " があなたの投稿にいいねしました。"
         dateLabel.text = viewModel.date
         
         

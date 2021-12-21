@@ -20,5 +20,7 @@ struct ProfileHeaderViewModel{
     let bio: String?
     let name: String?
     let buttonType: ProfileButtonType
+    let twitterId: String?
+    let instagramId: String?
     
 }

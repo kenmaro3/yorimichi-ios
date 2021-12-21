@@ -42,17 +42,6 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
         return button
     }()
     
-    private let yorimichiCount: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        label.text = "0"
-        label.font = .systemFont(ofSize: 12)
-        label.textColor = .white
-        
-        return label
-    }()
-
     
     private let likeButton: UIButton = {
         let button = UIButton()
@@ -67,7 +56,7 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
         label.textAlignment = .left
         label.numberOfLines = 0
         label.text = "0"
-        label.font = .systemFont(ofSize: 12)
+        label.font = .systemFont(ofSize: 14)
         label.textColor = .white
         
         return label
@@ -86,7 +75,7 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
         label.textAlignment = .left
         label.numberOfLines = 0
         label.text = "0"
-        label.font = .systemFont(ofSize: 12)
+        label.font = .systemFont(ofSize: 14)
         label.textColor = .white
         
         return label
@@ -271,21 +260,18 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
         
         yorimichiButton.frame = CGRect(x: view.width-size-10, y: yStart, width: size, height: size)
         
-        likeButton.frame = CGRect(x: view.width-size-10, y: yorimichiButton.bottom + 20, width: size, height: size)
+        likeButton.frame = CGRect(x: view.width-size-10, y: yorimichiButton.bottom + 30, width: size, height: size)
         
-        commentButton.frame = CGRect(x: view.width-size-10, y: likeButton.bottom + 20, width: size, height: size)
+        commentButton.frame = CGRect(x: view.width-size-10, y: likeButton.bottom + 30, width: size, height: size)
         
-        shareButton.frame = CGRect(x: view.width-size-10, y: commentButton.bottom + 20, width: size, height: size)
+        shareButton.frame = CGRect(x: view.width-size-10, y: commentButton.bottom + 30, width: size, height: size)
         
-        yorimichiCount.sizeToFit()
         likeCount.sizeToFit()
         commentCount.sizeToFit()
         
-        yorimichiCount.frame = CGRect(x: view.width-size-10, y: yorimichiButton.bottom, width: likeCount.width, height: likeCount.height)
-        yorimichiCount.center.x = yorimichiButton.center.x
-        likeCount.frame = CGRect(x: view.width-size-10, y: likeButton.bottom, width: likeCount.width, height: likeCount.height)
+        likeCount.frame = CGRect(x: view.width-size-10, y: likeButton.bottom+3, width: likeCount.width, height: likeCount.height)
         likeCount.center.x = likeButton.center.x
-        commentCount.frame = CGRect(x: view.width-size-10, y: commentButton.bottom, width: commentCount.width, height: commentCount.height)
+        commentCount.frame = CGRect(x: view.width-size-10, y: commentButton.bottom+3, width: commentCount.width, height: commentCount.height)
         commentCount.center.x = commentButton.center.x
         
         yorimichiButton.layer.cornerRadius = size/2
@@ -442,7 +428,9 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
     
     @objc private func didTapLikeCount(_ gesture: UITapGestureRecognizer){
         print("didTapLikeCount")
-        
+        let vc = ListViewController(type: .likers(usernames: model.likers))
+        self.navigationController?.pushViewController(vc, animated: true)
+
     }
     
     private func setUpButtons(){
@@ -452,7 +440,6 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
         view.addSubview(commentCount)
         view.addSubview(shareButton)
         view.addSubview(yorimichiButton)
-        view.addSubview(yorimichiCount)
         
         likeButton.addTarget(self, action: #selector(didTapLike), for: .touchUpInside)
         commentButton.addTarget(self, action: #selector(didTapComment), for: .touchUpInside)
@@ -610,6 +597,31 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
         group.enter()
         group.enter()
         
+        
+        if(isLiked){
+            
+        }
+        else{
+            let identifier = NotificationManager.newIdentifier()
+            StorageManager.shared.profilePictureURL(for: username, completion: { [weak self] profilePictureUrl in
+                
+                guard let profilePictureUrl = profilePictureUrl else {
+                    return
+                }
+                guard let strongSelf = self else {
+                    return
+                }
+                
+                let notification = IGNotification(
+                    notificationType: 1, identifier: identifier, profilePictureUrl: profilePictureUrl.absoluteString, username: username, dateString: String.date(from: Date()) ?? "", postId: strongSelf.model.id, postUrl: strongSelf.model.postThumbnailUrlString, postType: .video
+                )
+                NotificationManager.shared.create(notification: notification, for: strongSelf.model.user.username)
+                
+            })
+            
+            
+        }
+        
         DatabaseManager.shared.updateLikeVideo(
             state: isLiked ? .unlike: .like,
             postID: model.id,
@@ -643,10 +655,19 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
         
         group.notify(queue: .main){
             if self.isLiked{
+                self.model.likers = self.model.likers.filter{
+                    $0 != username
+                }
+                self.likeCount.text = "\(self.model.likers.count)"
                 let image = UIImage(systemName: "suit.heart", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))
                 self.likeButton.setImage(image, for: .normal)
                 self.likeButton.tintColor = .white
             }else{
+                self.model.likers = self.model.likers.filter{
+                    $0 != username
+                }
+                self.model.likers.append(username)
+                self.likeCount.text = "\(self.model.likers.count)"
                 let image = UIImage(systemName: "suit.heart.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))
                 self.likeButton.setImage(image, for: .normal)
                 self.likeButton.tintColor = .systemRed
@@ -667,25 +688,31 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
         
     }
     @objc private func didTapShare(){
-        AlertManager.shared.presentError(title: "共有機能", message: "実装予定です。アップデートをお待ちください。", completion: {[weak self] alert in
-            self?.present(alert, animated: true)
-        })
-        
-//        guard let url = URL(string: "https://tiktok.com") else {return}
-//        let vc =  UIActivityViewController(activityItems: [url], applicationActivities: [])
-//        present(vc, animated: true)
-
+        shareOnSNS()
     }
     
-//    private func setUpDoubleTapToLike(){
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap(_:)))
-//        tap.numberOfTapsRequired = 2
-//
-//        view.addGestureRecognizer(tap)
-//        view.isUserInteractionEnabled = true
-//
-//
-//    }
+    func shareOnSNS() {
+        
+        //シェアするテキストを作成
+        let header = "YorimichiAppから投稿を共有します。"
+        let hashTag = "#yorimichiApp #\(model.locationTitle)"
+        let link = "https://apps.apple.com/jp/app/yorimichiapp/id1596625712"
+        let recommend = "アプリのダウンロードはこちらから。"
+        let completedText = "\(header)\n\n\(model.caption)\n\(hashTag)\n\n\(recommend)\n\(link)"
+        
+        guard let thumbnailUrl = URL(string: model.postThumbnailUrlString) else {
+            return
+        }
+        
+        let tmpImageView = UIImageView()
+        tmpImageView.sd_setImage(with: thumbnailUrl, completed: nil)
+        
+        let image: UIImage = tmpImageView.image ?? UIImage()
+        let shareItems = [image, completedText] as [Any]
+        let controller = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
+        present(controller, animated: true, completion: nil)
+        
+    }
     
     @objc private func didDoubleTap(_ gesture: UITapGestureRecognizer){
 //        if !model.isLikedByCurrentUser{
@@ -736,6 +763,7 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
 
 extension VideoPostViewController: CommentsViewControllerDeleagate{
     func commentsViewControllerDidTapComment(with viewController: CommentsViewController, withText text: String) {
+        fpc.removePanelFromParent(animated: true, completion: nil)
         print("delegate at videoPostViewcontroller")
         guard let currentUserName = UserDefaults.standard.string(forKey: "username") else {
             return
@@ -775,6 +803,31 @@ extension VideoPostViewController: CommentsViewControllerDeleagate{
                                 return
                             }
                             ProgressHUD.showSuccess("コメントを投稿しました。")
+                            
+                            guard let username = UserDefaults.standard.string(forKey: "username") else {
+                                return
+                            }
+                            let identifier = NotificationManager.newIdentifier()
+                            StorageManager.shared.profilePictureURL(for: username, completion: { [weak self] profilePictureUrl in
+                                
+                                guard let profilePictureUrl = profilePictureUrl else {
+                                    return
+                                }
+                                guard let strongSelf = self else {
+                                    return
+                                }
+                                
+                                let notification = IGNotification(
+                                    notificationType: 2, identifier: identifier, profilePictureUrl: profilePictureUrl.absoluteString, username: username, dateString: String.date(from: Date()) ?? "", postId: strongSelf.model.id, postUrl: strongSelf.model.postUrlString, postType: .video
+                                )
+                                NotificationManager.shared.create(notification: notification, for: strongSelf.model.user.username)
+                                
+                                if let commentCountInt = Int(strongSelf.commentCount.text ?? "0"){
+                                    strongSelf.commentCount.text = "\(commentCountInt + 1)"
+                                    
+                                }
+                                
+                            })
                         }
                         
                     })
@@ -825,22 +878,11 @@ extension VideoPostViewController: PostHeaderViewDelegate{
     func postHeaderViewDidTapMore(_ view: PostHeaderView) {
         let sheet = UIAlertController(title: "投稿アクション", message: nil, preferredStyle: .actionSheet)
         sheet.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
-        sheet.addAction(UIAlertAction(title: "投稿の共有", style: .default, handler: {[weak self] _ in
-            DispatchQueue.main.async {
-//                let cellType = self?.viewModels[index]
-//                    switch cellType{
-//                    case .post(let viewModel):
-//                        let vc = UIActivityViewController(activityItems: ["Sharing from Yorimichi", viewModel.postUrl], applicationActivities: [])
-//                        self?.present(vc, animated: true)
-//
-//                    default:
-//                        break
-//
-//
-//                    }
-            }
-            
-        }))
+//        sheet.addAction(UIAlertAction(title: "投稿の共有", style: .default, handler: {[weak self] _ in
+//            DispatchQueue.main.async {
+//            }
+//            
+//        }))
         
         if isCurrentUserOwnsThisPost(){
             sheet.addAction(UIAlertAction(title: "投稿の削除", style: .default, handler: {[weak self] _ in

@@ -54,7 +54,7 @@ class CommentsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let closeButtonSize: CGFloat = 12
+        let closeButtonSize: CGFloat = 16
         closeButton.frame = CGRect(x: view.width-35, y: 10, width: closeButtonSize, height: closeButtonSize)
         tableView.frame = CGRect(x: 0, y: closeButton.bottom, width: view.width, height: view.height-closeButton.bottom-commentBarViewHeight)
 //        commentBarView.frame = CGRect(x: 0, y: tableView.bottom, width: view.width, height: commentBarViewHeight)

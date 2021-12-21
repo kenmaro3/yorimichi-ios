@@ -27,7 +27,7 @@ class PhotoEditInfoCollectionCaptionViewCell: UICollectionViewListCell {
         textView.borderStyle = .none
         textView.keyboardType = .default
         textView.backgroundColor = .systemBackground
-        textView.placeholder = "キャプションを追加"
+        textView.placeholder = "キャプションを追加してください。"
         
         return textView
     }()

@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum PostType: Codable{
+    case photo
+    case video
+}
 
 struct IGNotification: Codable{
     let notificationType: Int // 1: like, 2: comment, 3: follow
@@ -15,11 +19,13 @@ struct IGNotification: Codable{
     let username: String
     let dateString: String
     
-    // Follow/Unfollow
-    let isFollowing: Bool?
-    
     // Like/Comment
     let postId: String?
     let postUrl: String?
+    let postType: PostType?
+    
+    var date: Date{
+        return DateFormatter.formatter.date(from: dateString) ?? Date()
+    }
     
 }

@@ -8,8 +8,16 @@
 import UIKit
 import ProgressHUD
 import AVFoundation
+import MapKit
+import Mapbox
+
 
 class PhotoEditInfoViewController: UIViewController {
+    let geocoder = CLGeocoder()
+    // locationManager で現在地を取得する
+    private var locationManager:CLLocationManager!
+    
+    private var userCurrentLocation = CLLocation()
     
     enum SubmitType{
         case photo(image: UIImage)
@@ -57,7 +65,7 @@ class PhotoEditInfoViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         //imageView.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: view.width, height: view.width)
-        collectionView?.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: view.width, height: view.height)
+        collectionView?.frame = CGRect(x: 0, y: view.safeAreaInsets.bottom + 10, width: view.width, height: view.height)
     }
     
     
@@ -83,7 +91,7 @@ class PhotoEditInfoViewController: UIViewController {
     public func createPhotoViewModels(image: UIImage){
         viewModels.append(.post(viewModel: PhotoEditInfoPostViewModel(image: image)))
         viewModels.append(.caption)
-        viewModels.append(.location(viewModel: PhotoEditInfoLocationViewModel(title: "名称", subTitle: "場所詳細")))
+        viewModels.append(.location(viewModel: PhotoEditInfoLocationViewModel(title: "名称から検索", subTitle: "場所詳細")))
         viewModels.append(.genre(viewModel: PhotoEditInfoGenreViewModel(genre: GenreInfo(code: "G000", type: .food))))
         
         submitType = .photo(image: image)
@@ -92,7 +100,7 @@ class PhotoEditInfoViewController: UIViewController {
     public func createVideoViewModels(url: URL){
         viewModels.append(.video(viewModel: PhotoEditInfoVideoViewModel(url: url)))
         viewModels.append(.caption)
-        viewModels.append(.location(viewModel: PhotoEditInfoLocationViewModel(title: "名称", subTitle: "場所詳細")))
+        viewModels.append(.location(viewModel: PhotoEditInfoLocationViewModel(title: "名称から検索", subTitle: "場所詳細")))
         viewModels.append(.genre(viewModel: PhotoEditInfoGenreViewModel(genre: GenreInfo(code: "G000", type: .food))))
         
         submitType = .video(url: url)
@@ -361,14 +369,14 @@ class PhotoEditInfoViewController: UIViewController {
     // MARK: - CollectionView Layout
     
     private func configureCollectionViewLayout(){
-        let sectionHeight: CGFloat = 400
+        let sectionHeight: CGFloat = 420
 
         
         let layout = UICollectionViewCompositionalLayout(sectionProvider: {index, _ ->
             NSCollectionLayoutSection? in
             
             // Item
-            let postItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)))
+            let postItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(120)))
             
             let captionItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)))
             let locationItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(80)))
@@ -493,6 +501,12 @@ extension PhotoEditInfoViewController: SearchLocationViewControllerDelegate{
         self.collectionView?.reloadData()
     }
     
+    func searchLocationViewControllerDidEnterDirectLocation(text: String?){
+        print("tapped location direct entered")
+        self.locationTitle = text
+        determineMyCurrentLocation()
+    }
+    
     
 }
 
@@ -538,4 +552,57 @@ extension PhotoEditInfoViewController: PhotoEditInfoCollectionCaptionViewCellDel
     }
     
     
+}
+
+extension PhotoEditInfoViewController: CLLocationManagerDelegate{
+    
+    func determineMyCurrentLocation() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+            //locationManager.startUpdatingHeading()
+        }
+    }
+    
+    func getLocationString(location: CLLocation){
+        //逆ジオコーディング
+        self.geocoder.reverseGeocodeLocation( location, completionHandler: {[weak self] ( placemarks, error ) in
+            if let placemark = placemarks?.first {
+                self?.locationSubTitle = "\(placemark.administrativeArea ?? "") \(placemark.name ?? "")"
+                let model = PhotoEditInfoCellType.location(viewModel: PhotoEditInfoLocationViewModel(title: self?.locationTitle ?? "", subTitle: self?.locationSubTitle ?? ""))
+                self?.viewModels[2] = model
+                
+                self?.location = Location(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
+                
+                self?.collectionView?.reloadData()
+                
+            }
+            else{
+                return
+            }
+        })
+        
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation:CLLocation = locations[0] as CLLocation
+
+        //表示更新
+        if let location = locations.first {
+            userCurrentLocation = location
+            getLocationString(location: location)
+            
+        }
+        
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
+    {
+        print("Error \(error)")
+    }
 }
