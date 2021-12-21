@@ -22,7 +22,6 @@ final class AuthManager{
     let auth = Auth.auth()
     
     public var isSignedIn: Bool {
-        let tmp = auth.currentUser
         return auth.currentUser != nil
     }
     

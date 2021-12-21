@@ -198,7 +198,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UIImagePicker
                         self?.completion?()
                     case .failure(let error):
                         HapticManager.shared.vibrate(for: .error)
-                        print("\n\nSignUp Error: \(error)")
+                        let alert = UIAlertController(title: "メールアドレスが無効です。", message: "このメールアドレスはすでに登録されています。他のアドレスでアカウントを作成するか、アカウントをお持ちの場合はログインしてください。", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
+                        self?.present(alert, animated: true)
                     }
                 })
             }
