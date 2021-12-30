@@ -39,6 +39,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.setValue("なんでも", forKey: "genre")
         UserDefaults.standard.setValue("Yorimichi DB", forKey: "source")
         
+        DatabaseManager.shared.getSearchBoundary()
+        
+        
         if #available(iOS 10.0, *) {
           // For iOS 10 display notification (sent via APNS)
           UNUserNotificationCenter.current().delegate = self

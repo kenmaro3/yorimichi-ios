@@ -16,6 +16,25 @@ final class DatabaseManager{
     
     let database = Firestore.firestore()
     
+    public func getSearchBoundary(){
+        let ref = database.collection("configure").document("config")
+        
+        ref.getDocument{(document, error) in
+            if let document = document, document.exists{
+                guard let data = document.data() else {
+                    UserDefaults.standard.setValue(0.015, forKey: "searchBoundaryLat")
+                    UserDefaults.standard.setValue(0.015, forKey: "searchBoundaryLng")
+                    return
+                }
+                UserDefaults.standard.setValue(data["searchBoundaryLat"], forKey: "searchBoundaryLat")
+                UserDefaults.standard.setValue(data["searchBoundaryLng"], forKey: "searchBoundaryLng")
+                
+            }
+            
+        }
+        
+    }
+    
     public func getRequiredUpdateVersion(completion: @escaping(String?) -> Void){
         let ref = database.collection("configure").document("config")
         
@@ -590,9 +609,12 @@ final class DatabaseManager{
     }
     
     public func exploreYorimichiPosts(genre: GenreInfo, refLocation: Location, completion: @escaping ([Post]) -> Void){
+        let searchBoundaryLat = UserDefaults.standard.float(forKey: "searchBoundaryLat")
+        print("\n\n\n=========here boundary")
+        print(searchBoundaryLat)
         let ref = database.collection("yorimichiPost").document(genre.code).collection("posts")
-        let latUpperLimit = refLocation.lat + 0.01
-        let latLowerLimit = refLocation.lat - 0.01
+        let latUpperLimit = refLocation.lat + CGFloat(searchBoundaryLat)
+        let latLowerLimit = refLocation.lat - CGFloat(searchBoundaryLat)
         
 //        let lngUpperLimit = refLocation.lng + 0.01
 //        let lngLowerLimit = refLocation.lng - 0.01
@@ -650,8 +672,10 @@ final class DatabaseManager{
     }
     
     private func filterLng(places: [Post], refLocation: Location, completion: @escaping ([Post]) -> Void){
-        let lngUpperLimit = refLocation.lng + 0.01
-        let lngLowerLimit = refLocation.lng - 0.01
+        let searchBoundaryLng = UserDefaults.standard.float(forKey: "searchBoundaryLng")
+
+        let lngUpperLimit = refLocation.lng + CGFloat(searchBoundaryLng)
+        let lngLowerLimit = refLocation.lng - CGFloat(searchBoundaryLng)
         
         var filteredPost: [Post] = []
         

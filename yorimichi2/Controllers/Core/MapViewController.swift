@@ -22,8 +22,7 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
             .half: FloatingPanelLayoutAnchor(fractionalInset: 0.5, edge: .bottom, referenceGuide: .safeArea),
             .tip: FloatingPanelLayoutAnchor(absoluteInset: 44.0, edge: .bottom, referenceGuide: .safeArea),
         ]
-    }
-}
+    }}
 
 class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISearchResultsUpdating{
     /// when user hit the keyboard key
@@ -245,7 +244,7 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
 
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
          
-        mapView.setCenter(userCurrentLocation, zoomLevel: 15, animated: false)
+        mapView.setCenter(userCurrentLocation, zoomLevel: 12, animated: true)
          
         if(centeringCurrentLocation){
             determineMyCurrentLocation()
@@ -580,7 +579,7 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
     }
     
     
-    private func exploreWithYorimichiDB(){
+    private func exploreWithYorimichiDB(isShowingAlert: Bool=true){
         guard let genre = UserDefaults.standard.string(forKey: "genre") else {
             return
         }
@@ -606,7 +605,7 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
             })
         }
         
-        ProgressHUD.show("検索しています...")
+        //ProgressHUD.show("検索しています...")
         let genreInfo = GenreInfo(code: genreDisplayStringToCode(x: genre), type: genreType)
         
         let refLocation = Location(lat: mapView.centerCoordinate.latitude, lng: mapView.centerCoordinate.longitude)
@@ -662,17 +661,21 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         })
         
         group.notify(queue: .main){
-            ProgressHUD.dismiss()
+            //ProgressHUD.dismiss()
             guard let listVC = self.exploreFpc.contentViewController as? ListOnMapViewController else {
                 fatalError()
             }
             if (totalCellTypes.isEmpty){
-                AlertManager.shared.presentError(title: "場所が見つかりませんでした。", message: "ジャンルもしくは場所を変更して検索してください。", completion: { alert in
+                
+                if(isShowingAlert){
+                             AlertManager.shared.presentError(title: "場所が見つかりませんでした。", message: "ジャンルもしくは場所を変更して検索してください。", completion: { alert in
                     
                     self.present(alert, animated: true)
                 })
-                ProgressHUD.dismiss()
+                //ProgressHUD.dismiss()
                 return
+       
+                }
             }
             self.annotationsYorimichi = totalAnnotations
             self.mapView.addAnnotations(totalAnnotations)
@@ -934,6 +937,32 @@ extension MapViewController: MKLocalSearchCompleterDelegate {
 
 
 extension MapViewController: ListOnMapViewControllerDelegate{
+    func ListOnMapScrolled(type: SelectedSegment) {
+        switch type{
+        case .left:
+            print("now left")
+            exploreWithYorimichiDB(isShowingAlert: false)
+            removeLikeAnnotation()
+            removeHPAnnotation()
+            removeSelectedAnnotation()
+            
+        case .middle:
+            print("now middle")
+            removeLikeAnnotation()
+            removeHPAnnotation()
+            mapView.addAnnotations(annotationsSelected)
+            
+        case .right:
+            print("now right")
+            removeSelectedAnnotation()
+            removeHPAnnotation()
+            mapView.addAnnotations(annotationsLikes)
+            
+        }
+    }
+    
+    
+    
     func listOnMapViewControllerDidSelectLiked(index: Int, viewModel: ListYorimichiLikesCellType) {
         print("\n\nid of each annotation")
         annotationsSelected.forEach{
@@ -1491,6 +1520,17 @@ extension MapViewController: MGLMapViewDelegate{
         
     }
     
+    private func removeLikeAnnotation(){
+        if let existingAnnotations = mapView.annotations{
+            existingAnnotations.forEach{ annotation in
+                if annotation is LikesAnnotationViewModel{
+                    mapView.removeAnnotation(annotation)
+                }
+                    
+            }
+        }
+    }
+    
     
     private func removeDestinationAnnotation(){
         if let existingAnnotations = mapView.annotations{
@@ -1564,7 +1604,7 @@ extension MapViewController: CLLocationManagerDelegate{
         showCurrentUserLocation()
         
         if(centeringCurrentLocation){
-            mapView.setCenter(userCurrentLocation, zoomLevel: 15, animated: false)
+            mapView.setCenter(userCurrentLocation, zoomLevel: 12, animated: true)
 
         }
         centeringCurrentLocation = false

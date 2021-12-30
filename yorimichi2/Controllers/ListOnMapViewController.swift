@@ -16,10 +16,21 @@ protocol ListOnMapViewControllerDelegate: AnyObject{
     func ListOnMapMiddleViewControllerDidYorimichiDoubleTapped(_ cell: ListExploreResultYorimichiTableViewCell, didTapPostWith viewModel: YorimichiAnnotationViewModel)
     func ListOnMapMiddleViewControllerDidHPDoubleTapped(_ cell: ListExploreResultHPTableViewCell, didTapPostWith viewModel: HPAnnotationViewModel)
     
+    func ListOnMapScrolled(type: SelectedSegment)
+    
+}
+
+enum SelectedSegment{
+    case left
+    case middle
+    case right
 }
 
 class ListOnMapViewController: UIViewController {
     weak var delegate: ListOnMapViewControllerDelegate?
+    
+    private var previousSelectedSegment: SelectedSegment = SelectedSegment.left
+    private var selectedSegment: SelectedSegment = SelectedSegment.left
 
     private let emptyLabel: UILabel = {
         let label = UILabel()
@@ -198,6 +209,32 @@ extension ListOnMapViewController: UIScrollViewDelegate{
         }
         else{
             fatalError("ListOnMapViewController seems exceeded it scroll")
+        }
+        
+        if (segmentedControllView.selectedSegmentIndex==0){
+            selectedSegment = .left
+        }
+        else if(segmentedControllView.selectedSegmentIndex==1){
+            selectedSegment = .middle
+        }
+        else if(segmentedControllView.selectedSegmentIndex==2){
+            selectedSegment = .right
+            
+        }
+        else{
+            fatalError("ListOnMapViewController seems exceeded it scroll")
+        }
+        
+        if (previousSelectedSegment != selectedSegment){
+            switch selectedSegment{
+            case .left:
+                delegate?.ListOnMapScrolled(type: .left)
+            case .middle:
+                delegate?.ListOnMapScrolled(type: .middle)
+            case .right:
+                delegate?.ListOnMapScrolled(type: .right)
+            }
+            previousSelectedSegment = selectedSegment
         }
     }
 }
