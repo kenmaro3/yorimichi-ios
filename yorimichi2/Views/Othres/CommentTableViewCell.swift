@@ -28,8 +28,8 @@ class CommentTableViewCell: UITableViewCell {
     
     private let commentLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 16.0)
+        label.numberOfLines = 2
+        label.font = UIFont.systemFont(ofSize: 14.0)
         label.textColor = .black
         return label
     }()
@@ -37,7 +37,7 @@ class CommentTableViewCell: UITableViewCell {
     private let dateLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.font = UIFont.systemFont(ofSize: 12.0)
         label.textColor = .systemGray
         return label
     }()
@@ -68,7 +68,7 @@ class CommentTableViewCell: UITableViewCell {
         avatarImageView.layer.cornerRadius = imageSize/2
         
         let commentLabelHeight = min(contentView.height-dateLabel.top, commentLabel.height)
-        commentLabel.frame = CGRect(x: avatarImageView.right+10, y: 5, width: contentView.width - avatarImageView.width - 10, height: commentLabelHeight)
+        commentLabel.frame = CGRect(x: avatarImageView.right+10, y: 5, width: contentView.width - avatarImageView.width - 30, height: commentLabelHeight)
         dateLabel.frame = CGRect(x: avatarImageView.right+10, y: commentLabel.bottom, width: dateLabel.width, height: dateLabel.height)
         
     }
@@ -84,6 +84,9 @@ class CommentTableViewCell: UITableViewCell {
     public func configure(with model: PostComment){
         commentLabel.text = model.text
         dateLabel.text = .date(from: model.date)
+        commentLabel.sizeToFit()
+        let commentLabelHeight = min(contentView.height-dateLabel.top, commentLabel.height)
+        commentLabel.frame = CGRect(x: avatarImageView.right+10, y: 5, width: contentView.width - avatarImageView.width - 30, height: commentLabelHeight)
         
         StorageManager.shared.profilePictureURL(for: model.user.username, completion: {[weak self] url in
             self?.avatarImageView.sd_setImage(with: url, completed: nil)
