@@ -174,12 +174,14 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         setUpButtons()
 //        setUpDoubleTapToLike()
         fetchUser()
+        
+        configureImage()
+
         view.addSubview(captionLabel)
         view.addSubview(timestampLabel)
         view.addSubview(locationLabel)
         view.addSubview(location2Label)
         
-        configureImage()
         
         setUpLikeButton()
         setUpYorimichiButton()
