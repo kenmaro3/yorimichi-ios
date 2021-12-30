@@ -284,15 +284,18 @@ final class DatabaseManager{
         var res = [String]()
         self.following(for: username, completion: {[weak self] followings in
             var ref = self?.database.collection("users").limit(to: 20)
-            if (followings.count > 0){
-                ref = self?.database.collection("users").whereField("username", notIn: followings).limit(to: 20)
-            }
+//            if (followings.count > 0){
+//                ref = self?.database.collection("users").whereField("username", notIn: followings).limit(to: 20)
+//            }
             ref?.getDocuments{ snapshot, error in
-                guard let users = snapshot?.documents.compactMap({User(with: $0.data())?.username}), error == nil else{
+                guard let usernames = snapshot?.documents.compactMap({User(with: $0.data())?.username}), error == nil else{
                     completion([])
                     return
                 }
-                completion(users)
+                let filteredUsers = usernames.filter{ username in
+                    !followings.contains(username)
+                }
+                completion(filteredUsers)
             }
         })
     }
@@ -306,16 +309,20 @@ final class DatabaseManager{
                 var ref = self?.database.collection("users").limit(to: 20)
                 usersNotIn = usersNotIn + followings
                 usersNotIn = usersNotIn + blocks
-                if (usersNotIn.count > 0){
-                    ref = self?.database.collection("users").whereField("username", notIn: usersNotIn).limit(to: 20)
-                }
+//                if (usersNotIn.count > 0){
+//                    ref = self?.database.collection("users").whereField("username", notIn: usersNotIn).limit(to: 20)
+//                }
                 ref?.getDocuments{ snapshot, error in
-                    guard let users = snapshot?.documents.compactMap({User(with: $0.data())?.username}), error == nil else{
+                    guard let usernames = snapshot?.documents.compactMap({User(with: $0.data())?.username}), error == nil else{
                         completion([])
                         return
                     }
                     
-                    let usersWithoutMyself = users.filter{
+                    let filteredUsers = usernames.filter{ username in
+                        !followings.contains(username)
+                    }
+                    
+                    let usersWithoutMyself = filteredUsers.filter{
                         $0 != username
                     }
                     completion(usersWithoutMyself)
