@@ -1488,15 +1488,32 @@ final class DatabaseManager{
 //            return
 //        }
         
+        let readRef = database.collection("users").document(username).collection("yorimichiLikes")
         let newIdentifier = "\(username)_\(Date().timeIntervalSince1970)_\(Int.random(in: 0...1000))"
         let ref = database.collection("users").document(username).collection("yorimichiLikes").document(newIdentifier)
-        guard let data = post.asDictionary() else {
-            completion(false)
-            return
-        }
-        ref.setData(data) {error in
-            completion(error==nil)
-        }
+
+        readRef.getDocuments(completion: {[weak self] snapshot, error in
+            guard let ids = snapshot?.documents.compactMap({
+                Post(with: $0.data())!.id
+            }) else {
+                completion(false)
+                return
+            }
+            
+            if ids.contains(post.id){
+                completion(true)
+                return
+            }
+            else{
+                guard let data = post.asDictionary() else {
+                    completion(false)
+                    return
+                }
+                ref.setData(data) {error in
+                    completion(error==nil)
+                }
+            }
+        })
     }
     
 

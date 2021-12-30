@@ -111,8 +111,8 @@ class ProfileHeaderCountView: UIView {
         switch action{
         case .edit:
             delegate?.profileHeaderCountViewDidTapEditProfile(self)
-        case .follow(let isFollowing):
-            if isFollowing{
+        case .follow(let is_following):
+            if is_following{
                 // unfollow
                 delegate?.profileHeaderCountViewDidTapUnFollow(self)
             }
@@ -121,7 +121,8 @@ class ProfileHeaderCountView: UIView {
                 delegate?.profileHeaderCountViewDidTapFollow(self)
             }
             
-            self.isFollowing = !isFollowing
+            self.isFollowing = !is_following
+            self.action = .follow(isFollowing: self.isFollowing)
         }
     }
     
@@ -140,7 +141,6 @@ class ProfileHeaderCountView: UIView {
         
         actionButton.frame = CGRect(x: 5, y: height-42, width: width-10, height: 40)
     }
-    
     
     public func configure(with viewModel: ProfileHeaderCountViewModel){
         followerCountButton.setTitle("\(viewModel.followerCount)\nフォロワー", for: .normal)
