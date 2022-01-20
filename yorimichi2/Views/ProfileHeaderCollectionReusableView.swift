@@ -53,6 +53,7 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
         return button
     }()
     
+    
     // MARK: - Init
     
     override init(frame: CGRect) {
@@ -68,6 +69,9 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
         
         twitterLinkIcon.addTarget(self, action: #selector(didTapTwitterLink), for: .touchUpInside)
         instagramLinkIcon.addTarget(self, action: #selector(didTapInstagramLink), for: .touchUpInside)
+        
+        // minimum usage.
+        let startDate = Date()
         
     }
     

@@ -941,6 +941,7 @@ extension MapViewController: ListOnMapViewControllerDelegate{
         switch type{
         case .left:
             print("now left")
+            removeYorimichiAnnotation()
             exploreWithYorimichiDB(isShowingAlert: false)
             removeLikeAnnotation()
             removeHPAnnotation()
@@ -948,12 +949,14 @@ extension MapViewController: ListOnMapViewControllerDelegate{
             
         case .middle:
             print("now middle")
+            removeYorimichiAnnotation()
             removeLikeAnnotation()
             removeHPAnnotation()
             mapView.addAnnotations(annotationsSelected)
             
         case .right:
             print("now right")
+            removeYorimichiAnnotation()
             removeSelectedAnnotation()
             removeHPAnnotation()
             mapView.addAnnotations(annotationsLikes)

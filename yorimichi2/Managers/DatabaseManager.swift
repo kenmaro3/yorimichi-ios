@@ -16,6 +16,9 @@ final class DatabaseManager{
     
     let database = Firestore.firestore()
     
+    
+    // MARK: Configuration Loading
+    
     public func getSearchBoundary(){
         let ref = database.collection("configure").document("config")
         
@@ -81,6 +84,37 @@ final class DatabaseManager{
         }
     }
     
+    // MARK: User Creation
+    
+    public func createUser(newUser: User, completion: @escaping (Bool) -> Void){
+        let reference = database.document("users/\(newUser.username)")
+        
+        guard let data = newUser.asDictionary() else {
+            completion(false)
+            return
+        }
+        reference.setData(data) {error in
+            completion(error == nil)
+        }
+        
+    }
+    
+    public func getAllUsersString(completion: @escaping ([String]) -> Void){
+        let ref = database.collection("users")
+        
+        ref.getDocuments(completion: { snapshot, error in
+            guard let usernames = snapshot?.documents.compactMap({ $0.documentID}), error == nil else{
+                completion([])
+                return
+            }
+            completion(usernames)
+            
+        })
+    }
+    
+
+    
+    // MARK: Users
     
     public func findUsers(with usernamePrefix: String, completion: @escaping([User]) -> Void){
         let ref = database.collection("users")
@@ -103,10 +137,121 @@ final class DatabaseManager{
         
     }
     
+    public func findUser(with email: String, completion: @escaping (User?) -> Void){
+        let ref = database.collection("users")
+        ref.getDocuments{ snapshot, error in
+            //            guard let users = snapshot?.documents, error == nil else{
+            print(snapshot?.documents)
+            guard let users = snapshot?.documents.compactMap({User(with: $0.data())}), error == nil else{
+                completion(nil)
+                return
+            }
+            
+            //            let userData = users.compactMap({ $0.data()})
+            //            let myUser = userData.compactMap({ User(with: $0)})
+            
+            let user = users.first(where: {$0.email == email})
+            completion(user)
+            
+        }
+    }
+    
+    public func findUser(username: String, completion: @escaping (User?) -> Void){
+        let ref = database.collection("users").whereField("username", isEqualTo: username)
+        ref.getDocuments{ snapshot, error in
+            //            guard let users = snapshot?.documents, error == nil else{
+            guard let users = snapshot?.documents.compactMap({User(with: $0.data())}), error == nil else{
+                completion(nil)
+                return
+            }
+            
+            
+            let user = users.first
+            completion(user)
+            
+        }
+    }
+    
+    
+    /// Get userName list of username not following
+    public func getNotFollowing(username: String, completion: @escaping ([String]) -> Void){
+        var res = [String]()
+        self.following(for: username, completion: {[weak self] followings in
+            var ref = self?.database.collection("users").limit(to: 20)
+            //            if (followings.count > 0){
+            //                ref = self?.database.collection("users").whereField("username", notIn: followings).limit(to: 20)
+            //            }
+            ref?.getDocuments{ snapshot, error in
+                guard let usernames = snapshot?.documents.compactMap({User(with: $0.data())?.username}), error == nil else{
+                    completion([])
+                    return
+                }
+                let filteredUsers = usernames.filter{ username in
+                    !followings.contains(username)
+                }
+                completion(filteredUsers)
+            }
+        })
+    }
+    
+    /// Get userName list of username neither not following nor blocking nor myself
+    public func getNotFollowingNotBlocking(username: String, completion: @escaping ([String]) -> Void){
+        var res = [String]()
+        var usersNotIn = [String]()
+        self.following(for: username, completion: {[weak self] followings in
+            self?.blocks(for: username, completion: { blocks in
+                var ref = self?.database.collection("users").limit(to: 20)
+                usersNotIn = usersNotIn + followings
+                usersNotIn = usersNotIn + blocks
+                //                if (usersNotIn.count > 0){
+                //                    ref = self?.database.collection("users").whereField("username", notIn: usersNotIn).limit(to: 20)
+                //                }
+                ref?.getDocuments{ snapshot, error in
+                    guard let usernames = snapshot?.documents.compactMap({User(with: $0.data())?.username}), error == nil else{
+                        completion([])
+                        return
+                    }
+                    
+                    let filteredUsers = usernames.filter{ username in
+                        !followings.contains(username)
+                    }
+                    
+                    let usersWithoutMyself = filteredUsers.filter{
+                        $0 != username
+                    }
+                    completion(usersWithoutMyself)
+                }
+            })
+        })
+    }
+    
+    public func isUsernameExist(username: String, completion: @escaping (Bool) -> Void){
+        let ref = database.collection("users")
+        ref.getDocuments{ snapshot, error in
+            //            guard let users = snapshot?.documents, error == nil else{
+            guard let usernames = snapshot?.documents.compactMap({User(with: $0.data())?.username}), error == nil else{
+                completion(false)
+                return
+            }
+            
+            if usernames.contains(username){
+                completion(true)
+            }
+            else{
+                completion(false)
+            }
+            
+        }
+        
+    }
+    
+    
+    // MARK: Places
+    
     public func findPlacesSubString(with prefix: String, completion: @escaping([String]) -> Void){
         let ref = database.collection("yorimichiPost").document("A000").collection("posts")
         ref.getDocuments{ snapshot, error in
-//            guard let users = snapshot?.documents, error == nil else{
+            //            guard let users = snapshot?.documents, error == nil else{
             guard let posts = snapshot?.documents.compactMap({Post(with: $0.data())}), error == nil else{
                 completion([])
                 return
@@ -144,6 +289,9 @@ final class DatabaseManager{
         
     }
     
+    
+    // MARK: Posts Reading
+
     public func posts(for username: String, completion: @escaping (Result<[Post], Error>) -> Void){
         let ref = database.collection("users")
             .document(username)
@@ -262,114 +410,8 @@ final class DatabaseManager{
         
     }
     
-    public func findUser(with email: String, completion: @escaping (User?) -> Void){
-        let ref = database.collection("users")
-        ref.getDocuments{ snapshot, error in
-//            guard let users = snapshot?.documents, error == nil else{
-            print(snapshot?.documents)
-            guard let users = snapshot?.documents.compactMap({User(with: $0.data())}), error == nil else{
-                completion(nil)
-                return
-            }
-            
-//            let userData = users.compactMap({ $0.data()})
-//            let myUser = userData.compactMap({ User(with: $0)})
-            
-            let user = users.first(where: {$0.email == email})
-            completion(user)
-            
-        }
-    }
     
-    public func findUser(username: String, completion: @escaping (User?) -> Void){
-        let ref = database.collection("users")
-        ref.getDocuments{ snapshot, error in
-//            guard let users = snapshot?.documents, error == nil else{
-            guard let users = snapshot?.documents.compactMap({User(with: $0.data())}), error == nil else{
-                completion(nil)
-                return
-            }
-            
-            
-            let user = users.first(where: {$0.username == username})
-            completion(user)
-            
-        }
-    }
-    
-    
-    /// Get userName list of username not following
-    public func getNotFollowing(username: String, completion: @escaping ([String]) -> Void){
-        var res = [String]()
-        self.following(for: username, completion: {[weak self] followings in
-            var ref = self?.database.collection("users").limit(to: 20)
-//            if (followings.count > 0){
-//                ref = self?.database.collection("users").whereField("username", notIn: followings).limit(to: 20)
-//            }
-            ref?.getDocuments{ snapshot, error in
-                guard let usernames = snapshot?.documents.compactMap({User(with: $0.data())?.username}), error == nil else{
-                    completion([])
-                    return
-                }
-                let filteredUsers = usernames.filter{ username in
-                    !followings.contains(username)
-                }
-                completion(filteredUsers)
-            }
-        })
-    }
-    
-    /// Get userName list of username neither not following nor blocking nor myself
-    public func getNotFollowingNotBlocking(username: String, completion: @escaping ([String]) -> Void){
-        var res = [String]()
-        var usersNotIn = [String]()
-        self.following(for: username, completion: {[weak self] followings in
-            self?.blocks(for: username, completion: { blocks in
-                var ref = self?.database.collection("users").limit(to: 20)
-                usersNotIn = usersNotIn + followings
-                usersNotIn = usersNotIn + blocks
-//                if (usersNotIn.count > 0){
-//                    ref = self?.database.collection("users").whereField("username", notIn: usersNotIn).limit(to: 20)
-//                }
-                ref?.getDocuments{ snapshot, error in
-                    guard let usernames = snapshot?.documents.compactMap({User(with: $0.data())?.username}), error == nil else{
-                        completion([])
-                        return
-                    }
-                    
-                    let filteredUsers = usernames.filter{ username in
-                        !followings.contains(username)
-                    }
-                    
-                    let usersWithoutMyself = filteredUsers.filter{
-                        $0 != username
-                    }
-                    completion(usersWithoutMyself)
-                }
-            })
-        })
-    }
-    
-    public func isUsernameExist(username: String, completion: @escaping (Bool) -> Void){
-        let ref = database.collection("users")
-        ref.getDocuments{ snapshot, error in
-//            guard let users = snapshot?.documents, error == nil else{
-            guard let usernames = snapshot?.documents.compactMap({User(with: $0.data())?.username}), error == nil else{
-                completion(false)
-                return
-            }
-            
-            if usernames.contains(username){
-                completion(true)
-            }
-            else{
-                completion(false)
-            }
-            
-        }
-        
-    }
-    
+    // MARK: Post Creation
     
     public func createVideoPost(post: Post, completion: @escaping (Bool) -> Void){
         guard let username = UserDefaults.standard.string(forKey: "username") else {
@@ -559,32 +601,6 @@ final class DatabaseManager{
         reference.setData(data){ error in
             completion(error == nil)
         }
-    }
-    
-    public func createUser(newUser: User, completion: @escaping (Bool) -> Void){
-        let reference = database.document("users/\(newUser.username)")
-        
-        guard let data = newUser.asDictionary() else {
-            completion(false)
-            return
-        }
-        reference.setData(data) {error in
-            completion(error == nil)
-        }
-        
-    }
-    
-    public func getAllUsersString(completion: @escaping ([String]) -> Void){
-        let ref = database.collection("users")
-        
-        ref.getDocuments(completion: { snapshot, error in
-            guard let usernames = snapshot?.documents.compactMap({ $0.documentID}), error == nil else{
-                completion([])
-                return
-            }
-            completion(usernames)
-            
-        })
     }
     
     

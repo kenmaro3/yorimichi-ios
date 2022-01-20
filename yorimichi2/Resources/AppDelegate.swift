@@ -8,6 +8,7 @@
 import Firebase
 import UIKit
 import Appirater
+import FirebaseMessaging
 import UserNotifications
 
 @main
@@ -42,45 +43,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DatabaseManager.shared.getSearchBoundary()
         
         
+        // Notifications
         if #available(iOS 10.0, *) {
-          // For iOS 10 display notification (sent via APNS)
-          UNUserNotificationCenter.current().delegate = self
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
 
-          let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-          UNUserNotificationCenter.current().requestAuthorization(
-            options: authOptions,
-            completionHandler: { _, _ in }
-          )
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: {_, _ in })
         } else {
-          let settings: UIUserNotificationSettings =
-            UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-          application.registerUserNotificationSettings(settings)
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
         }
 
         application.registerForRemoteNotifications()
         
-//        // Add dummy notification for current user
-//        let identifier = NotificationManager.newIdentifier()
-//        let model = IGNotification(notificationType: 3,
-//                                   identifier: identifier,
-//                                   profilePictureUrl: "https://iosacademy.io/assets/images/brand/icon.jpg",
-//                                   username: "azami",
-//                                   dateString: String.date(from: Date()) ?? "Now",
-//                                   isFollowing: false,
-//                                   postId: nil,
-//                                   postUrl: nil
-////                                   postUrl: "https://iosacademy.io/assets/images/courses/swiftui.png"
-//                                   )
-//        NotificationManager.shared.create(notification: model, for: "kenmaro")
-        
-        Messaging.messaging().token { token, error in
-          if let error = error {
-            print("Error fetching FCM registration token: \(error)")
-          } else if let token = token {
-            print("FCM registration token: \(token)")
-            //self.fcmRegTokenMessage.text  = "Remote FCM registration token: \(token)"
-          }
-        }
         
         return true
     }
@@ -159,52 +138,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
-
-// [START ios_10_message_handling]
-@available(iOS 10, *)
-extension AppDelegate: UNUserNotificationCenterDelegate {
-  // Receive displayed notifications for iOS 10 devices.
-  func userNotificationCenter(_ center: UNUserNotificationCenter,
-                              willPresent notification: UNNotification,
-                              withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions)
-                                -> Void) {
-    let userInfo = notification.request.content.userInfo
-
-    // With swizzling disabled you must let Messaging know about the message, for Analytics
-    // Messaging.messaging().appDidReceiveMessage(userInfo)
-    // [START_EXCLUDE]
-    // Print message ID.
-    if let messageID = userInfo[gcmMessageIDKey] {
-      print("Message ID: \(messageID)")
-    }
-    // [END_EXCLUDE]
-    // Print full message.
-    print(userInfo)
-
-    // Change this to your preferred presentation option
-    completionHandler([[.alert, .sound]])
-  }
-
-  func userNotificationCenter(_ center: UNUserNotificationCenter,
-                              didReceive response: UNNotificationResponse,
-                              withCompletionHandler completionHandler: @escaping () -> Void) {
-    let userInfo = response.notification.request.content.userInfo
-
-    // [START_EXCLUDE]
-    // Print message ID.
-    if let messageID = userInfo[gcmMessageIDKey] {
-      print("Message ID: \(messageID)")
-    }
-    // [END_EXCLUDE]
-    // With swizzling disabled you must let Messaging know about the message, for Analytics
-    // Messaging.messaging().appDidReceiveMessage(userInfo)
-    // Print full message.
-    print(userInfo)
-
-    completionHandler()
-  }
-}
-
 // [END ios_10_message_handling]
 extension AppDelegate: MessagingDelegate {
   // [START refresh_token]
@@ -224,3 +157,40 @@ extension AppDelegate: MessagingDelegate {
   // [END refresh_token]
 }
 
+@available(iOS 10, *)
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    // Receive displayed notifications for iOS 10 devices.
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions)
+                                -> Void) {
+        let userInfo = notification.request.content.userInfo
+        
+        // With swizzling disabled you must let Messaging know about the message, for Analytics
+        // Messaging.messaging().appDidReceiveMessage(userInfo)
+        
+        // ...
+        
+        // Print full message.
+        print(userInfo)
+        
+        // Change this to your preferred presentation option
+        completionHandler([[.alert, .sound]])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        
+        // ...
+        
+        // With swizzling disabled you must let Messaging know about the message, for Analytics
+        // Messaging.messaging().appDidReceiveMessage(userInfo)
+        
+        // Print full message.
+        print(userInfo)
+        
+        completionHandler()
+    }
+}
