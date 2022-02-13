@@ -5,9 +5,10 @@ import MapKit
 import CoreLocation
 
 class ExploreViewController: UIViewController, UISearchResultsUpdating, UITableViewDelegate, UITableViewDataSource, PhotoTableViewFooterViewDelegate {
+    
     // locationManager で現在地を取得する
     private var locationManager:CLLocationManager!
-    public var currenetLocation: CLLocation?
+    public var currentLocation: CLLocation?
     /// ロケーションマネージャのセットアップ
     func setupLocationManager() {
         locationManager = CLLocationManager()
@@ -337,7 +338,7 @@ class ExploreViewController: UIViewController, UISearchResultsUpdating, UITableV
             self.postsPopular = posts
         }
         
-        DatabaseManager.shared.explorePostsNearBy(currentLocation: self.currenetLocation ?? CLLocation(), completion: { posts in
+        DatabaseManager.shared.explorePostsNearBy(currentLocation: self.currentLocation ?? CLLocation(), completion: { posts in
             defer{
                 group.leave()
             }
@@ -414,10 +415,10 @@ extension ExploreViewController: CLLocationManagerDelegate{
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation:CLLocation = locations[0] as CLLocation
-        self.currenetLocation = userLocation
+        self.currentLocation = userLocation
         print("\n\nhere==============")
-        print("explore updating location \(self.currenetLocation)")
-        DatabaseManager.shared.explorePostsNearBy(currentLocation: self.currenetLocation ?? CLLocation(), completion: { posts in
+        print("explore updating location \(self.currentLocation)")
+        DatabaseManager.shared.explorePostsNearBy(currentLocation: self.currentLocation ?? CLLocation(), completion: { posts in
             self.postsNearBy = posts
             self.tableView.reloadData()
         })

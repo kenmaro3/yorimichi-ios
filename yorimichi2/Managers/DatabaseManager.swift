@@ -999,7 +999,7 @@ final class DatabaseManager{
                   }
             
             let now = Date()
-            let modifiedDate = Calendar.current.date(byAdding: .day, value: -60, to: now)!
+            let modifiedDate = Calendar.current.date(byAdding: .day, value: -1, to: now)!
             
             var recentNotifications = notifications.filter{
                 $0.date > modifiedDate

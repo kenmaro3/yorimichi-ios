@@ -1,6 +1,32 @@
 import UIKit
+import CoreLocation
 
 class HomeViewController: UIViewController {
+    // locationManager で現在地を取得する
+    private var locationManager:CLLocationManager!
+    public var currentLocation: CLLocation?
+    /// ロケーションマネージャのセットアップ
+    func setupLocationManager() {
+        locationManager = CLLocationManager()
+        // 位置情報取得許可ダイアログの表示
+        guard let locationManager = locationManager else { return }
+        locationManager.requestWhenInUseAuthorization()
+        // マネージャの設定
+        let status = CLLocationManager.authorizationStatus()
+        // ステータスごとの処理
+        if status == .authorizedWhenInUse {
+            locationManager.delegate = self
+            // 位置情報取得を開始
+            locationManager.startUpdatingLocation()
+        }
+        
+        // ステータスごとの処理
+        if status == .authorizedWhenInUse {
+            locationManager.delegate = self // これを追加
+            // 位置情報取得を開始
+            locationManager.startUpdatingLocation()
+        }
+    }
     
     private let emptyLabelForForYou: UILabel = {
         let label = UILabel()
@@ -58,6 +84,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupLocationManager()
+        
         
         // Do any additional setup after loading the view.
         view.backgroundColor = .systemBackground
@@ -68,7 +96,7 @@ class HomeViewController: UIViewController {
         
         horizontalScrollView.contentSize = CGSize(width: view.width*2, height: view.height)
         
-        fetchPostForYou()
+        //fetchPostForYou()
         fetchPostFollowing()
         
         horizontalScrollView.contentInsetAdjustmentBehavior = .never
@@ -99,55 +127,70 @@ class HomeViewController: UIViewController {
         let group = DispatchGroup()
         
         group.enter()
-        DatabaseManager.shared.getNotFollowingNotBlocking(username: username, completion: { randomUsers in
+        
+        print("debug Location \(self.currentLocation)")
+        DatabaseManager.shared.explorePostsNearBy(currentLocation: self.currentLocation ?? CLLocation(), completion: {[weak self] posts in
+            
             defer{
                 group.leave()
             }
             
-            randomUsers.forEach{ user in
-                // Fetch User posts images
-                group.enter()
-                DatabaseManager.shared.postsRecent(for: user, completion: {[weak self] result in
-                    defer{
-                        group.leave()
-                    }
-                    
-                    switch result{
-                    case .success(let posts):
-                        //self?.posts = posts
-                        posts.forEach{
-                            self?.forYouPosts.append((cellType: .photo(viewModel: HomeScrollPhotoViewModel(post: $0)), id: $0.id))
-                        }
-                        
-                    case .failure:
-                        break
-                    }
-                    
-                })
-                
-                // Fetch User video posts
-                group.enter()
-                DatabaseManager.shared.videoPostsRecent(for: user, completion: {[weak self] result in
-                    defer{
-                        group.leave()
-                    }
-                    
-                    switch result{
-                    case .success(let posts):
-                        print("here======")
-                        print(posts)
-                        posts.forEach{
-                            self?.forYouPosts.append((cellType: .video(viewModel: HomeScrollVideoViewModel(post: $0)), id: $0.id))
-                            
-                        }
-                    case .failure:
-                        print("failure======")
-                        break
-                        
-                    }
-                })
+            posts.forEach{
+                self?.forYouPosts.append((cellType: .photo(viewModel: HomeScrollPhotoViewModel(post: $0)), id: $0.id))
             }
         })
+        
+        
+        
+//        DatabaseManager.shared.getNotFollowingNotBlocking(username: username, completion: { randomUsers in
+//            defer{
+//                group.leave()
+//            }
+//
+//            randomUsers.forEach{ user in
+//                // Fetch User posts images
+//                group.enter()
+//                DatabaseManager.shared.postsRecent(for: user, completion: {[weak self] result in
+//                    defer{
+//                        group.leave()
+//                    }
+//
+//                    switch result{
+//                    case .success(let posts):
+//                        //self?.posts = posts
+//                        posts.forEach{
+//                            self?.forYouPosts.append((cellType: .photo(viewModel: HomeScrollPhotoViewModel(post: $0)), id: $0.id))
+//                        }
+//
+//                    case .failure:
+//                        break
+//                    }
+//
+//                })
+//
+//                // Fetch User video posts
+//                group.enter()
+//                DatabaseManager.shared.videoPostsRecent(for: user, completion: {[weak self] result in
+//                    defer{
+//                        group.leave()
+//                    }
+//
+//                    switch result{
+//                    case .success(let posts):
+//                        print("here======")
+//                        print(posts)
+//                        posts.forEach{
+//                            self?.forYouPosts.append((cellType: .video(viewModel: HomeScrollVideoViewModel(post: $0)), id: $0.id))
+//
+//                        }
+//                    case .failure:
+//                        print("failure======")
+//                        break
+//
+//                    }
+//                })
+//            }
+//        })
         
         group.notify(queue: .main){
             print("\n\nNotify")
@@ -693,4 +736,37 @@ extension HomeViewController: PhotoPostViewControllerDelegate{
     }
     
     
+}
+
+
+extension HomeViewController: CLLocationManagerDelegate{
+    
+    func determineMyCurrentLocation() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+            //locationManager.startUpdatingHeading()
+        }
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation:CLLocation = locations[0] as CLLocation
+        self.currentLocation = userLocation
+        fetchPostForYou()
+        locationManager.stopUpdatingLocation()
+        
+        
+
+        
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
+    {
+        print("Error \(error)")
+    }
 }
