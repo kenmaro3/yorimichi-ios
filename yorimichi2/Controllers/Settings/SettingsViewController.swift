@@ -10,6 +10,19 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
+    private struct SettingsSection{
+        let title: String
+        let options: [SettingOption]
+    }
+
+    private struct SettingOption{
+        let title: String
+        let image: UIImage?
+        let color: UIColor
+        let handler: (() -> Void)
+    }
+
+    
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -58,7 +71,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             
             SettingsSection(title: "アプリの評価、共有", options: [
                 SettingOption(title: "アプリを評価する", image: UIImage(systemName: "star"), color: .systemOrange) {
-                    guard let url = URL(string: "https://yorimichi-project.webflow.io/") else {
+                    guard let url = URL(string: "https://apps.apple.com/jp/app/yorimichiapp/id1596625712") else {
                         return
                     }
                     DispatchQueue.main.async {
@@ -126,16 +139,48 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     // Table
     
     private func createTableFooter(){
-        let footer = UIView(frame: CGRect(x: 0, y: 0, width: view.width, height: 50))
+        let footer = UIView(frame: CGRect(x: 0, y: 0, width: view.width, height: 100))
         footer.clipsToBounds = true
         
         let button = UIButton(frame: footer.bounds)
+        button.frame = CGRect(x: 0, y: 0, width: footer.width, height: footer.height/2)
         footer.addSubview(button)
         button.setTitle("ログアウト", for: .normal)
         button.setTitleColor(.systemRed, for: .normal)
         button.addTarget(self, action: #selector(didTapSignOut), for: .touchUpInside)
         
+        let buttonDeleteAccount = UIButton()
+        buttonDeleteAccount.frame = CGRect(x: 0, y: button.bottom, width: footer.width, height: footer.height/2)
+        footer.addSubview(buttonDeleteAccount)
+        buttonDeleteAccount.setTitle("アカウントの消去", for: .normal)
+        buttonDeleteAccount.setTitleColor(.systemRed, for: .normal)
+        buttonDeleteAccount.addTarget(self, action: #selector(didTapDeleteAccount), for: .touchUpInside)
+        
         tableView.tableFooterView = footer
+    }
+    
+    @objc private func didTapDeleteAccount(){
+        let actionSheet = UIAlertController(
+            title: "アカウントの消去",
+            message: "アカウントを消去すると、これまでの投稿、ユーザ情報など、全てのデータが消去されます。アカウントの消去を実行しますか？",
+            preferredStyle: .actionSheet
+        )
+        
+        actionSheet.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "消去する", style: .destructive, handler: { [weak self] _ in
+            AuthManager.shared.signOut{ success in
+                if success{
+                    DispatchQueue.main.async {
+                        let vc = SignInViewController()
+                        let navVC = UINavigationController(rootViewController: vc)
+                        navVC.modalPresentationStyle = .fullScreen
+                        self?.present(navVC, animated: true)
+                    }
+                }
+            }
+        }))
+        present(actionSheet, animated: true)
+        
     }
     
     @objc private func didTapSignOut(){

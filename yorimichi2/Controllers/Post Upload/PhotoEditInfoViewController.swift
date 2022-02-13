@@ -120,7 +120,6 @@ class PhotoEditInfoViewController: UIViewController {
         return "\(username)_\(randomNumber)_\(timeStamp)"
     }
     
-    
     @objc private func didTapPost(){
         if (caption == ""){
             let alert = UIAlertController(title: "キャプションが入力されていません。", message: "キャプション入力後に、キーボードの確定ボタンを押してください。", preferredStyle: .alert)
@@ -134,6 +133,10 @@ class PhotoEditInfoViewController: UIViewController {
         else{
             print("\n\nhere caption=================")
             print(caption)
+            print(locationTitle)
+            print(locationSubTitle)
+            print(genre)
+            print(location)
         }
         
         
@@ -472,6 +475,7 @@ extension PhotoEditInfoViewController: PhotoEditInfoCollectionLocationViewCellDe
         let vc = SearchLocationViewController()
 //        navigationController?.pushViewController(vc, animated: true)
         vc.delegate = self
+        //navigationController?.pushViewController(vc, animated: true)
         present(UINavigationController(rootViewController: vc), animated: true)
     }
 }
@@ -487,6 +491,17 @@ extension PhotoEditInfoViewController: PhotoEditInfoCollectionGenreViewCellDeleg
 }
 
 extension PhotoEditInfoViewController: SearchLocationViewControllerDelegate{
+    func searchLocationViewControllerDidEnterDirectLocation(text: String?, location: Location) {
+        print("tapped location direct entered")
+        self.locationTitle = text
+        self.locationSubTitle = ""
+        self.location = location
+        
+        let model = PhotoEditInfoCellType.location(viewModel: PhotoEditInfoLocationViewModel(title: text ?? "", subTitle: "マップ上で選択済み"))
+        viewModels[2] = model
+        self.collectionView?.reloadData()
+    }
+    
     func searchLocationViewControllerDidSelected(title: String, subTitle: String, location: Location) {
         print("\n\n")
         print(title)
@@ -501,11 +516,6 @@ extension PhotoEditInfoViewController: SearchLocationViewControllerDelegate{
         self.collectionView?.reloadData()
     }
     
-    func searchLocationViewControllerDidEnterDirectLocation(text: String?){
-        print("tapped location direct entered")
-        self.locationTitle = text
-        determineMyCurrentLocation()
-    }
     
     
 }

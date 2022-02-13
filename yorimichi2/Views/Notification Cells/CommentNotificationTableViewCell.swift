@@ -113,7 +113,7 @@ class CommentNotificationTableViewCell: UITableViewCell {
         self.viewModel = viewModel
         profilePictureImageView.sd_setImage(with: viewModel.profilePictureUrl, completed: nil)
         postImageView.sd_setImage(with: viewModel.postUrl, completed: nil)
-        label.text = viewModel.username + " があなたの投稿にコメントしました。"
+        label.text = viewModel.username + " があなたの投稿に情報を追加しました。"
         dateLabel.text = viewModel.date
         
     }

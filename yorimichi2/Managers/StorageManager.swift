@@ -19,6 +19,27 @@ final class StorageManager{
         
     }
     
+    public func deleteUserAllData(completion: @escaping (Bool) -> Void){
+        guard let username = UserDefaults.standard.string(forKey: "username") else {
+            return
+        }
+        
+        storage.child(username).delete{ error in
+            if let error = error{
+                print("error deleting user storage: \(error)")
+                completion(false)
+                return
+                
+            }
+            else{
+                completion(true)
+                return
+                
+            }
+        }
+        
+    }
+    
     public func uploadVideo(from url: URL, id: String, completion: @escaping (Bool) -> Void){
         guard let username = UserDefaults.standard.string(forKey: "username") else {
             return

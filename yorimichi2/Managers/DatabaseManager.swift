@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import Mapbox
+import MapKit
 
 final class DatabaseManager{
     static let shared = DatabaseManager()
@@ -110,6 +111,57 @@ final class DatabaseManager{
             completion(usernames)
             
         })
+    }
+    
+    public func deleteUser(completion: @escaping (Bool) -> Void){
+        guard let username = UserDefaults.standard.string(forKey: "username") else {
+            completion(false)
+            return
+        }
+        
+        let ref = database.collection("users").document(username)
+        ref.delete(){ error in
+            if let error = error{
+                print("error removing user: \(username) with error: \(error)")
+                completion(false)
+                return
+            }
+            else{
+                print("success removing user: \(username)")
+                completion(true)
+                return
+            }
+        }
+    }
+    
+    public func deleteYorimichiOnUserDeletion(genre: String, completion: @escaping (Bool) -> Void){
+        
+        guard let username = UserDefaults.standard.string(forKey: "username") else {
+            completion(false)
+            return
+        }
+        
+        let ref = database.collection("yorimichiPost").document(genre).collection("posts")
+        let refFilter = ref.whereField("user.username", isEqualTo: username)
+        refFilter.getDocuments{ snapshot, error in
+            snapshot?.documents.forEach{
+                $0.reference.delete()
+            }
+            
+        }
+        
+        let refVideo = database.collection("yorimichiPost").document(genre).collection("videos")
+        let refFilterVideo = ref.whereField("user.username", isEqualTo: username)
+        refFilterVideo.getDocuments{ snapshot, error in
+            snapshot?.documents.forEach{
+                $0.reference.delete()
+            }
+            
+        }
+        
+        print("success removing yorimichiPost of user: \(username)")
+        completion(true)
+        return
     }
     
 
@@ -624,6 +676,143 @@ final class DatabaseManager{
         }
     }
     
+    public func explorePostsPromotion(completion: @escaping ([Post]) -> Void){
+        let ref = database.collection("yorimichiPost").document("PRO000").collection("posts")
+        ref.getDocuments{ snapshot, error in
+//            guard let users = snapshot?.documents, error == nil else{
+            guard var posts = snapshot?.documents.compactMap({Post(with: $0.data())}), error == nil else{
+                completion([])
+                return
+            }
+            completion(posts)
+            
+        }
+    }
+    
+    public func explorePostsRecent(completion: @escaping ([Post]) -> Void){
+        let ref = database.collection("yorimichiPost").document("A000").collection("posts")
+        ref.getDocuments{ snapshot, error in
+//            guard let users = snapshot?.documents, error == nil else{
+            guard var posts = snapshot?.documents.compactMap({Post(with: $0.data())}), error == nil else{
+                completion([])
+                return
+            }
+            
+            let now = Date()
+            let modifiedDate = Calendar.current.date(byAdding: .day, value: -7, to: now)!
+            
+            var recentPosts = posts.filter{
+                $0.date > modifiedDate
+                
+            }
+            if(recentPosts.count == 0){
+                completion([])
+                
+            }
+
+            recentPosts.sort{ $0.date > $1.date}
+            
+            completion(recentPosts)
+            
+            
+        }
+    }
+    
+    public func explorePostsPopular(completion: @escaping ([Post]) -> Void){
+        let ref = database.collection("yorimichiPost").document("A000").collection("posts")
+        ref.getDocuments{ snapshot, error in
+//            guard let users = snapshot?.documents, error == nil else{
+            guard var posts = snapshot?.documents.compactMap({Post(with: $0.data())}), error == nil else{
+                completion([])
+                return
+            }
+            
+            let now = Date()
+            let modifiedDate = Calendar.current.date(byAdding: .day, value: -30, to: now)!
+            
+            let recentPosts = posts.filter{
+                $0.date > modifiedDate
+                
+            }
+            
+            if(recentPosts.count == 0){
+                completion([])
+                return
+                
+            }
+            
+            let sortedIndices = recentPosts.enumerated()
+                .sorted{ $0.element.likers.count > $1.element.likers.count }
+                              .map{ $0.offset }
+            
+            var resPost: [Post] = []
+            
+            
+            
+            let sortedIndicesLimited = sortedIndices[0..<min(10, sortedIndices.count)]
+            for i in 0..<min(10, sortedIndices.count){
+                    resPost.append(recentPosts[sortedIndices[i]])
+                }
+                completion(resPost)
+                
+            
+        }
+        
+    }
+    
+    
+    public func explorePostsNearBy(currentLocation: CLLocation, completion: @escaping ([Post]) -> Void){
+        print("\n\nlocation called !!!!")
+        print(currentLocation)
+        
+        let ref = database.collection("yorimichiPost").document("A000").collection("posts")
+        ref.getDocuments{ snapshot, error in
+//            guard let users = snapshot?.documents, error == nil else{
+            guard var posts = snapshot?.documents.compactMap({Post(with: $0.data())}), error == nil else{
+                completion([])
+                return
+            }
+            
+            let now = Date()
+            let modifiedDate = Calendar.current.date(byAdding: .day, value: -30, to: now)!
+            
+            let recentPosts = posts.filter{
+                $0.date > modifiedDate
+                
+            }
+            
+            if(recentPosts.count == 0){
+                completion([])
+                return
+                
+            }
+            
+            var distanceList = [Float]()
+            recentPosts.forEach{
+                let latDiff = currentLocation.coordinate.latitude - $0.location.lat
+                let lngDiff = currentLocation.coordinate.longitude - $0.location.lng
+                
+                distanceList.append(Float(latDiff*latDiff+lngDiff*lngDiff))
+            }
+            
+            let sortedIndices = distanceList.enumerated()
+                .sorted{ $0.element < $1.element }
+                .map{$0.offset}
+            
+            var resPost: [Post] = []
+            
+
+            let sortedIndicesLimited = sortedIndices[0..<min(10, sortedIndices.count)]
+            for i in 0..<min(10, sortedIndices.count){
+                    resPost.append(recentPosts[sortedIndices[i]])
+                }
+                completion(resPost)
+            
+            
+        }
+        
+    }
+    
     public func exploreYorimichiPosts(genre: GenreInfo, refLocation: Location, completion: @escaping ([Post]) -> Void){
         let searchBoundaryLat = UserDefaults.standard.float(forKey: "searchBoundaryLat")
         print("\n\n\n=========here boundary")
@@ -782,7 +971,42 @@ final class DatabaseManager{
                       return
                   }
             
-            completion(notifications)
+            let now = Date()
+            let modifiedDate = Calendar.current.date(byAdding: .day, value: -1, to: now)!
+            
+            var recentNotifications = notifications.filter{
+                $0.date > modifiedDate
+                
+            }
+            
+            completion(recentNotifications)
+        }
+    }
+    
+    public func getNotificationsCountRecent(completion: @escaping (Int) -> Void){
+        guard let username = UserDefaults.standard.string(forKey: "username") else {
+            completion(0)
+            return
+        }
+        let ref = database.collection("users").document(username).collection("notifications")
+        ref.getDocuments{ snapshot, error in
+            guard let notifications = snapshot?.documents.compactMap({
+                IGNotification(with: $0.data())
+            }),
+                  error == nil else{
+                      completion(0)
+                      return
+                  }
+            
+            let now = Date()
+            let modifiedDate = Calendar.current.date(byAdding: .day, value: -60, to: now)!
+            
+            var recentNotifications = notifications.filter{
+                $0.date > modifiedDate
+                
+            }
+            
+            completion(recentNotifications.count)
         }
     }
     
@@ -1314,6 +1538,46 @@ final class DatabaseManager{
     // MARK: - Liking
     enum LikeState{
         case like, unlike
+    }
+    
+    public func updateLikeYorimichi(state: LikeState, postID: String, owner: String, completion: @escaping (Bool) -> Void){
+        guard let currentUsername = UserDefaults.standard.string(forKey: "username") else {
+            completion(false)
+            return
+        }
+        let ref = database.collection("yorimichiPost").document("A000").collection("posts").document(postID)
+        getPost(with: postID, from: owner){ post in
+            guard var post = post else{
+                completion(false)
+                return
+            }
+            
+            switch state{
+            case .like:
+                if !post.likers.contains(currentUsername){
+                    post.likers.append(currentUsername)
+                }
+            case .unlike:
+                post.likers.removeAll(where: { $0 == currentUsername })
+            }
+            guard let data = post.asDictionary() else {
+                completion(false)
+                return
+            }
+            
+            print("========")
+            print(data)
+            ref.setData(data){ error in
+                if error != nil{
+                    print("failing")
+                    completion(false)
+                    return
+                }
+                else{
+                    completion(true)
+                }
+            }
+        }
     }
     
     public func updateLike(state: LikeState, postID: String, owner: String, completion: @escaping (Bool) -> Void){

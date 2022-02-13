@@ -24,14 +24,13 @@ class CommentBarView: UIView , UITextFieldDelegate{
     
     public let field: TextField = {
         let field = TextField()
-        //field.placeholder = "コメントを投稿しましょう。"
         
         field.backgroundColor = .white
         field.tintColor = .black
         field.textColor = .black
         field.clearButtonMode = .whileEditing
         field.returnKeyType = .done
-        field.attributedPlaceholder = NSAttributedString(string: "コメントを投稿しましょう。", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        field.attributedPlaceholder = NSAttributedString(string: "この場所の追加情報を投稿しましょう。", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         return field
         
     }()

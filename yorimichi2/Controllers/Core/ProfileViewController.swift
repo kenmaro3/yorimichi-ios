@@ -10,16 +10,55 @@ import ProgressHUD
 import SafariServices
 import CryptoKit
 
+enum ShowingSegment{
+    case posts
+    case likedPosts
+}
+
 class ProfileViewController: UIViewController, UISearchResultsUpdating{
     private let searchVC = UISearchController(searchResultsController: SearchUserResultsViewController())
     
     private let user: User
     
+    private let userInfoView: ProfileHeaderInfoView = {
+        let userInfoView = ProfileHeaderInfoView()
+        return userInfoView
+        
+    }()
+    
+    private let mySegcon: UISegmentedControl = {
+        // 表示する配列を作成する.
+        let myArray: NSArray = ["ヨリミチ","いいねしたヨリミチ"]
+        let mySegcon: UISegmentedControl = UISegmentedControl(items: myArray as [AnyObject])
+        mySegcon.selectedSegmentIndex = 0
+        return mySegcon
+        
+    }()
+    
+    private let badgeOnNotification: UILabel = {
+        let badgeCount = UILabel()
+        //badgeCount.translatesAutoresizingMaskIntoConstraints = false
+        badgeCount.tag = 9830384
+        badgeCount.textAlignment = .center
+        badgeCount.layer.masksToBounds = true
+        badgeCount.textColor = .white
+        badgeCount.font = badgeCount.font.withSize(12)
+        badgeCount.backgroundColor = .systemRed
+        badgeCount.text = "3"
+        return badgeCount
+        
+    }()
+
     private var collectionView: UICollectionView?
+    
     
     private var headerViewModel: ProfileHeaderViewModel?
     
     private var posts = [ProfileCollectionCellType]()
+    
+    private var likedPosts = [ProfileCollectionCellType]()
+    
+    private var showingSegment: ShowingSegment = .posts
     
     private var isCurrentUser: Bool {
         return user.username.lowercased() == UserDefaults.standard.string(forKey: "username")?.lowercased() ?? ""
@@ -42,12 +81,25 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
+        
+        view.addSubview(userInfoView)
+        view.addSubview(mySegcon)
+        
+        userInfoView.delegate = self
+        userInfoView.countContainerView.delegate = self
+        
+        // イベントを追加する.
+        mySegcon.addTarget(self, action: #selector(segconChanged(segCon:)), for: UIControl.Event.valueChanged)
+        
 
         view.backgroundColor = .systemBackground
         title = user.username.uppercased()
         setupSearch()
         configureNavBar()
         configureCollectionView()
+        
         
         guard let currentUserName = UserDefaults.standard.string(forKey: "username") else {
             return
@@ -70,8 +122,51 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
                 
             }
         }
+        
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        view.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height*2)
+        userInfoView.frame = CGRect(x: 0, y: view.safeAreaInsets.bottom + 60, width: view.width, height: view.height/8)
+        
+       
+        //mySegcon.center = CGPoint(x: view.width/2, y: userInfoView.bottom+20)
+        mySegcon.frame = CGRect(x: 20, y: userInfoView.bottom+20, width: view.width-40, height: 40)
+        mySegcon.backgroundColor = UIColor.gray
+        mySegcon.tintColor = UIColor.white
+        
+        collectionView?.frame = CGRect(x: 0, y: mySegcon.bottom + 20, width: view.width, height: view.height/5)
+        
+        let badgeSize: CGFloat = 20
+        badgeOnNotification.frame = CGRect(x: 12, y: -10, width: badgeSize, height: badgeSize)
+        badgeOnNotification.layer.cornerRadius = badgeSize/2
+        
+
     }
     
+    /*
+     SwgmentedControlの値が変わったときに呼び出される.
+     */
+    @objc private func segconChanged(segCon: UISegmentedControl){
+
+        switch segCon.selectedSegmentIndex {
+        case 0:
+            self.showingSegment = .posts
+            self.collectionView?.reloadData()
+            print("changed to 0")
+
+        case 1:
+            self.showingSegment = .likedPosts
+            self.collectionView?.reloadData()
+            print("changed to 1")
+
+        default:
+            print("Error")
+        }
+    }
+
+
     private func fetchProfileInfo(){
         let username = user.username
         let group = DispatchGroup()
@@ -82,17 +177,11 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
             defer{
                 group.leave()
             }
-            
             switch result{
             case .success(let posts):
-                //self?.posts = posts
                 posts.forEach{
                     self?.posts.append(.photo(viewModel: ProfilePhotoCellViewModel(post: $0)))
                 }
-//                self?.posts = posts.map({
-//                    return .photo(viewModel: ProfilePhotoCellViewModel(post: $0))
-//                })
-                
             case .failure:
                 break
             }
@@ -125,6 +214,19 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
             }
         })
         
+        // Fetch User liked posts images
+        group.enter()
+        DatabaseManager.shared.yorimichiLikes(for: username, completion: {[weak self] posts in
+            defer{
+                group.leave()
+            }
+            posts.forEach{
+                self?.likedPosts.append(.photo(viewModel: ProfilePhotoCellViewModel(post: $0)))
+            }
+            
+        })
+        
+
         
         // Fetch User header
         var profilePictureUrl: URL?
@@ -198,15 +300,10 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
                 twitterId: twitterId,
                 instagramId: instagramId
             )
+            self.userInfoView.configure(with: self.headerViewModel!)
             
             self.collectionView?.reloadData()
         }
-    }
-    
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        collectionView?.frame = view.bounds
     }
     
     
@@ -219,12 +316,30 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
                 action: #selector(didTapSettings)
             )
             
-            let notificationButton = UIBarButtonItem(
-                image: UIImage(systemName: "heart"),
-                style: .done,
-                target: self,
-                action: #selector(didTapNotification)
-            )
+            let button: UIButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+            button.setBackgroundImage(UIImage(systemName: "heart"), for: .normal)
+            button.addTarget(self, action: #selector(didTapNotification), for: .touchUpInside)
+            
+            let notificationCount = UserDefaults.standard.integer(forKey: "notificationCount")
+            
+            if(notificationCount > 0){
+                badgeOnNotification.text = "\(notificationCount)"
+                button.addSubview(badgeOnNotification)
+            }
+            else{
+                badgeOnNotification.text = "0"
+                badgeOnNotification.removeFromSuperview()
+            }
+            
+            
+//            let notificationButton = UIBarButtonItem(
+//                image: UIImage(systemName: "heart"),
+//                style: .done,
+//                target: self,
+//                action: #selector(didTapNotification)
+//            )
+            
+            let notificationButton = UIBarButtonItem(customView: button)
             
             navigationItem.rightBarButtonItems = [settingButton, notificationButton]
             
@@ -244,6 +359,8 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
         print("notification tapped")
         let vc = NotificationViewController()
         self.navigationController?.pushViewController(vc, animated: true)
+        
+        UserDefaults.standard.setValue(0, forKey: "notificationCount")
         //self.present(vc, animated: true)
         
     }
@@ -307,6 +424,7 @@ class ProfileViewController: UIViewController, UISearchResultsUpdating{
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         showSignedOutUIIfNeeded()
+        configureNavBar()
     }
     
     private func showSignedOutUIIfNeeded(){
@@ -368,24 +486,25 @@ extension ProfileViewController{
             
             item.contentInsets = NSDirectionalEdgeInsets(top: 1, leading: 1, bottom: 1, trailing: 1)
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.33)), subitem: item, count: 3)
+            
             let section = NSCollectionLayoutSection(group: group)
             
-            section.boundarySupplementaryItems = [
-                NSCollectionLayoutBoundarySupplementaryItem(
-                    layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.66)),
-                    elementKind: UICollectionView.elementKindSectionHeader,
-                    alignment: .top
-                )
-            
-            ]
+//            section.boundarySupplementaryItems = [
+//                NSCollectionLayoutBoundarySupplementaryItem(
+//                    layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.66)),
+//                    elementKind: UICollectionView.elementKindSectionHeader,
+//                    alignment: .top
+//                )
+//
+//            ]
             return section
         }))
         
         collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
         collectionView.register(VideoPostCollectionViewCell.self, forCellWithReuseIdentifier: VideoPostCollectionViewCell.identifier)
-        collectionView.register(ProfileHeaderCollectionReusableView.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: ProfileHeaderCollectionReusableView.identifier)
+//        collectionView.register(ProfileHeaderCollectionReusableView.self,
+//                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+//                                withReuseIdentifier: ProfileHeaderCollectionReusableView.identifier)
         collectionView.backgroundColor = .systemBackground
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -400,13 +519,31 @@ extension ProfileViewController{
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return posts.count
+        switch self.showingSegment{
+        case .posts:
+            return posts.count
+        case .likedPosts:
+            return likedPosts.count
+            
+        }
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cellType = posts[indexPath.row]
+        print("here=====")
+        print(indexPath.section)
+        print(indexPath.row)
+        
+        var cellType = posts[indexPath.row]
+
+        switch self.showingSegment{
+        case .posts:
+            cellType = posts[indexPath.row]
+        case .likedPosts:
+            cellType = likedPosts[indexPath.row]
+            
+        }
         switch cellType{
         case .photo(let viewModel):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as? PhotoCollectionViewCell else{
@@ -426,30 +563,38 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard kind == UICollectionView.elementKindSectionHeader,
-              let headerView = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: ProfileHeaderCollectionReusableView.identifier,
-                for: indexPath) as? ProfileHeaderCollectionReusableView else{
-            return UICollectionReusableView()
-        }
-        
-        if let viewModel = headerViewModel {
-            headerView.configure(with: viewModel)
-            headerView.countContainerView.delegate = self
-            
-        }
-        
-        headerView.delegate = self
-        
-        return headerView
-    }
+//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//        guard kind == UICollectionView.elementKindSectionHeader,
+//              let headerView = collectionView.dequeueReusableSupplementaryView(
+//                ofKind: kind,
+//                withReuseIdentifier: ProfileHeaderCollectionReusableView.identifier,
+//                for: indexPath) as? ProfileHeaderCollectionReusableView else{
+//            return UICollectionReusableView()
+//        }
+//
+//        if let viewModel = headerViewModel {
+//            headerView.configure(with: viewModel)
+//            headerView.countContainerView.delegate = self
+//
+//        }
+//
+//        headerView.delegate = self
+//
+//        return headerView
+//    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         
-        let cellType = posts[indexPath.row]
+        var cellType = posts[indexPath.row]
+
+        switch self.showingSegment{
+        case .posts:
+            cellType = posts[indexPath.row]
+        case .likedPosts:
+            cellType = likedPosts[indexPath.row]
+            
+        }
         switch cellType{
         case .photo(let viewModel):
             //let vc = PostViewController(post: viewModel.post, owner: user.username)
@@ -468,8 +613,9 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
 }
 
-extension ProfileViewController: ProfileHeaderCollectionReusableViewDelegate{
-    func profileHeaderCollectionReusableViewDidTapImage(_ header: ProfileHeaderCollectionReusableView) {
+extension ProfileViewController: ProfileHeaderInfoViewDelegate{
+    
+    func profileHeaderInfoViewDidTapImage(_ header: ProfileHeaderInfoView) {
         guard isCurrentUser else {
             return
         }
@@ -502,7 +648,7 @@ extension ProfileViewController: ProfileHeaderCollectionReusableViewDelegate{
         
     }
     
-    func profileHeaderCollectionReusableViewShowAlert(alert: UIAlertController){
+    func profileHeaderInfoViewShowAlert(alert: UIAlertController){
         present(alert, animated: true)
     }
 }

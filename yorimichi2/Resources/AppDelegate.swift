@@ -10,6 +10,7 @@ import UIKit
 import Appirater
 import FirebaseMessaging
 import UserNotifications
+//import GoogleMobileAds
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+//        //GADMobileAds.configure(withApplicationID: "ca-app-pub-4038783882928170~5171490537")
+//        GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         
         Appirater.appLaunched(true)
@@ -33,6 +37,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Messaging.messaging().delegate = self
         // [END set_messaging_delegate]
         
+        Installations.installations().installationID { (id, error) in
+          if let error = error {
+            print("Error fetching id: \(error)")
+            return
+          }
+          guard let id = id else { return }
+          print("Installation ID: \(id)")
+        }
+        
         UserDefaults.standard.setValue(true, forKey: "save_photo")
         UserDefaults.standard.setValue(true, forKey: "save_video")
         
@@ -41,6 +54,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.setValue("Yorimichi DB", forKey: "source")
         
         DatabaseManager.shared.getSearchBoundary()
+        
+        DatabaseManager.shared.getNotificationsCountRecent{ notificationCount in
+            UserDefaults.standard.setValue(notificationCount, forKey: "notificationCount")
+        }
+        
         
         
         // Notifications

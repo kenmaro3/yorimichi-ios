@@ -12,18 +12,24 @@ import FloatingPanel
 import StoreKit
 import ProgressHUD
 import MapKit
+//import GoogleMobileAds
 
-class MyFloatingPanelLayout: FloatingPanelLayout {
-    let position: FloatingPanelPosition = .bottom
-    let initialState: FloatingPanelState = .tip
-    var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
-        return [
-            .full: FloatingPanelLayoutAnchor(absoluteInset: 16.0, edge: .top, referenceGuide: .safeArea),
-            .half: FloatingPanelLayoutAnchor(fractionalInset: 0.5, edge: .bottom, referenceGuide: .safeArea),
-            .tip: FloatingPanelLayoutAnchor(absoluteInset: 44.0, edge: .bottom, referenceGuide: .safeArea),
-        ]
-    }}
-
+//class MyFloatingPanelLayout: FloatingPanelLayout {
+//    
+//    var position: FloatingPanelPosition
+//    
+//    var initialState: FloatingPanelState
+//    
+////    let position: FloatingPanelPosition = .bottom
+////    let initialState: FloatingPanelState = .tip
+//    var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
+//        return [
+//            .full: FloatingPanelLayoutAnchor(absoluteInset: 16.0, edge: .top, referenceGuide: .safeArea),
+//            .half: FloatingPanelLayoutAnchor(fractionalInset: 0.5, edge: .bottom, referenceGuide: .safeArea),
+//            .tip: FloatingPanelLayoutAnchor(absoluteInset: 44.0, edge: .bottom, referenceGuide: .safeArea),
+//        ]
+//    }}
+//
 class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISearchResultsUpdating{
     /// when user hit the keyboard key
     func updateSearchResults(for searchController: UISearchController) {
@@ -40,6 +46,12 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
 //            resultsVC.update(with: results)
 //        }
     }
+    
+//    private let bannerView: GADBannerView = {
+//        let banner = GADBannerView()
+//        return banner
+//
+//    }()
 
     
 
@@ -61,7 +73,7 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
     
     let geocoder = CLGeocoder()
     
-    private var centeringCurrentLocation: Bool = true
+    public var centeringCurrentLocation: Bool = true
     
     private var methodsObserver: NSObjectProtocol?
     private var genreObserver: NSObjectProtocol?
@@ -76,6 +88,17 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
     private var userCurrentLocation = CLLocationCoordinate2D()
     private var selectedAnnotationsLocation: [CLLocationCoordinate2D] = []
     private var destinationLocation: CLLocationCoordinate2D?
+    
+    private let searchController = UISearchController(searchResultsController: SearchLocationResultsViewController())
+    private var searchCompleter = MKLocalSearchCompleter()
+    
+    private var addCandidateObserver: NSObjectProtocol?
+    
+    public var specificCenter: CLLocationCoordinate2D?
+    public var specificPostFromPostView: Post?
+    
+    public var specificListExploreCellType: [ListExploreResultCellType] = []
+
     
     private let focusButton: UIButton = {
         let button = UIButton()
@@ -226,10 +249,6 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
 
     }()
     
-    private let searchController = UISearchController(searchResultsController: SearchLocationResultsViewController())
-    private var searchCompleter = MKLocalSearchCompleter()
-    
-    private var addCandidateObserver: NSObjectProtocol?
 
     
     // MARK: Lifecycle
@@ -241,15 +260,11 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.black
         ]
+        
 
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-         
-        mapView.setCenter(userCurrentLocation, zoomLevel: 12, animated: true)
-         
-        if(centeringCurrentLocation){
-            determineMyCurrentLocation()
-        }
         
+        setMapCenter()
         
         addSubViews()
         addButtonTarget()
@@ -257,46 +272,9 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         // Set the map view's delegate
         mapView.delegate = self
         
+        setLongGesture()
         
-        // 長押しのジェスチャーを認識する関数
-        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        mapView.addGestureRecognizer(gesture)
-        
-        
-        // Initialize a `FloatingPanelController` object.
-        exploreFpc = FloatingPanelController()
-        exploreFpc.layout = MyFloatingPanelLayout()
-
-        
-        // appearance
-        // Create a new appearance.
-        let appearance = SurfaceAppearance()
-
-        
-        // Define shadows
-        let shadow = SurfaceAppearance.Shadow()
-        shadow.color = UIColor.black
-        shadow.offset = CGSize(width: 0, height: 16)
-        shadow.radius = 24
-        shadow.spread = 12
-        appearance.shadows = [shadow]
-
-        // Define corner radius and background color
-        appearance.cornerRadius = 12.0
-        appearance.backgroundColor = .clear
-
-        // Set the new appearance
-        exploreFpc.surfaceView.appearance = appearance
-        
-        // Assign self as the delegate of the controller.
-        exploreFpc.delegate = self // Optional
-        exploreFpc.view.frame = CGRect(x: 6, y: 0, width: view.width-12, height: view.height/2)
-        
-        let vc = ListOnMapViewController()
-        vc.delegate = self
-        exploreFpc.set(contentViewController: vc)
-        exploreFpc.addPanel(toParent: self, animated: true)
-        
+        setUpFpc()
         
         setupSearch()
         
@@ -314,6 +292,74 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
             self?.removeSelectedAnnotation()
             self?.removeOnlyCandidateYorimichi()
             self?.addCandidatesAnnotation()
+        }
+        
+        if let specificCenter = specificCenter {
+            self.mapView.setCenter(specificCenter, animated: true)
+            guard let listVC = self.exploreFpc.contentViewController as? ListOnMapViewController else {
+                fatalError()
+            }
+            var totalCellTypes = [ListExploreResultCellType]()
+            listVC.updateLeft(with: self.specificListExploreCellType)
+        }
+        
+    }
+    
+    
+    private func setUpFpc(){
+        // Initialize a `FloatingPanelController` object.
+        exploreFpc = FloatingPanelController()
+        //exploreFpc.layout = MyFloatingPanelLayout()
+        
+        // appearance
+        // Create a new appearance.
+        let appearance = SurfaceAppearance()
+        
+        
+        // Define shadows
+        let shadow = SurfaceAppearance.Shadow()
+        shadow.color = UIColor.black
+        shadow.offset = CGSize(width: 0, height: 16)
+        shadow.radius = 24
+        shadow.spread = 12
+        appearance.shadows = [shadow]
+        
+        // Define corner radius and background color
+        appearance.cornerRadius = 12.0
+        appearance.backgroundColor = .clear
+        
+        // Set the new appearance
+        exploreFpc.surfaceView.appearance = appearance
+        
+        // Assign self as the delegate of the controller.
+        exploreFpc.delegate = self // Optional
+        exploreFpc.view.frame = CGRect(x: 6, y: 0, width: view.width-12, height: view.height/2)
+        
+        let vc = ListOnMapViewController()
+        vc.delegate = self
+        exploreFpc.set(contentViewController: vc)
+        exploreFpc.addPanel(toParent: self, animated: true)
+        
+
+    }
+    
+    
+    private func setLongGesture(){
+        mapView.setCenter(userCurrentLocation, zoomLevel: 12, animated: true)
+        
+        if(centeringCurrentLocation){
+            
+            determineMyCurrentLocation()
+        }
+        
+    }
+    
+    private func setMapCenter(){
+        mapView.setCenter(userCurrentLocation, zoomLevel: 12, animated: true)
+        
+        if(centeringCurrentLocation){
+            
+            determineMyCurrentLocation()
         }
         
     }
@@ -576,6 +622,45 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
                     
                 })
             })
+    }
+    
+    public func exploreSpecificYorimichi(post: Post){
+        
+        let posts = [post]
+        print("okay")
+        self.postsToAnnotations(posts: posts, completion: {[weak self] annotations in
+            
+            guard let strongSelf = self else {
+                return
+            }
+            print("\n\n=======annotations \n \(annotations)")
+            strongSelf.annotationsYorimichi.removeAll()
+            for annotation in annotations{
+                strongSelf.annotationsYorimichi.append(annotation)
+            }
+            strongSelf.mapView.addAnnotations(annotations)
+            //                print(annotations)
+            let cellTypes = annotations.map({
+                ListExploreResultCellType.yorimichiDB(viewModel: $0)
+            })
+            strongSelf.specificPostFromPostView = post
+            strongSelf.specificCenter = CLLocationCoordinate2D(latitude: post.location.lat - strongSelf.offset, longitude: post.location.lng)
+            
+            
+            print("\n\nhere map ==========")
+            //print(strongSelf.annotationsYorimichi)
+            //strongSelf.mapView.selectAnnotation(strongSelf.annotationsYorimichi[0], animated: true)
+            
+            //print(strongSelf.mapView.annotations)
+                
+//            let selectedAnnotationFromPostView = strongSelf.annotationsYorimichi[0]
+//            strongSelf.mapView.selectAnnotation(selectedAnnotationFromPostView, animated: true, completionHandler: nil)
+            strongSelf.specificListExploreCellType.append( ListExploreResultCellType.yorimichiDB(viewModel: strongSelf.annotationsYorimichi[0]))
+            
+//self.exploreFpc.move(to: .full, animated: true, completion: nil)
+            
+            
+        })
     }
     
     
@@ -891,6 +976,9 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         super.viewDidLayoutSubviews()
         mapView.frame = view.bounds
         setupFrame()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
     }
 
 }
@@ -1273,51 +1361,55 @@ extension MapViewController: MGLMapViewDelegate{
         
         
         // If there’s no reusable annotation view available, initialize a new one.
-            if annotation is YorimichiAnnotationViewModel{
-                // Use the point annotation’s longitude value (as a string) as the reuse identifier for its view.
-                let tmpAnnotation = annotation as! YorimichiAnnotationViewModel
-                let reuseIdentifier = "\(annotation.coordinate.longitude)"
-                
-                // For better performance, always try to reuse existing annotations.
-                var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: YorimichiAnnotationView.identifier) as? YorimichiAnnotationView
-                
+        if annotation is YorimichiAnnotationViewModel{
+            // Use the point annotation’s longitude value (as a string) as the reuse identifier for its view.
+            let tmpAnnotation = annotation as! YorimichiAnnotationViewModel
+            let reuseIdentifier = "\(annotation.coordinate.longitude)"
+            
+            // For better performance, always try to reuse existing annotations.
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: YorimichiAnnotationView.identifier) as? YorimichiAnnotationView
+            
+            if annotationView == nil{
                 annotationView = YorimichiAnnotationView(reuseIdentifier: reuseIdentifier)
                 annotationView?.configure(with: tmpAnnotation.post)
                 
                 let size: CGFloat = tmpAnnotation.selectedForYorimichi ? 60 : 40
                 annotationView!.bounds = CGRect(x: 0, y: 0, width: size, height: size)
                 
-                
-//                annotationView!.layer.borderColor = UIColor.systemRed.cgColor
-                return annotationView
-                
-            } else if annotation is HPAnnotationViewModel{
-                // Use the point annotation’s longitude value (as a string) as the reuse identifier for its view.
-                let tmpAnnotation = annotation as! HPAnnotationViewModel
-                let reuseIdentifier = "\(annotation.coordinate.longitude)"
-                
-                // For better performance, always try to reuse existing annotations.
-                var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: HPAnnotationView.identifier) as? HPAnnotationView
-                print("here")
-                print(tmpAnnotation.url)
-                
-                annotationView = HPAnnotationView(reuseIdentifier: reuseIdentifier)
-                annotationView?.configure(with: tmpAnnotation.url)
-                
-                annotationView!.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
                 return annotationView
                 
             }
-            else if annotation is DestinationAnnotationViewModel{
+            else{
+                return annotationView
+            }
+            
+        } else if annotation is HPAnnotationViewModel{
+            // Use the point annotation’s longitude value (as a string) as the reuse identifier for its view.
+            let tmpAnnotation = annotation as! HPAnnotationViewModel
+            let reuseIdentifier = "\(annotation.coordinate.longitude)"
+            
+            // For better performance, always try to reuse existing annotations.
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: HPAnnotationView.identifier) as? HPAnnotationView
+            print("here")
+            print(tmpAnnotation.url)
+            
+            annotationView = HPAnnotationView(reuseIdentifier: reuseIdentifier)
+            annotationView?.configure(with: tmpAnnotation.url)
+            
+            annotationView!.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
+            return annotationView
+            
+        }
+        else if annotation is DestinationAnnotationViewModel{
             // Use the point annotation’s longitude value (as a string) as the reuse identifier for its view.
             let reuseIdentifier = "\(annotation.coordinate.longitude)"
             
             // For better performance, always try to reuse existing annotations.
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
-                annotationView = DestinationAnnotationView(reuseIdentifier: reuseIdentifier)
-                annotationView!.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
-                return annotationView
-            }
+            annotationView = DestinationAnnotationView(reuseIdentifier: reuseIdentifier)
+            annotationView!.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
+            return annotationView
+        }
         else if annotation is SelectedAnnotationViewModel{
             // Use the point annotation’s longitude value (as a string) as the reuse identifier for its view.
             let reuseIdentifier = "\(annotation.coordinate.longitude)"
@@ -1343,8 +1435,14 @@ extension MapViewController: MGLMapViewDelegate{
             return annotationView
             
         }
+        else{
+            
+            print("falling this else")
+            return MGLAnnotationView()
+
+            
+        }
         
-        return MGLAnnotationView()
         
         
     }
@@ -1607,7 +1705,13 @@ extension MapViewController: CLLocationManagerDelegate{
         showCurrentUserLocation()
         
         if(centeringCurrentLocation){
-            mapView.setCenter(userCurrentLocation, zoomLevel: 12, animated: true)
+            if let specificCenter = specificCenter{
+                mapView.setCenter(specificCenter, zoomLevel: 12, animated: true)
+            }
+            else{
+                mapView.setCenter(userCurrentLocation, zoomLevel: 12, animated: true)
+                
+            }
 
         }
         centeringCurrentLocation = false

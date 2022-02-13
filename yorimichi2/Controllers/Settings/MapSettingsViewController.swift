@@ -9,6 +9,19 @@ import UIKit
 
 class MapSettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    private struct SettingsSection{
+        let title: String
+        let options: [SettingOption]
+    }
+
+    private struct SettingOption{
+        let title: String
+        let image: UIImage?
+        let color: UIColor
+        let handler: (() -> Void)
+    }
+
+    
     private var sourceTitle = ""
     private var genreTitle = ""
     private var methodTitle = ""

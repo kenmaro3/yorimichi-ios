@@ -9,6 +9,7 @@ import UIKit
 import ProgressHUD
 import FloatingPanel
 import SafariServices
+//import GoogleMobileAds
 
 class CommentFloatingPanelLayout: FloatingPanelLayout {
     let position: FloatingPanelPosition = .bottom
@@ -38,6 +39,16 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
     private var fpc: FloatingPanelController!
     
     private let profileView: PostHeaderView
+    
+    private let postFooterView: PostFooterView
+    
+//    // 広告ユニットID
+//    let AdMobID = "[Your AdMob ID]"
+//    // テスト用広告ユニットID
+//    let TEST_ID = "ca-app-pub-3940256099942544/2934735716"
+//
+//    // true:テスト
+//    let AdMobTest:Bool = true
     
     private let yorimichiButton: UIButton = {
         let button = UIButton()
@@ -71,7 +82,7 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
     
     private let commentButton: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(systemName: "text.bubble.fill"), for: .normal)
+        button.setBackgroundImage(UIImage(systemName: "info.circle"), for: .normal)
         button.tintColor = .white
         button.imageView?.contentMode = .scaleAspectFit
         return button
@@ -153,7 +164,10 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
     init(model: Post){
         self.model = model
         self.profileView = PostHeaderView()
+        self.postFooterView = PostFooterView()
+        self.postFooterView.configure(post: model)
         super.init(nibName: nil, bundle: nil)
+        self.postFooterView.delegate = self
         
     }
     
@@ -168,6 +182,7 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         super.viewDidLoad()
         view.addSubview(postImageView)
         view.addSubview(profileView)
+        view.addSubview(postFooterView)
         profileView.backgroundColor = .systemBackground
         
         view.backgroundColor = .black
@@ -188,6 +203,25 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         setUpFPC()
         setUpCount()
         setUpLikeCountTap()
+        
+
+//        var admobView = GADBannerView()
+//
+//        // iPhone X のポートレート決め打ちです
+//        admobView.frame.origin = CGPoint(x:0, y:self.view.frame.size.height - admobView.frame.height - 34)
+//        admobView.frame.size = CGSize(width:self.view.frame.width, height:admobView.frame.height)
+//
+//        if AdMobTest {
+//            admobView.adUnitID = TEST_ID
+//        }
+//        else{
+//            admobView.adUnitID = AdMobID
+//        }
+//
+//        admobView.rootViewController = self
+//        admobView.load(GADRequest())
+//
+//        self.view.addSubview(admobView)
 
     }
     
@@ -303,16 +337,18 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        let footerHeight: CGFloat = 80
+        postFooterView.frame = CGRect(x: 0, y: view.height-view.safeAreaInsets.bottom-footerHeight - 10, width: view.width, height: footerHeight)
+        
         
         profileView.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: view.width, height: 60)
         
         if let tabBarHeight = tabBarController?.tabBar.height {
-            postImageView.frame = CGRect(x: 0, y: profileView.bottom, width: view.width, height: view.height-profileView.bottom - tabBarHeight)
+            postImageView.frame = CGRect(x: 0, y: profileView.bottom - footerHeight, width: view.width, height: view.height-profileView.bottom - tabBarHeight)
         }
         else{
-            postImageView.frame = CGRect(x: 0, y: profileView.bottom, width: view.width, height: view.height-profileView.bottom)
+            postImageView.frame = CGRect(x: 0, y: profileView.bottom - footerHeight, width: view.width, height: view.height-profileView.bottom)
         }
-
 
         let size: CGFloat = 40
         let tabBarHeight: CGFloat = 0
@@ -320,7 +356,7 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         let locationHeight:  CGFloat = 50
         
         
-        let yStart: CGFloat = view.height - (size * 6) - 30 - view.safeAreaInsets.bottom - tabBarHeight
+        let yStart: CGFloat = view.height - (size * 6) - 30 - view.safeAreaInsets.bottom - tabBarHeight - footerHeight
         for(index, button) in [yorimichiButton, likeButton, commentButton, shareButton].enumerated(){
             button.frame = CGRect(x: view.width-size-10, y: yStart + CGFloat(index) * size + CGFloat(index) * 10, width: size, height: size)
         }
@@ -349,7 +385,7 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         let labelSize = captionLabel.sizeThatFits(CGSize(width:  view.width-size-12, height: view.height))
         captionLabel.frame = CGRect(
             x: 5,
-            y: view.height-10-view.safeAreaInsets.bottom-labelSize.height - timestampHeight - 10 - locationHeight*2 - 10*2,
+            y: view.height-10-view.safeAreaInsets.bottom-labelSize.height - timestampHeight - 10 - locationHeight*2 - 10*2 - footerHeight,
             width: view.width-size-24,
             height: labelSize.height)
         
@@ -523,21 +559,32 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
                 
             })
         
-        if (isLiked){
-            DatabaseManager.shared.removeYorimichiLikes(with: model, for: username, completion: { success in
-                defer{
-                    group.leave()
-                }
-            })
-        }
-        else{
+        DatabaseManager.shared.updateLikeYorimichi(state: isLiked ? .unlike: .like, postID: model.id, owner: model.user.username, completion: {[weak self] success in
+            defer{
+                group.leave()
+            }
+            guard success else{
+                print("failed to like to yorimichiPost A000")
+                return
+            }
             
-            DatabaseManager.shared.addYorimichiLikes(with: model, for: username, completion: { success in
-                defer{
-                    group.leave()
-                }
-            })
-        }
+        })
+        
+//        if (isLiked){
+//            DatabaseManager.shared.removeYorimichiLikes(with: model, for: username, completion: { success in
+//                defer{
+//                    group.leave()
+//                }
+//            })
+//        }
+//        else{
+//
+//            DatabaseManager.shared.addYorimichiLikes(with: model, for: username, completion: { success in
+//                defer{
+//                    group.leave()
+//                }
+//            })
+//        }
         
         
         group.notify(queue: .main){
@@ -651,7 +698,7 @@ extension PhotoPostViewController: CommentsViewControllerDeleagate{
         
         DatabaseManager.shared.isTargetUserBlocked(for: model.user.username, with: currentUserName, completion: { isBlocked in
             if(isBlocked){
-                ProgressHUD.showFailed("コメントを投稿できませんでした。")
+                ProgressHUD.showFailed("情報を投稿できませんでした。")
                 return
             }
             else{
@@ -659,12 +706,12 @@ extension PhotoPostViewController: CommentsViewControllerDeleagate{
                 DatabaseManager.shared.findUser(username: currentUserName, completion: {[weak self] user in
                     guard let user = user else {
                         print("cannot find user aborte")
-                        ProgressHUD.showFailed("コメントを投稿できませんでした。")
+                        ProgressHUD.showFailed("情報を投稿できませんでした。")
                         return
                     }
                     
                     guard let strongSelf = self else {
-                        ProgressHUD.showFailed("コメントを投稿できませんでした。")
+                        ProgressHUD.showFailed("情報を投稿できませんでした。")
                         return
                     }
                     
@@ -678,10 +725,10 @@ extension PhotoPostViewController: CommentsViewControllerDeleagate{
                         DispatchQueue.main.async {
                             guard success else{
                                 print("failed to add comment")
-                                ProgressHUD.showFailed("コメントを投稿できませんでした。")
+                                ProgressHUD.showFailed("情報を投稿できませんでした。")
                                 return
                             }
-                            ProgressHUD.showSuccess("コメントを投稿しました。")
+                            ProgressHUD.showSuccess("情報を投稿しました。")
                             
                             guard let username = UserDefaults.standard.string(forKey: "username") else {
                                 return
@@ -894,4 +941,14 @@ extension PhotoPostViewController: PostHeaderViewDelegate{
     }
     
     
+}
+
+extension PhotoPostViewController: PostFooterViewDeleagte{
+    func postFooterViewDidTapped(post: Post) {
+        print("delegate called here")
+        let vc = MapViewController()
+        vc.exploreSpecificYorimichi(post: post)
+        self.navigationController?.pushViewController(vc, animated: true)
+
+    }
 }

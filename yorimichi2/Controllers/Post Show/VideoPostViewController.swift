@@ -64,7 +64,7 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
     
     private let commentButton: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(UIImage(systemName: "text.bubble.fill"), for: .normal)
+        button.setBackgroundImage(UIImage(systemName: "info.circle"), for: .normal)
         button.tintColor = .white
         button.imageView?.contentMode = .scaleAspectFit
         return button
@@ -771,7 +771,7 @@ extension VideoPostViewController: CommentsViewControllerDeleagate{
         
         DatabaseManager.shared.isTargetUserBlocked(for: model.user.username, with: currentUserName, completion: { isBlocked in
             if(isBlocked){
-                ProgressHUD.showFailed("コメントを投稿できませんでした。")
+                ProgressHUD.showFailed("情報を投稿できませんでした。")
                 return
             }
             else{
@@ -780,12 +780,12 @@ extension VideoPostViewController: CommentsViewControllerDeleagate{
                 DatabaseManager.shared.findUser(username: currentUserName, completion: {[weak self] user in
                     guard let user = user else {
                         print("cannot find user aborte")
-                        ProgressHUD.showFailed("コメントを投稿できませんでした。")
+                        ProgressHUD.showFailed("情報を投稿できませんでした。")
                         return
                     }
                     
                     guard let strongSelf = self else {
-                        ProgressHUD.showFailed("コメントを投稿できませんでした。")
+                        ProgressHUD.showFailed("情報を投稿できませんでした。")
                         return
                     }
                     
@@ -799,10 +799,10 @@ extension VideoPostViewController: CommentsViewControllerDeleagate{
                         DispatchQueue.main.async {
                             guard success else{
                                 print("failed to add comment")
-                                ProgressHUD.showFailed("コメントを投稿できませんでした。")
+                                ProgressHUD.showFailed("情報を投稿できませんでした。")
                                 return
                             }
-                            ProgressHUD.showSuccess("コメントを投稿しました。")
+                            ProgressHUD.showSuccess("情報を投稿しました。")
                             
                             guard let username = UserDefaults.standard.string(forKey: "username") else {
                                 return

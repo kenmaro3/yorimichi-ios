@@ -1,22 +1,20 @@
 //
-//  ProfileHeaderCollectionReusableView.swift
+//  ProfileHeaderInfoView.swift
 //  yorimichi2
 //
-//  Created by Kentaro Mihara on 2021/10/21.
+//  Created by Kentaro Mihara on 2022/01/22.
 //
 
 import UIKit
 
-protocol ProfileHeaderCollectionReusableViewDelegate: AnyObject{
-    func profileHeaderCollectionReusableViewDidTapImage(_ header: ProfileHeaderCollectionReusableView)
-    func profileHeaderCollectionReusableViewShowAlert(alert: UIAlertController)
-    func profileHeaderCollectionReusableViewSegmentedValueChanged(segCon: UISegmentedControl)
+protocol ProfileHeaderInfoViewDelegate: AnyObject{
+    func profileHeaderInfoViewDidTapImage(_ header: ProfileHeaderInfoView)
+    func profileHeaderInfoViewShowAlert(alert: UIAlertController)
 }
 
-class ProfileHeaderCollectionReusableView: UICollectionReusableView {
-    static let identifier = "ProfileHeaderCollectionReusableView"
-    
-    weak var delegate: ProfileHeaderCollectionReusableViewDelegate?
+class ProfileHeaderInfoView: UIView {
+
+    weak var delegate: ProfileHeaderInfoViewDelegate?
     
     private var twitterId: String?
     private var instagramId: String?
@@ -55,14 +53,6 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
     }()
     
     
-    private let mySegcon: UISegmentedControl = {
-        // 表示する配列を作成する.
-        let myArray: NSArray = ["投稿","いいねした投稿"]
-        let mySegcon: UISegmentedControl = UISegmentedControl(items: myArray as [AnyObject])
-        mySegcon.selectedSegmentIndex = 0
-        return mySegcon
-        
-    }()
     
     
     
@@ -75,7 +65,7 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
         addSubview(bioLabel)
         addSubview(twitterLinkIcon)
         addSubview(instagramLinkIcon)
-        addSubview(mySegcon)
+        
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapImage))
         imageView.addGestureRecognizer(tap)
@@ -83,83 +73,6 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
         twitterLinkIcon.addTarget(self, action: #selector(didTapTwitterLink), for: .touchUpInside)
         instagramLinkIcon.addTarget(self, action: #selector(didTapInstagramLink), for: .touchUpInside)
         
-        // イベントを追加する.
-        mySegcon.addTarget(self, action: #selector(segconChanged(segcon:)), for: UIControl.Event.valueChanged)
-
-        // minimum usage.
-        let startDate = Date()
-        
-    }
-    /*
-     SwgmentedControlの値が変わったときに呼び出される.
-     */
-    @objc private func segconChanged(segcon: UISegmentedControl){
-        
-        delegate?.profileHeaderCollectionReusableViewSegmentedValueChanged(segCon: segcon)
-
-    }
-    
-    @objc private func didTapTwitterLink(){
-        print("twitter tapped")
-        if let twitterId = twitterId {
-            let appURL = URL(string: "twitter://user?screen_name=\(twitterId)")!
-            let webURL = URL(string: "https://twitter.com/\(twitterId)")!
-            
-            if UIApplication.shared.canOpenURL(appURL as URL) {
-                if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(appURL)
-                } else {
-                    UIApplication.shared.openURL(appURL)
-                }
-            } else {
-                //redirect to safari because the user doesn't have Instagram
-                if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(webURL)
-                } else {
-                    UIApplication.shared.openURL(webURL)
-                }
-            }
-            
-        }
-        else{
-            
-            let alert = UIAlertController(title: "Twitter連携エラー", message: "TwitterのIDが登録されていません。プロフィールの編集からIDを連携してください。", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            delegate?.profileHeaderCollectionReusableViewShowAlert(alert: alert)
-        }
-    }
-    
-    @objc private func didTapInstagramLink(){
-        print("ig tapped")
-        if let instagramId = instagramId {
-            let appURL = URL(string: "instagram://user?screen_name=\(instagramId)")!
-            let webURL = URL(string: "https://instagram.com/\(instagramId)")!
-            
-            if UIApplication.shared.canOpenURL(appURL as URL) {
-                if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(appURL)
-                } else {
-                    UIApplication.shared.openURL(appURL)
-                }
-            } else {
-                //redirect to safari because the user doesn't have Instagram
-                if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(webURL)
-                } else {
-                    UIApplication.shared.openURL(webURL)
-                }
-            }
-            
-        }
-        else{
-            let alert = UIAlertController(title: "Instagram連携エラー", message: "InstagramのIDが登録されていません。プロフィールの編集からIDを連携してください。", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            delegate?.profileHeaderCollectionReusableViewShowAlert(alert: alert)
-        }
-    }
-    
-    @objc private func didTapImage(){
-        delegate?.profileHeaderCollectionReusableViewDidTapImage(self)
     }
     
     required init?(coder: NSCoder) {
@@ -205,18 +118,75 @@ class ProfileHeaderCollectionReusableView: UICollectionReusableView {
             height: instagramLinkIconSize
         )
         
-        mySegcon.center = CGPoint(x: frame.width/2, y: twitterLinkIcon.bottom+60)
-        mySegcon.backgroundColor = UIColor.gray
-        mySegcon.tintColor = UIColor.white
         
 
     }
+
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        imageView.image = nil
-        bioLabel.text = nil
+    @objc private func didTapTwitterLink(){
+        print("twitter tapped")
+        if let twitterId = twitterId {
+            let appURL = URL(string: "twitter://user?screen_name=\(twitterId)")!
+            let webURL = URL(string: "https://twitter.com/\(twitterId)")!
+            
+            if UIApplication.shared.canOpenURL(appURL as URL) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(appURL)
+                } else {
+                    UIApplication.shared.openURL(appURL)
+                }
+            } else {
+                //redirect to safari because the user doesn't have Instagram
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(webURL)
+                } else {
+                    UIApplication.shared.openURL(webURL)
+                }
+            }
+            
+        }
+        else{
+            
+            let alert = UIAlertController(title: "Twitter連携エラー", message: "TwitterのIDが登録されていません。プロフィールの編集からIDを連携してください。", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            delegate?.profileHeaderInfoViewShowAlert(alert: alert)
+        }
     }
+    
+    @objc private func didTapInstagramLink(){
+        print("ig tapped")
+        if let instagramId = instagramId {
+            let appURL = URL(string: "instagram://user?screen_name=\(instagramId)")!
+            let webURL = URL(string: "https://instagram.com/\(instagramId)")!
+            
+            if UIApplication.shared.canOpenURL(appURL as URL) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(appURL)
+                } else {
+                    UIApplication.shared.openURL(appURL)
+                }
+            } else {
+                //redirect to safari because the user doesn't have Instagram
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(webURL)
+                } else {
+                    UIApplication.shared.openURL(webURL)
+                }
+            }
+            
+        }
+        else{
+            let alert = UIAlertController(title: "Instagram連携エラー", message: "InstagramのIDが登録されていません。プロフィールの編集からIDを連携してください。", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            delegate?.profileHeaderInfoViewShowAlert(alert: alert)
+        }
+    }
+    
+    @objc private func didTapImage(){
+        delegate?.profileHeaderInfoViewDidTapImage(self)
+    }
+    
+    
     
     public func configure(with viewModel: ProfileHeaderViewModel){
         var text = ""
