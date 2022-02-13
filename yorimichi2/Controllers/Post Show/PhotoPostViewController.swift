@@ -264,6 +264,8 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         // Set the new appearance
         fpc.surfaceView.appearance = appearance
         
+        fpc.isRemovalInteractionEnabled = true
+        
         // Assign self as the delegate of the controller.
         fpc.delegate = self // Optional
         fpc.view.frame = CGRect(x: 6, y: 0, width: view.width-12, height: view.height/2)
@@ -689,7 +691,7 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
 }
 
 extension PhotoPostViewController: CommentsViewControllerDeleagate{
-    func commentsViewControllerDidTapComment(with viewController: CommentsViewController, withText text: String) {
+    func commentsViewControllerDidTapComment(with viewController: CommentsViewController, withText text: String, type: ShowingCommentSegment) {
         fpc.removePanelFromParent(animated: true, completion: nil)
         print("delegate at videoPostViewcontroller")
         guard let currentUserName = UserDefaults.standard.string(forKey: "username") else {
@@ -719,7 +721,8 @@ extension PhotoPostViewController: CommentsViewControllerDeleagate{
                                                           owner: strongSelf.model.user.username,
                                                           comment: PostComment(text: text,
                                                                                user: user,
-                                                                               date: Date()
+                                                                               date: Date(),
+                                                                               type: type
                                                                               ),
                                                           completion: { success in
                         DispatchQueue.main.async {

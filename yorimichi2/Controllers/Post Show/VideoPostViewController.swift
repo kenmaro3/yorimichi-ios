@@ -762,7 +762,7 @@ class VideoPostViewController: UIViewController, FloatingPanelControllerDelegate
 
 
 extension VideoPostViewController: CommentsViewControllerDeleagate{
-    func commentsViewControllerDidTapComment(with viewController: CommentsViewController, withText text: String) {
+    func commentsViewControllerDidTapComment(with viewController: CommentsViewController, withText text: String, type: ShowingCommentSegment) {
         fpc.removePanelFromParent(animated: true, completion: nil)
         print("delegate at videoPostViewcontroller")
         guard let currentUserName = UserDefaults.standard.string(forKey: "username") else {
@@ -793,7 +793,8 @@ extension VideoPostViewController: CommentsViewControllerDeleagate{
                                                                owner: strongSelf.model.user.username,
                                                                comment: PostComment(text: text,
                                                                                     user: user,
-                                                                                    date: Date()
+                                                                                    date: Date(),
+                                                                                    type: type
                                                                                    ),
                                                                completion: { success in
                         DispatchQueue.main.async {

@@ -28,7 +28,7 @@ class CommentTableViewCell: UITableViewCell {
     
     private let commentLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 14.0)
         label.textColor = .black
         return label
@@ -86,7 +86,8 @@ class CommentTableViewCell: UITableViewCell {
         dateLabel.text = .date(from: model.date)
         commentLabel.sizeToFit()
         let commentLabelHeight = min(contentView.height-dateLabel.top, commentLabel.height)
-        commentLabel.frame = CGRect(x: avatarImageView.right+10, y: 5, width: contentView.width - avatarImageView.width - 30, height: commentLabelHeight)
+        //commentLabel.frame = CGRect(x: avatarImageView.right+10, y: 5, width: contentView.width - avatarImageView.width - 30, height: commentLabelHeight)
+        commentLabel.frame = CGRect(x: avatarImageView.right+10, y: 5, width: commentLabel.width, height: commentLabelHeight)
         
         StorageManager.shared.profilePictureURL(for: model.user.username, completion: {[weak self] url in
             self?.avatarImageView.sd_setImage(with: url, completed: nil)
