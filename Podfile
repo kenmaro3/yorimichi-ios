@@ -8,18 +8,20 @@ target 'yorimichi2' do
   # Pods for yorimichi2
   pod 'Appirater'
   pod 'Firebase'
-  pod 'Firebase/Auth' 
+  pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Messaging'
+  pod 'Firebase/InAppMessaging'
+  #pod 'Firebase/InAppMessagingDisplay'
+  #pod 'Firebase/InAppMessaging'
 
   pod 'SDWebImage'
   pod 'GoogleSignIn'
   #pod 'Koloda'
-  #pod "PromiseKit", "~> 6.8"
-  #pod 'PromiseKit/Alamofire'
+  #pod "PromiseKit", "~> 6.8" #pod 'PromiseKit/Alamofire'
   pod 'Alamofire', "~> 4.9.1"
   #pod 'Mapbox-iOS-SDK'
   pod 'Mapbox-iOS-SDK', '~> 6.3.0'
@@ -43,12 +45,15 @@ target 'yorimichi2-dev' do
   # Pods for yorimichi2
   pod 'Appirater'
   pod 'Firebase'
-  pod 'Firebase/Auth' 
+  pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Messaging'
+  pod 'Firebase/InAppMessaging'
+  #pod 'Firebase/InAppMessagingDisplay'
+  #pod 'Firebase/InAppMessaging'
 
   pod 'SDWebImage'
   pod 'GoogleSignIn'
