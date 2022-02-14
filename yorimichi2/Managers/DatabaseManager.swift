@@ -676,7 +676,7 @@ final class DatabaseManager{
         }
     }
     
-    public func explorePostsPromotion(completion: @escaping ([Post]) -> Void){
+    public func explorePostsPromotion(currentLocation: CLLocation, completion: @escaping ([Post]) -> Void){
         let ref = database.collection("yorimichiPost").document("PRO000").collection("posts")
         ref.getDocuments{ snapshot, error in
 //            guard let users = snapshot?.documents, error == nil else{
@@ -684,7 +684,28 @@ final class DatabaseManager{
                 completion([])
                 return
             }
-            completion(posts)
+            posts.sort{ $0.date > $1.date}
+            
+            var distanceList = [Float]()
+            posts.forEach{
+                let latDiff = currentLocation.coordinate.latitude - $0.location.lat
+                let lngDiff = currentLocation.coordinate.longitude - $0.location.lng
+                
+                distanceList.append(Float(latDiff*latDiff+lngDiff*lngDiff))
+            }
+            
+            let sortedIndices = distanceList.enumerated()
+                .sorted{ $0.element < $1.element }
+                .map{$0.offset}
+            
+            var resPost: [Post] = []
+            
+
+            let sortedIndicesLimited = sortedIndices[0..<min(10, sortedIndices.count)]
+            for i in 0..<min(10, sortedIndices.count){
+                    resPost.append(posts[sortedIndices[i]])
+                }
+                completion(resPost)
             
         }
     }

@@ -128,14 +128,16 @@ class HomeViewController: UIViewController {
         
         group.enter()
         
-        print("debug Location \(self.currentLocation)")
         DatabaseManager.shared.explorePostsNearBy(currentLocation: self.currentLocation ?? CLLocation(), completion: {[weak self] posts in
             
             defer{
                 group.leave()
             }
             
-            posts.forEach{
+            let postsFilterNotMyself = posts.filter{
+                $0.user.username != username
+            }
+            postsFilterNotMyself.forEach{
                 self?.forYouPosts.append((cellType: .photo(viewModel: HomeScrollPhotoViewModel(post: $0)), id: $0.id))
             }
         })

@@ -317,7 +317,7 @@ class ExploreViewController: UIViewController, UISearchResultsUpdating, UITableV
         group.enter()
         
         
-        DatabaseManager.shared.explorePostsPromotion{ posts in
+        DatabaseManager.shared.explorePostsPromotion(currentLocation: self.currentLocation ?? CLLocation()){ posts in
             defer{
                 group.leave()
             }
