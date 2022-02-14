@@ -14,12 +14,13 @@ target 'yorimichi2' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Messaging'
+
   pod 'SDWebImage'
   pod 'GoogleSignIn'
   #pod 'Koloda'
   #pod "PromiseKit", "~> 6.8"
   #pod 'PromiseKit/Alamofire'
-  pod 'Alamofire'
+  pod 'Alamofire', "~> 4.9.1"
   #pod 'Mapbox-iOS-SDK'
   pod 'Mapbox-iOS-SDK', '~> 6.3.0'
   #pod 'MapboxNavigation', '~> 1.4.2'
@@ -48,12 +49,13 @@ target 'yorimichi2-dev' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Messaging'
+
   pod 'SDWebImage'
   pod 'GoogleSignIn'
   #pod 'Koloda'
   #pod "PromiseKit", "~> 6.8"
   #pod 'PromiseKit/Alamofire'
-  pod 'Alamofire'
+  pod 'Alamofire', "~> 4.9.1"
   #pod 'Mapbox-iOS-SDK'
   pod 'Mapbox-iOS-SDK', '~> 6.3.0'
   #pod 'MapboxNavigation', '~> 1.4.2'
