@@ -655,6 +655,21 @@ final class DatabaseManager{
         }
     }
     
+    public func exploreAllYorimichiPosts(completion: @escaping([Post]) -> Void){
+        let ref = database.collection("yorimichiPost").document("A000").collection("posts")
+        ref.getDocuments{ snapshot, error in
+//            guard let users = snapshot?.documents, error == nil else{
+            guard var posts = snapshot?.documents.compactMap({Post(with: $0.data())}), error == nil else{
+                completion([])
+                return
+            }
+            
+            completion(posts)
+            
+        }
+        
+    }
+    
     
     public func explorePosts(completion: @escaping ([Post]) -> Void){
         let ref = database.collection("yorimichiPost").document("A000").collection("posts")
@@ -764,7 +779,7 @@ final class DatabaseManager{
             
             let sortedIndices = recentPosts.enumerated()
                 .sorted{ $0.element.likers.count > $1.element.likers.count }
-                              .map{ $0.offset }
+                .map{ $0.offset }
             
             var resPost: [Post] = []
             
@@ -772,9 +787,9 @@ final class DatabaseManager{
             
             let sortedIndicesLimited = sortedIndices[0..<min(10, sortedIndices.count)]
             for i in 0..<min(10, sortedIndices.count){
-                    resPost.append(recentPosts[sortedIndices[i]])
-                }
-                completion(resPost)
+                resPost.append(recentPosts[sortedIndices[i]])
+            }
+            completion(resPost)
                 
             
         }
@@ -822,12 +837,12 @@ final class DatabaseManager{
             
             var resPost: [Post] = []
             
-
+            
             let sortedIndicesLimited = sortedIndices[0..<min(10, sortedIndices.count)]
             for i in 0..<min(10, sortedIndices.count){
-                    resPost.append(recentPosts[sortedIndices[i]])
-                }
-                completion(resPost)
+                resPost.append(recentPosts[sortedIndices[i]])
+            }
+            completion(resPost)
             
             
         }

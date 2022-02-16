@@ -12,25 +12,9 @@ import FloatingPanel
 import StoreKit
 import ProgressHUD
 import MapKit
-//import GoogleMobileAds
+import GoogleMobileAds
 
-//class MyFloatingPanelLayout: FloatingPanelLayout {
-//    
-//    var position: FloatingPanelPosition
-//    
-//    var initialState: FloatingPanelState
-//    
-////    let position: FloatingPanelPosition = .bottom
-////    let initialState: FloatingPanelState = .tip
-//    var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
-//        return [
-//            .full: FloatingPanelLayoutAnchor(absoluteInset: 16.0, edge: .top, referenceGuide: .safeArea),
-//            .half: FloatingPanelLayoutAnchor(fractionalInset: 0.5, edge: .bottom, referenceGuide: .safeArea),
-//            .tip: FloatingPanelLayoutAnchor(absoluteInset: 44.0, edge: .bottom, referenceGuide: .safeArea),
-//        ]
-//    }}
-//
-class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISearchResultsUpdating{
+class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISearchResultsUpdating, GADBannerViewDelegate{
     /// when user hit the keyboard key
     func updateSearchResults(for searchController: UISearchController) {
         guard let resultsVC = searchController.searchResultsController as? SearchLocationResultsViewController,
@@ -42,19 +26,13 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         
         searchCompleter.queryFragment = query
         
-//        DatabaseManager.shared.findUsers(with: query){ results in
-//            resultsVC.update(with: results)
-//        }
     }
     
-//    private let bannerView: GADBannerView = {
-//        let banner = GADBannerView()
-//        return banner
-//
-//    }()
-
+    var bannerView: GADBannerView = {
+        let bannerView = GADBannerView()
+        return bannerView
+    }()
     
-
     var exploreFpc: FloatingPanelController!
     
     private var annotationsYorimichi: [YorimichiAnnotationViewModel] = []
@@ -249,7 +227,27 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
 
     }()
     
-
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+      bannerView.translatesAutoresizingMaskIntoConstraints = false
+      view.addSubview(bannerView)
+      view.addConstraints(
+        [NSLayoutConstraint(item: bannerView,
+                            attribute: .bottom,
+                            relatedBy: .equal,
+                            toItem: bottomLayoutGuide,
+                            attribute: .top,
+                            multiplier: 1,
+                            constant: 0),
+         NSLayoutConstraint(item: bannerView,
+                            attribute: .centerX,
+                            relatedBy: .equal,
+                            toItem: view,
+                            attribute: .centerX,
+                            multiplier: 1,
+                            constant: 0)
+        ])
+     }
+    
     
     // MARK: Lifecycle
 
@@ -261,6 +259,12 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
             .foregroundColor: UIColor.black
         ]
         
+        print("Google Mobile Ads SDK version: \(GADMobileAds.sharedInstance().sdkVersion)")
+        //bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.adUnitID = "ca-app-pub-4038783882928170/6577527813"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        //addBannerViewToView(bannerView)
 
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
@@ -543,6 +547,7 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         view.addSubview(exploreHPLabel)
         view.addSubview(goButton)
         view.addSubview(goLabel)
+        view.addSubview(bannerView)
     }
     
     
@@ -1785,6 +1790,8 @@ extension MapViewController{
         goLabel.frame = CGRect(x: view.right - goLabel.width - 10 - 40, y: goButton.bottom + labelOverlap, width: goLabel.width+20, height: goLabel.height+5)
         goButton.center.x = view.width/4*3 + 30
         goLabel.center.x = view.width/4*3 + 30
+        
+        bannerView.frame = CGRect(x: view.right/2 - 320/2, y:  goButton.top - 130, width: 320, height: 120)
         
     }
     

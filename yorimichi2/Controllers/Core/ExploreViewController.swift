@@ -307,6 +307,103 @@ class ExploreViewController: UIViewController, UISearchResultsUpdating, UITableV
         fetchData()
 
     }
+    
+    private func filterForRecent(allPosts: [Post], completion: (Bool) -> Void){
+        let now = Date()
+        let modifiedDate = Calendar.current.date(byAdding: .day, value: -7, to: now)!
+        
+        var recentPosts = allPosts.filter{
+            $0.date > modifiedDate
+            
+        }
+        recentPosts.sort{ $0.date > $1.date}
+        self.posts = recentPosts
+        completion(true)
+        return
+        
+    }
+    
+    private func filterForPopular(allPosts: [Post], completion: (Bool) -> Void){
+        let now = Date()
+        let modifiedDate = Calendar.current.date(byAdding: .day, value: -30, to: now)!
+        
+        let recentPosts = allPosts.filter{
+            $0.date > modifiedDate
+            
+        }
+        
+        if(recentPosts.count == 0){
+            self.postsPopular = []
+            completion(true)
+            return
+            
+        }
+        
+        let sortedIndices = recentPosts.enumerated()
+            .sorted{ $0.element.likers.count > $1.element.likers.count }
+            .map{ $0.offset }
+        
+        var resPost: [Post] = []
+        
+        let sortedIndicesLimited = sortedIndices[0..<min(10, sortedIndices.count)]
+        for i in 0..<min(10, sortedIndices.count){
+            resPost.append(recentPosts[sortedIndices[i]])
+        }
+        
+        self.postsPopular = resPost
+        completion(true)
+        return
+
+    }
+    
+    private func filterForNearBy(allPosts: [Post], completion: (Bool) -> Void){
+        let now = Date()
+        let modifiedDate = Calendar.current.date(byAdding: .day, value: -30, to: now)!
+        
+        let recentPosts = posts.filter{
+            $0.date > modifiedDate
+            
+        }
+        
+        if(recentPosts.count == 0){
+            self.postsNearBy = []
+            completion(true)
+            return
+            
+        }
+        
+        var distanceList = [Float]()
+        
+        guard let currentLocation = currentLocation else {
+            self.postsNearBy = []
+            completion(true)
+            return
+        }
+
+        recentPosts.forEach{
+            let latDiff = currentLocation.coordinate.latitude - $0.location.lat
+            let lngDiff = currentLocation.coordinate.longitude - $0.location.lng
+            
+            distanceList.append(Float(latDiff*latDiff+lngDiff*lngDiff))
+        }
+        
+        let sortedIndices = distanceList.enumerated()
+            .sorted{ $0.element < $1.element }
+            .map{$0.offset}
+        
+        var resPost: [Post] = []
+        
+        
+        let sortedIndicesLimited = sortedIndices[0..<min(10, sortedIndices.count)]
+        for i in 0..<min(10, sortedIndices.count){
+            resPost.append(recentPosts[sortedIndices[i]])
+        }
+        
+        self.postsNearBy = resPost
+        completion(true)
+        return
+
+    }
 
 
     private func fetchData(){
@@ -324,26 +421,27 @@ class ExploreViewController: UIViewController, UISearchResultsUpdating, UITableV
             self.postsPromotion = posts
         }
         
-        DatabaseManager.shared.explorePostsRecent{ posts in
-            defer{
-                group.leave()
-            }
-            self.posts = posts
-        }
-        
-        DatabaseManager.shared.explorePostsPopular{ posts in
-            defer{
-                group.leave()
-            }
-            self.postsPopular = posts
-        }
-        
-        DatabaseManager.shared.explorePostsNearBy(currentLocation: self.currentLocation ?? CLLocation(), completion: { posts in
-            defer{
-                group.leave()
-            }
-            self.postsNearBy = posts
+        DatabaseManager.shared.exploreAllYorimichiPosts(completion: {[weak self] allPosts in
+            self?.filterForRecent(allPosts: allPosts, completion: { res in
+                defer{
+                    group.leave()
+                }
+            })
+            self?.filterForPopular(allPosts: allPosts, completion: { res in
+                defer{
+                    group.leave()
+                }
+            })
+            self?.filterForNearBy(allPosts: allPosts, completion: { res in
+                defer{
+                    group.leave()
+                }
+            })
+            
+            
         })
+        
+        
         
         group.notify(queue: .global()){
             self.sections.append(

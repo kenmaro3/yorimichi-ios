@@ -10,7 +10,7 @@ import UIKit
 import Appirater
 import FirebaseMessaging
 import UserNotifications
-//import GoogleMobileAds
+import GoogleMobileAds
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        //GADMobileAds.configure(withApplicationID: "ca-app-pub-4038783882928170~5171490537")
 //        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        // Initialize the Google Mobile Ads SDK.
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         
         Appirater.appLaunched(true)
