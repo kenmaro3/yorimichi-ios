@@ -1,7 +1,14 @@
 import UIKit
 import CoreLocation
+import GoogleMobileAds
 
-class HomeViewController: UIViewController {
+
+class HomeViewController: UIViewController, GADBannerViewDelegate {
+    
+    var bannerView: GADBannerView = {
+        let bannerView = GADBannerView()
+        return bannerView
+    }()
     // locationManager で現在地を取得する
     private var locationManager:CLLocationManager!
     public var currentLocation: CLLocation?
@@ -77,12 +84,19 @@ class HomeViewController: UIViewController {
     
     private var postObserver: NSObjectProtocol?
     private var yorimichiObserver: NSObjectProtocol?
-
+    
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("Google Mobile Ads SDK version: \(GADMobileAds.sharedInstance().sdkVersion)")
+        //bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        bannerView.adUnitID = "ca-app-pub-4038783882928170/6577527813"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        view.addSubview(bannerView)
         
         setupLocationManager()
         
@@ -94,7 +108,7 @@ class HomeViewController: UIViewController {
         view.addSubview(emptyLabelForForYou)
         view.addSubview(emptyLabelForFollowings)
         
-        horizontalScrollView.contentSize = CGSize(width: view.width*2, height: view.height)
+        horizontalScrollView.contentSize = CGSize(width: view.width*2, height: view.height-200)
         
         //fetchPostForYou()
         fetchPostFollowing()
@@ -304,7 +318,12 @@ class HomeViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        horizontalScrollView.frame = view.bounds
+        horizontalScrollView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height-150 - view.safeAreaInsets.top)
+//        bannerView.frame = CGRect(x: view.right/2 - 320/2, y:  horizontalScrollView.bottom, width: 320, height: 100)
+        
+        bannerView.frame.origin = CGPoint(x:0, y: view.height - view.safeAreaInsets.bottom - 135 )
+        bannerView.frame.size = CGSize(width: view.width, height: 120)
+        
         emptyLabelForForYou.sizeToFit()
         emptyLabelForForYou.center = view.center
         emptyLabelForFollowings.sizeToFit()
@@ -350,7 +369,7 @@ class HomeViewController: UIViewController {
 
         switch model.cellType{
         case .photo(let viewModel):
-            let cellVC = PhotoPostViewController(model: viewModel.post)
+            let cellVC = PhotoPostViewController(model: viewModel.post, isOnHome: true)
             cellVC.delegate = self
             followingPageViewController.setViewControllers(
                 [cellVC],
@@ -387,7 +406,7 @@ class HomeViewController: UIViewController {
         switch model.cellType{
         case .photo(let viewModel):
             print("\n\n\nfalling 2")
-            let vc = PhotoPostViewController(model: viewModel.post)
+            let vc = PhotoPostViewController(model: viewModel.post, isOnHome: true)
             vc.delegate = self
             forYorPageViewController.setViewControllers(
                 [vc],
@@ -453,7 +472,7 @@ extension HomeViewController: UIPageViewControllerDataSource{
             
             switch model.cellType{
             case .photo(let viewModel):
-                let vc = PhotoPostViewController(model: viewModel.post)
+                let vc = PhotoPostViewController(model: viewModel.post, isOnHome: true)
 //                vc.delegate = self
                 return vc
             case .video(let viewModel):
@@ -480,7 +499,7 @@ extension HomeViewController: UIPageViewControllerDataSource{
             
             switch model.cellType{
             case .photo(let viewModel):
-                let vc = PhotoPostViewController(model: viewModel.post)
+                let vc = PhotoPostViewController(model: viewModel.post, isOnHome: true)
 //                vc.delegate = self
                 return vc
             case .video(let viewModel):
@@ -548,7 +567,7 @@ extension HomeViewController: UIPageViewControllerDataSource{
             case .photo(let viewModel):
                 print("fall3 photo=======")
                 print(viewModel.post)
-                let vc = PhotoPostViewController(model: viewModel.post)
+                let vc = PhotoPostViewController(model: viewModel.post, isOnHome: true)
 //                vc.delegate = self
                 return vc
             case .video(let viewModel):
@@ -581,7 +600,7 @@ extension HomeViewController: UIPageViewControllerDataSource{
             case .photo(let viewModel):
                 print("let 2 photo========")
                 
-                let vc = PhotoPostViewController(model: viewModel.post)
+                let vc = PhotoPostViewController(model: viewModel.post, isOnHome: true)
                 //                vc.delegate = self
                 return vc
             case .video(let viewModel):

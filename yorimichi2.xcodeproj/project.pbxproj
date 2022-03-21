@@ -9,6 +9,24 @@
 /* Begin PBXBuildFile section */
 		0A052FF727701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A052FF627701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift */; };
 		0A052FF827701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A052FF627701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift */; };
+		0A0D90C727AACFA800671884 /* PostFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0D90C627AACFA800671884 /* PostFooterView.swift */; };
+		0A0D90C827AACFA800671884 /* PostFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0D90C627AACFA800671884 /* PostFooterView.swift */; };
+		0A0F7ACE2799A8CC0087A7C8 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F7ACD2799A8CC0087A7C8 /* TestViewController.swift */; };
+		0A0F7ACF2799A8CC0087A7C8 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F7ACD2799A8CC0087A7C8 /* TestViewController.swift */; };
+		0A0F7AD12799A9600087A7C8 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F7AD02799A9600087A7C8 /* ChartView.swift */; };
+		0A0F7AD22799A9600087A7C8 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F7AD02799A9600087A7C8 /* ChartView.swift */; };
+		0A14745F279BAF340005344A /* ProfileSegmentedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A14745E279BAF340005344A /* ProfileSegmentedCollectionViewCell.swift */; };
+		0A147460279BAF340005344A /* ProfileSegmentedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A14745E279BAF340005344A /* ProfileSegmentedCollectionViewCell.swift */; };
+		0A147462279BBEE20005344A /* ProfileHeaderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A147461279BBEE20005344A /* ProfileHeaderInfoView.swift */; };
+		0A147463279BBEE20005344A /* ProfileHeaderInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A147461279BBEE20005344A /* ProfileHeaderInfoView.swift */; };
+		0A147465279BC9E10005344A /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A147464279BC9E10005344A /* LevelView.swift */; };
+		0A147466279BC9E10005344A /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A147464279BC9E10005344A /* LevelView.swift */; };
+		0A147468279C282C0005344A /* PhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A147467279C282C0005344A /* PhotoTableViewCell.swift */; };
+		0A147469279C282C0005344A /* PhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A147467279C282C0005344A /* PhotoTableViewCell.swift */; };
+		0A14746B279C28CC0005344A /* PhotoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A14746A279C28CC0005344A /* PhotoCellViewModel.swift */; };
+		0A14746C279C28CC0005344A /* PhotoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A14746A279C28CC0005344A /* PhotoCellViewModel.swift */; };
+		0A14746E279C559F0005344A /* PhotoTableViewFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A14746D279C559F0005344A /* PhotoTableViewFooterView.swift */; };
+		0A14746F279C559F0005344A /* PhotoTableViewFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A14746D279C559F0005344A /* PhotoTableViewFooterView.swift */; };
 		0A1CA0A5275C591700F2C22D /* SearchPlaceResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CA0A4275C591700F2C22D /* SearchPlaceResultsViewController.swift */; };
 		0A1CA0A6275C591700F2C22D /* SearchPlaceResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CA0A4275C591700F2C22D /* SearchPlaceResultsViewController.swift */; };
 		0A1CA0A8275C593500F2C22D /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CA0A7275C593500F2C22D /* ExploreViewController.swift */; };
@@ -16,6 +34,8 @@
 		0A1CA0AB275C61DF00F2C22D /* SpecificPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CA0AA275C61DF00F2C22D /* SpecificPostsViewController.swift */; };
 		0A1CA0AC275C61DF00F2C22D /* SpecificPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CA0AA275C61DF00F2C22D /* SpecificPostsViewController.swift */; };
 		0A42DDB9274A0CB600A36B0F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A42DDB8274A0CB600A36B0F /* GoogleService-Info.plist */; };
+		0A6A118927B14B4F00F46D9F /* MapToSetPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6A118827B14B4F00F46D9F /* MapToSetPinViewController.swift */; };
+		0A6A118A27B14B4F00F46D9F /* MapToSetPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A6A118827B14B4F00F46D9F /* MapToSetPinViewController.swift */; };
 		0A841F552754DC970021EA3E /* SourceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD25807272E610000F22274 /* SourceInfo.swift */; };
 		0A841F562754DC970021EA3E /* SwipeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACDA55A27268CC600DA3596 /* SwipeInfo.swift */; };
 		0A841F572754DC970021EA3E /* ListGenreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACDA56D2726A4FA00DA3596 /* ListGenreTableViewCell.swift */; };
@@ -213,6 +233,10 @@
 		0ACED3CB272402A40054398A /* CommentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACED3CA272402A40054398A /* CommentCollectionViewCell.swift */; };
 		0ACED3CD272407420054398A /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACED3CC272407420054398A /* Comment.swift */; };
 		0ACED3CF27240A120054398A /* CommentBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACED3CE27240A120054398A /* CommentBarView.swift */; };
+		0ACED45927A94E0C00A04770 /* PhotoTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACED45827A94E0C00A04770 /* PhotoTableViewHeaderView.swift */; };
+		0ACED45A27A94E0C00A04770 /* PhotoTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACED45827A94E0C00A04770 /* PhotoTableViewHeaderView.swift */; };
+		0ACED45C27A97BEA00A04770 /* ExploreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACED45B27A97BEA00A04770 /* ExploreDetailViewController.swift */; };
+		0ACED45D27A97BEA00A04770 /* ExploreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACED45B27A97BEA00A04770 /* ExploreDetailViewController.swift */; };
 		0AD25804272E5F7700F22274 /* ListSourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD25803272E5F7700F22274 /* ListSourceViewController.swift */; };
 		0AD25806272E60C500F22274 /* ListSourceTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD25805272E60C500F22274 /* ListSourceTableViewCellViewModel.swift */; };
 		0AD25808272E610000F22274 /* SourceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD25807272E610000F22274 /* SourceInfo.swift */; };
@@ -298,11 +322,21 @@
 
 /* Begin PBXFileReference section */
 		0A052FF627701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditInfoCollectionLocationDirectViewCell.swift; sourceTree = "<group>"; };
+		0A0D90C627AACFA800671884 /* PostFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFooterView.swift; sourceTree = "<group>"; };
+		0A0F7ACD2799A8CC0087A7C8 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		0A0F7AD02799A9600087A7C8 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		0A14745E279BAF340005344A /* ProfileSegmentedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSegmentedCollectionViewCell.swift; sourceTree = "<group>"; };
+		0A147461279BBEE20005344A /* ProfileHeaderInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderInfoView.swift; sourceTree = "<group>"; };
+		0A147464279BC9E10005344A /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
+		0A147467279C282C0005344A /* PhotoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewCell.swift; sourceTree = "<group>"; };
+		0A14746A279C28CC0005344A /* PhotoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellViewModel.swift; sourceTree = "<group>"; };
+		0A14746D279C559F0005344A /* PhotoTableViewFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewFooterView.swift; sourceTree = "<group>"; };
 		0A1CA0A4275C591700F2C22D /* SearchPlaceResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceResultsViewController.swift; sourceTree = "<group>"; };
 		0A1CA0A7275C593500F2C22D /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		0A1CA0AA275C61DF00F2C22D /* SpecificPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificPostsViewController.swift; sourceTree = "<group>"; };
 		0A42DDB52747BD6D00A36B0F /* yorimichi2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = yorimichi2.entitlements; sourceTree = "<group>"; };
 		0A42DDB8274A0CB600A36B0F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0A6A118827B14B4F00F46D9F /* MapToSetPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapToSetPinViewController.swift; sourceTree = "<group>"; };
 		0A841FDC2754DC970021EA3E /* yorimichi2-dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "yorimichi2-dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A841FE02754DEC60021EA3E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0A901AB0272024AD00EC0A36 /* PosterColectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterColectionViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -375,6 +409,8 @@
 		0ACED3CA272402A40054398A /* CommentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollectionViewCell.swift; sourceTree = "<group>"; };
 		0ACED3CC272407420054398A /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		0ACED3CE27240A120054398A /* CommentBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentBarView.swift; sourceTree = "<group>"; };
+		0ACED45827A94E0C00A04770 /* PhotoTableViewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewHeaderView.swift; sourceTree = "<group>"; };
+		0ACED45B27A97BEA00A04770 /* ExploreDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDetailViewController.swift; sourceTree = "<group>"; };
 		0AD25803272E5F7700F22274 /* ListSourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSourceViewController.swift; sourceTree = "<group>"; };
 		0AD25805272E60C500F22274 /* ListSourceTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSourceTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		0AD25807272E610000F22274 /* SourceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceInfo.swift; sourceTree = "<group>"; };
@@ -677,6 +713,7 @@
 				0AD319BD271FBAF100734539 /* PhotoCollectionViewCell.swift */,
 				0AB0EF12272112D40039FF9F /* ProfileHeaderCollectionReusableView.swift */,
 				0AB0EF16272118100039FF9F /* ProfileHeaderCountView.swift */,
+				0A14745E279BAF340005344A /* ProfileSegmentedCollectionViewCell.swift */,
 				0AB0EF202721866E0039FF9F /* FollowButton.swift */,
 				0AC6927B27226D9B005E9737 /* ListUserTableViewCell.swift */,
 				0ACED3CA272402A40054398A /* CommentCollectionViewCell.swift */,
@@ -692,6 +729,13 @@
 				0AC8FB2D273CA67C003B327E /* PhotoEditInfoCollectionVideoViewCell.swift */,
 				0AC82F572746131600E58887 /* ListYorimichiLikesTableViewCell.swift */,
 				0A052FF627701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift */,
+				0A0F7AD02799A9600087A7C8 /* ChartView.swift */,
+				0A147461279BBEE20005344A /* ProfileHeaderInfoView.swift */,
+				0A147464279BC9E10005344A /* LevelView.swift */,
+				0A147467279C282C0005344A /* PhotoTableViewCell.swift */,
+				0A14746D279C559F0005344A /* PhotoTableViewFooterView.swift */,
+				0ACED45827A94E0C00A04770 /* PhotoTableViewHeaderView.swift */,
+				0A0D90C627AACFA800671884 /* PostFooterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -721,6 +765,7 @@
 				0AD4862C273771EF005FEF91 /* HomeScrollVideoViewModel.swift */,
 				0AD4863227381AEF005FEF91 /* PostHeaderViewModel.swift */,
 				0AD486342738CDA6005FEF91 /* CommentsViewModel.swift */,
+				0A14746A279C28CC0005344A /* PhotoCellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -765,6 +810,7 @@
 				0AD319C1271FC0D100734539 /* TabBarViewController.swift */,
 				0A1CA0A7275C593500F2C22D /* ExploreViewController.swift */,
 				0A9E1D68276DF4B50044DA20 /* NotificationViewController.swift */,
+				0A0F7ACD2799A8CC0087A7C8 /* TestViewController.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -786,6 +832,8 @@
 				0AC82F532745F9A600E58887 /* ListOnMapRightViewController.swift */,
 				0A1CA0A4275C591700F2C22D /* SearchPlaceResultsViewController.swift */,
 				0A1CA0AA275C61DF00F2C22D /* SpecificPostsViewController.swift */,
+				0ACED45B27A97BEA00A04770 /* ExploreDetailViewController.swift */,
+				0A6A118827B14B4F00F46D9F /* MapToSetPinViewController.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -875,6 +923,8 @@
 			dependencies = (
 			);
 			name = yorimichi2;
+			packageProductDependencies = (
+			);
 			productName = yorimichi2;
 			productReference = 0AD31948271FB3ED00734539 /* yorimichi2.app */;
 			productType = "com.apple.product-type.application";
@@ -947,6 +997,8 @@
 				Base,
 			);
 			mainGroup = 0AD3193F271FB3ED00734539;
+			packageReferences = (
+			);
 			productRefGroup = 0AD31949271FB3ED00734539 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1095,10 +1147,13 @@
 				0A841F5E2754DC970021EA3E /* ListGenreTableViewCellViewModel.swift in Sources */,
 				0A841F5F2754DC970021EA3E /* PhotoEditInfoCellType.swift in Sources */,
 				0A841F602754DC970021EA3E /* ProfileVideoCellViewModel.swift in Sources */,
+				0ACED45D27A97BEA00A04770 /* ExploreDetailViewController.swift in Sources */,
 				0A841F612754DC970021EA3E /* PostHeaderView.swift in Sources */,
 				0A841F622754DC970021EA3E /* NotificationCellViewModels.swift in Sources */,
 				0A841F632754DC970021EA3E /* ListMethodsTableViewCellViewModel.swift in Sources */,
 				0A841F642754DC970021EA3E /* SearchLocationResultsViewController.swift in Sources */,
+				0A14746C279C28CC0005344A /* PhotoCellViewModel.swift in Sources */,
+				0A14746F279C559F0005344A /* PhotoTableViewFooterView.swift in Sources */,
 				0A841F652754DC970021EA3E /* ListViewController.swift in Sources */,
 				0A1CA0AC275C61DF00F2C22D /* SpecificPostsViewController.swift in Sources */,
 				0A841F662754DC970021EA3E /* ListYorimichiLikesCellType.swift in Sources */,
@@ -1122,9 +1177,12 @@
 				0A841F782754DC970021EA3E /* FollowNotificationTableViewCell.swift in Sources */,
 				0A841F792754DC970021EA3E /* BudgetInfo.swift in Sources */,
 				0A841F7A2754DC970021EA3E /* ListYorimichiLikesTableViewCell.swift in Sources */,
+				0A0D90C827AACFA800671884 /* PostFooterView.swift in Sources */,
 				0A841F7B2754DC970021EA3E /* ProfileHeaderCountViewModel.swift in Sources */,
+				0A147466279BC9E10005344A /* LevelView.swift in Sources */,
 				0A841F7C2754DC970021EA3E /* ListOnMapMiddleViewController.swift in Sources */,
 				0A841F7D2754DC970021EA3E /* ProfileHeaderCollectionReusableView.swift in Sources */,
+				0A147460279BAF340005344A /* ProfileSegmentedCollectionViewCell.swift in Sources */,
 				0A1CA0A6275C591700F2C22D /* SearchPlaceResultsViewController.swift in Sources */,
 				0A841F7E2754DC970021EA3E /* PhotoCollectionViewCell.swift in Sources */,
 				0A841F7F2754DC970021EA3E /* GenreInfo.swift in Sources */,
@@ -1152,6 +1210,7 @@
 				0A9E1D6A276DF4B50044DA20 /* NotificationViewController.swift in Sources */,
 				0A841F952754DC970021EA3E /* PhotoEditInfoVideoViewModel.swift in Sources */,
 				0A841F962754DC970021EA3E /* ListSourceTableViewCellViewModel.swift in Sources */,
+				0A0F7ACF2799A8CC0087A7C8 /* TestViewController.swift in Sources */,
 				0A841F972754DC970021EA3E /* Comment.swift in Sources */,
 				0A1CA0A9275C593500F2C22D /* ExploreViewController.swift in Sources */,
 				0A841F982754DC970021EA3E /* Address.swift in Sources */,
@@ -1174,12 +1233,14 @@
 				0A841FA92754DC970021EA3E /* ShopUtils.swift in Sources */,
 				0A841FAA2754DC970021EA3E /* PostCaptionCollectionViewCellViewModel.swift in Sources */,
 				0A841FAB2754DC970021EA3E /* SceneDelegate.swift in Sources */,
+				0A147469279C282C0005344A /* PhotoTableViewCell.swift in Sources */,
 				0A841FAC2754DC970021EA3E /* AnalyticsManager.swift in Sources */,
 				0A841FAD2754DC970021EA3E /* Notification.swift in Sources */,
 				0A841FAE2754DC970021EA3E /* SearchViewController.swift in Sources */,
 				0A841FAF2754DC970021EA3E /* ListMethodsViewController.swift in Sources */,
 				0A841FB02754DC970021EA3E /* AlertManager.swift in Sources */,
 				0A841FB12754DC970021EA3E /* EditProfileViewController.swift in Sources */,
+				0A0F7AD22799A9600087A7C8 /* ChartView.swift in Sources */,
 				0A841FB22754DC970021EA3E /* PostDatetimeCollectionViewCellViewModel.swift in Sources */,
 				0A841FB32754DC970021EA3E /* CustomAnnotationView.swift in Sources */,
 				0A841FB42754DC970021EA3E /* UserInfo.swift in Sources */,
@@ -1189,11 +1250,13 @@
 				0A841FB82754DC970021EA3E /* HomeScrollCellType.swift in Sources */,
 				0A841FB92754DC970021EA3E /* LocationInfo.swift in Sources */,
 				0A841FBA2754DC970021EA3E /* SignInHeaderView.swift in Sources */,
+				0ACED45A27A94E0C00A04770 /* PhotoTableViewHeaderView.swift in Sources */,
 				0A841FBB2754DC970021EA3E /* SearchUserResultsViewController.swift in Sources */,
 				0A841FBC2754DC970021EA3E /* PostHeaderViewModel.swift in Sources */,
 				0A841FBD2754DC970021EA3E /* ListExploreResultViewController.swift in Sources */,
 				0A841FBE2754DC970021EA3E /* ListSourceViewController.swift in Sources */,
 				0A841FBF2754DC970021EA3E /* PostActionsCollectionViewCellViewModel.swift in Sources */,
+				0A6A118A27B14B4F00F46D9F /* MapToSetPinViewController.swift in Sources */,
 				0A841FC02754DC970021EA3E /* TextField.swift in Sources */,
 				0A841FC12754DC970021EA3E /* SettingsViewController.swift in Sources */,
 				0A841FC22754DC970021EA3E /* ListUserTableViewCellViewModel.swift in Sources */,
@@ -1204,6 +1267,7 @@
 				0A841FC82754DC970021EA3E /* PostNameCollectionViewCellViewModel.swift in Sources */,
 				0A841FC92754DC970021EA3E /* PostLikesCollectionVIewCellViewModel.swift in Sources */,
 				0A841FCA2754DC970021EA3E /* ProfileHeaderViewModel.swift in Sources */,
+				0A147463279BBEE20005344A /* ProfileHeaderInfoView.swift in Sources */,
 				0A841FCB2754DC970021EA3E /* HomeFeedCellType.swift in Sources */,
 				0A841FCC2754DC970021EA3E /* ProfileViewController.swift in Sources */,
 				0A841FCD2754DC970021EA3E /* HomeViewController.swift in Sources */,
@@ -1231,10 +1295,13 @@
 				0ACDA56A27269D9D00DA3596 /* ListGenreTableViewCellViewModel.swift in Sources */,
 				0ACCEF7F273A183100AB4026 /* PhotoEditInfoCellType.swift in Sources */,
 				0AD486272736C968005FEF91 /* ProfileVideoCellViewModel.swift in Sources */,
+				0ACED45C27A97BEA00A04770 /* ExploreDetailViewController.swift in Sources */,
 				0AD4863127380CDD005FEF91 /* PostHeaderView.swift in Sources */,
 				0A901ABD2720251600EC0A36 /* NotificationCellViewModels.swift in Sources */,
 				0AB41D5B272D2EE6000BE8B5 /* ListMethodsTableViewCellViewModel.swift in Sources */,
 				0ACCEF8D273A857600AB4026 /* SearchLocationResultsViewController.swift in Sources */,
+				0A14746B279C28CC0005344A /* PhotoCellViewModel.swift in Sources */,
+				0A14746E279C559F0005344A /* PhotoTableViewFooterView.swift in Sources */,
 				0AD31994271FB84C00734539 /* ListViewController.swift in Sources */,
 				0A1CA0AB275C61DF00F2C22D /* SpecificPostsViewController.swift in Sources */,
 				0AC82F56274603CD00E58887 /* ListYorimichiLikesCellType.swift in Sources */,
@@ -1258,9 +1325,12 @@
 				0A901ACB2720330E00EC0A36 /* FollowNotificationTableViewCell.swift in Sources */,
 				0ACDA56127268DA900DA3596 /* BudgetInfo.swift in Sources */,
 				0AC82F582746131600E58887 /* ListYorimichiLikesTableViewCell.swift in Sources */,
+				0A0D90C727AACFA800671884 /* PostFooterView.swift in Sources */,
 				0AB0EF1927211C3B0039FF9F /* ProfileHeaderCountViewModel.swift in Sources */,
+				0A147465279BC9E10005344A /* LevelView.swift in Sources */,
 				0AC8FB36273CDEE7003B327E /* ListOnMapMiddleViewController.swift in Sources */,
 				0AB0EF13272112D40039FF9F /* ProfileHeaderCollectionReusableView.swift in Sources */,
+				0A14745F279BAF340005344A /* ProfileSegmentedCollectionViewCell.swift in Sources */,
 				0AD319BE271FBAF100734539 /* PhotoCollectionViewCell.swift in Sources */,
 				0ACDA55F27268D0F00DA3596 /* GenreInfo.swift in Sources */,
 				0ACDA56627268E6B00DA3596 /* RequestsToBackendUtils.swift in Sources */,
@@ -1288,6 +1358,7 @@
 				0A9E1D69276DF4B50044DA20 /* NotificationViewController.swift in Sources */,
 				0AD25806272E60C500F22274 /* ListSourceTableViewCellViewModel.swift in Sources */,
 				0ACED3CD272407420054398A /* Comment.swift in Sources */,
+				0A0F7ACE2799A8CC0087A7C8 /* TestViewController.swift in Sources */,
 				0AD2983D2730F50B00ACE371 /* Address.swift in Sources */,
 				0A1CA0A8275C593500F2C22D /* ExploreViewController.swift in Sources */,
 				0AD486232736C90E005FEF91 /* ProfileCollectionCellType.swift in Sources */,
@@ -1310,12 +1381,14 @@
 				0ACDA56427268E5A00DA3596 /* ShopUtils.swift in Sources */,
 				0A901AB9272024F200EC0A36 /* PostCaptionCollectionViewCellViewModel.swift in Sources */,
 				0AD3194E271FB3ED00734539 /* SceneDelegate.swift in Sources */,
+				0A147468279C282C0005344A /* PhotoTableViewCell.swift in Sources */,
 				0AD319A4271FB8D500734539 /* AnalyticsManager.swift in Sources */,
 				0AD319B0271FB9BC00734539 /* Notification.swift in Sources */,
 				0AA83255272934F4002725CF /* SearchViewController.swift in Sources */,
 				0AB41D59272D2DFD000BE8B5 /* ListMethodsViewController.swift in Sources */,
 				0AC8FB30273CC3A0003B327E /* AlertManager.swift in Sources */,
 				0AB0EF1D272154BA0039FF9F /* EditProfileViewController.swift in Sources */,
+				0A0F7AD12799A9600087A7C8 /* ChartView.swift in Sources */,
 				0A901ABB2720250300EC0A36 /* PostDatetimeCollectionViewCellViewModel.swift in Sources */,
 				0AB41D5F272D734F000BE8B5 /* CustomAnnotationView.swift in Sources */,
 				0AB0EF1B272152150039FF9F /* UserInfo.swift in Sources */,
@@ -1325,11 +1398,13 @@
 				0AD48629273771A7005FEF91 /* HomeScrollCellType.swift in Sources */,
 				0ACDA55D27268CF000DA3596 /* LocationInfo.swift in Sources */,
 				0AD319BA271FBA8100734539 /* SignInHeaderView.swift in Sources */,
+				0ACED45927A94E0C00A04770 /* PhotoTableViewHeaderView.swift in Sources */,
 				0AD3199C271FB8A300734539 /* SearchUserResultsViewController.swift in Sources */,
 				0AD4863327381AEF005FEF91 /* PostHeaderViewModel.swift in Sources */,
 				0AD2580C272E6BB200F22274 /* ListExploreResultViewController.swift in Sources */,
 				0AD25804272E5F7700F22274 /* ListSourceViewController.swift in Sources */,
 				0A901AB5272024D100EC0A36 /* PostActionsCollectionViewCellViewModel.swift in Sources */,
+				0A6A118927B14B4F00F46D9F /* MapToSetPinViewController.swift in Sources */,
 				0AD319BC271FBACC00734539 /* TextField.swift in Sources */,
 				0AD31998271FB86000734539 /* SettingsViewController.swift in Sources */,
 				0AC6927E27226FDC005E9737 /* ListUserTableViewCellViewModel.swift in Sources */,
@@ -1340,6 +1415,7 @@
 				0AA831BC2727918B002725CF /* PostNameCollectionViewCellViewModel.swift in Sources */,
 				0A901AB7272024E500EC0A36 /* PostLikesCollectionVIewCellViewModel.swift in Sources */,
 				0AB0EF15272113550039FF9F /* ProfileHeaderViewModel.swift in Sources */,
+				0A147462279BBEE20005344A /* ProfileHeaderInfoView.swift in Sources */,
 				0AD319B2271FB9DB00734539 /* HomeFeedCellType.swift in Sources */,
 				0AD3198C271FB7C300734539 /* ProfileViewController.swift in Sources */,
 				0AD31984271FB79200734539 /* HomeViewController.swift in Sources */,
@@ -1401,7 +1477,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = yorimichi2/yorimichi2.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = B4C7245FA7;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1422,9 +1499,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agrimetal.yorimichi2-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "yorimichi2-dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1438,7 +1516,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = yorimichi2/yorimichi2.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = B4C7245FA7;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1459,9 +1538,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.agrimetal.yorimichi2-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "yorimichi2-dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1591,7 +1671,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = yorimichi2/yorimichi2.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = B4C7245FA7;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1612,9 +1693,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.agrimetal.yorimichi2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = yorimichi2;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1628,7 +1710,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = yorimichi2/yorimichi2.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = B4C7245FA7;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1649,9 +1732,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.agrimetal.yorimichi2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = yorimichi2;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

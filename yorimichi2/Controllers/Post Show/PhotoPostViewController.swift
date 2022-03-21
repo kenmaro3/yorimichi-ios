@@ -158,16 +158,18 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         
     }()
     
+    private var isOnHome: Bool = false
     
     // MARK: - Init
     
-    init(model: Post){
+    init(model: Post, isOnHome: Bool=false){
         self.model = model
         self.profileView = PostHeaderView()
         self.postFooterView = PostFooterView()
         self.postFooterView.configure(post: model)
         super.init(nibName: nil, bundle: nil)
         self.postFooterView.delegate = self
+        self.isOnHome = isOnHome
         
     }
     
@@ -345,13 +347,13 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         
         profileView.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: view.width, height: 60)
         
-        if let tabBarHeight = tabBarController?.tabBar.height {
-            postImageView.frame = CGRect(x: 0, y: profileView.bottom - footerHeight, width: view.width, height: view.height-profileView.bottom - tabBarHeight)
+        if (self.isOnHome){
+            postImageView.frame = CGRect(x: 0, y: profileView.bottom, width: view.width, height: view.height-profileView.bottom)
         }
         else{
             postImageView.frame = CGRect(x: 0, y: profileView.bottom - footerHeight, width: view.width, height: view.height-profileView.bottom)
         }
-
+        
         let size: CGFloat = 40
         let tabBarHeight: CGFloat = 0
         let timestampHeight:  CGFloat = 50

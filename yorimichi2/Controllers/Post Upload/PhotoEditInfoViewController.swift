@@ -154,7 +154,13 @@ class PhotoEditInfoViewController: UIViewController {
               let locationSubTitle = locationSubTitle,
               let genre = genre,
               let location = location else{
-                  fatalError()
+                  let alert = UIAlertController(title: "場所情報が入力されていません。", message: "場所情報を検索、もしくは手入力してください。", preferredStyle: .alert)
+                  alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+                      return
+                      
+                  }))
+                  present(alert, animated: true)
+                  return
               }
         
         guard let submitType = submitType else {

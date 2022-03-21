@@ -76,4 +76,6 @@ target 'yorimichi2-dev' do
   pod 'SwiftyCam'
   pod 'ProgressHUD'
 
+  pod 'Google-Mobile-Ads-SDK'
+
 end

@@ -146,12 +146,12 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
                     vc.modalPresentationStyle = .fullScreen
                     self?.present(vc, animated: true, completion: nil)
                     
-                    AlertManager.shared.presentError(title: "ログインエラー", message: "メールアドレスとパスワードを再度ご確認ください。"){[weak self] alert in
-                        self?.present(alert, animated: true)
-                        
-                    }
                 case .failure(let error):
                     HapticManager.shared.vibrate(for: .error)
+                    let alert = UIAlertController(title: "ログインエラー", message: "メールアドレスとパスワードを再度ご確認ください。", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                    self?.present(alert, animated: true)
+                    print("here signin failure detected.")
                     print(error)
                 }
             }

@@ -344,6 +344,8 @@ class MapViewController: UIViewController, FloatingPanelControllerDelegate, UISe
         exploreFpc.set(contentViewController: vc)
         exploreFpc.addPanel(toParent: self, animated: true)
         
+        exploreFpc.move(to: .tip, animated: true, completion: nil)
+        
 
     }
     
