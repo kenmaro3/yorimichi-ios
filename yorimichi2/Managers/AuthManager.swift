@@ -72,10 +72,8 @@ final class AuthManager{
                        password: String,
                        completion: @escaping (Result<User, Error>) -> Void
     ){
-        ProgressHUD.show("サインインしています...")
         self.auth.signIn(withEmail: email, password: password){ result, error in
             guard result != nil, error == nil else{
-                ProgressHUD.dismiss()
                 completion(.failure(AuthError.signInFailed))
                 return
             }
@@ -89,7 +87,6 @@ final class AuthManager{
                 UserDefaults.standard.setValue(user.username, forKey: "username")
                 UserDefaults.standard.setValue(user.email, forKey: "email")
                 
-                ProgressHUD.dismiss()
                 completion(.success(user))
             })
             

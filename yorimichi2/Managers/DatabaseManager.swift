@@ -461,7 +461,8 @@ final class DatabaseManager{
         }
         
     }
-    
+
+
     
     // MARK: Post Creation
     
@@ -482,7 +483,50 @@ final class DatabaseManager{
         }
     }
     
+    public func createVideoPostForSpecific(post: Post, completion: @escaping (Bool) -> Void){
+        
+        let reference = database.document("users/\(post.user.username)/videos/\(post.id)")
+        guard let data = post.asDictionary() else{
+            completion(false)
+            return
+        }
+        reference.setData(data){ error in
+            completion(error == nil)
+            
+        }
+    }
+    
     public func createPost(post: Post, completion: @escaping (Bool) -> Void){
+        guard let username = UserDefaults.standard.string(forKey: "username") else {
+            completion(false)
+            return
+        }
+        
+        let reference = database.document("users/\(username)/posts/\(post.id)")
+        guard let data = post.asDictionary() else{
+            completion(false)
+            return
+        }
+        reference.setData(data){ error in
+            completion(error == nil)
+            
+        }
+    }
+    
+    public func createPostSpecificUser(post: Post, completion: @escaping (Bool) -> Void){
+        
+        let reference = database.document("users/\(post.user.username)/posts/\(post.id)")
+        guard let data = post.asDictionary() else{
+            completion(false)
+            return
+        }
+        reference.setData(data){ error in
+            completion(error == nil)
+            
+        }
+    }
+    
+    public func updatePost(post: Post, completion: @escaping (Bool) -> Void){
         guard let username = UserDefaults.standard.string(forKey: "username") else {
             completion(false)
             return

@@ -113,7 +113,7 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         label.textAlignment = .left
         label.numberOfLines = 0
         label.text = "check out this video! #foryou"
-        label.font = .systemFont(ofSize: 20)
+        label.font = .systemFont(ofSize: 18)
         label.textColor = .white
         
         return label
@@ -182,14 +182,22 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        title = "投稿の詳細"
         view.addSubview(postImageView)
-        view.addSubview(profileView)
+        
+        let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+        if(!isGhost){
+            view.addSubview(profileView)
+        }
+        
         view.addSubview(postFooterView)
         profileView.backgroundColor = .systemBackground
+//        self.navigationController?.navigationBar.barTintColor = .systemBackground
         
-        view.backgroundColor = .black
+        view.backgroundColor = .systemBackground
         setUpButtons()
-//        setUpDoubleTapToLike()
         fetchUser()
         
         configureImage()
@@ -207,23 +215,6 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         setUpLikeCountTap()
         
 
-//        var admobView = GADBannerView()
-//
-//        // iPhone X のポートレート決め打ちです
-//        admobView.frame.origin = CGPoint(x:0, y:self.view.frame.size.height - admobView.frame.height - 34)
-//        admobView.frame.size = CGSize(width:self.view.frame.width, height:admobView.frame.height)
-//
-//        if AdMobTest {
-//            admobView.adUnitID = TEST_ID
-//        }
-//        else{
-//            admobView.adUnitID = AdMobID
-//        }
-//
-//        admobView.rootViewController = self
-//        admobView.load(GADRequest())
-//
-//        self.view.addSubview(admobView)
 
     }
     
@@ -274,6 +265,12 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
     }
     
     private func setUpLikeCountTap(){
+        
+        let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+        if(isGhost){
+            return
+        }
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapLikeCount(_:)))
         tap.numberOfTapsRequired = 1
         
@@ -344,20 +341,33 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         let footerHeight: CGFloat = 80
         postFooterView.frame = CGRect(x: 0, y: view.height-view.safeAreaInsets.bottom-footerHeight - 10, width: view.width, height: footerHeight)
         
-        
-        profileView.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: view.width, height: 60)
-        
-        if (self.isOnHome){
-            postImageView.frame = CGRect(x: 0, y: profileView.bottom, width: view.width, height: view.height-profileView.bottom)
-        }
-        else{
-            postImageView.frame = CGRect(x: 0, y: profileView.bottom - footerHeight, width: view.width, height: view.height-profileView.bottom)
-        }
-        
         let size: CGFloat = 40
         let tabBarHeight: CGFloat = 0
         let timestampHeight:  CGFloat = 50
         let locationHeight:  CGFloat = 50
+
+        let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+        if(!isGhost){
+            profileView.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: view.width, height: 60)
+            
+            if (self.isOnHome){
+                postImageView.frame = CGRect(x: 0, y: profileView.bottom, width: view.width, height: view.bottom - profileView.bottom)
+            }
+            else{
+                postImageView.frame = CGRect(x: 0, y: profileView.bottom , width: view.width, height: view.bottom - profileView.bottom)
+            }
+        }
+        else{
+            if (self.isOnHome){
+                postImageView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+10, width: view.width, height: view.height-140)
+            }
+            else{
+                postImageView.frame = CGRect(x: 0, y: view.safeAreaInsets.top+10, width: view.width, height: view.height-140)
+            }
+            
+        }
+
+        
         
         
         let yStart: CGFloat = view.height - (size * 6) - 30 - view.safeAreaInsets.bottom - tabBarHeight - footerHeight
@@ -374,12 +384,10 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         shareButton.frame = CGRect(x: view.width-size-10, y: commentButton.bottom + 30, width: size, height: size)
         
         likeCount.sizeToFit()
-        //let likeCountSize: CGFloat = 20
         commentCount.sizeToFit()
         
         likeCount.frame = CGRect(x: view.width-size-10, y: likeButton.bottom+3, width: likeCount.width*1.5, height: likeCount.height*1.5)
         likeCount.center.x = likeButton.center.x
-//        likeCount.frame = CGRect(x: view.width-size-10, y: likeButton.bottom+3, width: likeCountSize, height: likeCountSize)
         commentCount.frame = CGRect(x: view.width-size-10, y: commentButton.bottom+3, width: commentCount.width, height: commentCount.height)
         commentCount.center.x = commentButton.center.x
         
@@ -397,17 +405,6 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         location2Label.frame = CGRect(x: 5, y: locationLabel.bottom + 10, width: view.width-size-24, height: locationHeight)
         timestampLabel.frame = CGRect(x: 5, y: location2Label.bottom + 10, width: view.width-size-24, height: timestampHeight)
         
-//        profileButton.frame = CGRect(
-//            x: likeButton.left,
-//            y: likeButton.top - 10 - size,
-//            width: size,
-//            height: size)
-//
-//        profileButton.layer.cornerRadius = size/2
-        
-        
-        
-
     }
     
     private func fetchUser(){
@@ -517,6 +514,11 @@ class PhotoPostViewController: UIViewController, FloatingPanelControllerDelegate
         
         
         guard let username = UserDefaults.standard.string(forKey: "username") else {
+            return
+        }
+        
+        let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+        if(isGhost){
             return
         }
         
@@ -841,96 +843,123 @@ extension PhotoPostViewController: PostHeaderViewDelegate{
 //        }))
         
         if isCurrentUserOwnsThisPost(){
-            sheet.addAction(UIAlertAction(title: "投稿の削除", style: .default, handler: {[weak self] _ in
-                print("delete called")
-                
-                ProgressHUD.show("ポストを削除しています...")
-                guard let post = self?.model else{
-                    return
-                }
-                
-                let group = DispatchGroup()
-                group.enter()
-                group.enter()
-                
-                for targetUser in post.likers {
-                    group.enter()
-                    DatabaseManager.shared.removeYorimichiLikes(with: post, for: targetUser, completion: { res in
-                        defer{
-                            group.leave()
-                        }
-                        print("=============")
-                        print(res)
+            let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+            if(!isGhost){
+                sheet.addAction(UIAlertAction(title: "投稿の編集", style: .default, handler: {[weak self] _ in
+                    print("\n\nmodification called+++++++++++++")
+                    
+                    guard let post = self?.model else{
+                        return
+                    }
+                    
+                    let vc = PhotoEditInfoViewController()
+                    vc.configureForEditPost()
+                    if let image = self?.postImageView.image{
+                        vc.loadInfomationForUpdate(image: image, post: post)
                         
-                    })
-                }
-                
-                for targetUser in post.yorimichi {
-                    group.enter()
-                    DatabaseManager.shared.removeYorimichiCandidate(with: post, for: targetUser, completion: { res in
-                        defer{
-                            group.leave()
-                        }
-                        print("=============")
-                        print(res)
-                        
-                    })
-                }
-                
+                    }
+                    DispatchQueue.main.async {
+//                        self?.present(vc, animated: true)
+//                        self?.edgesForExtendedLayout = UIRectEdge.init()
+                        self?.navigationController?.navigationBar.isTranslucent = false
+                        self?.navigationController?.pushViewController(vc, animated: true)
+                    }
 
-                DatabaseManager.shared.deletePost(post: post, completion: { res in
-                    defer{
-                        group.leave()
+                    //self?.present(vc, animated: true)
+                }))
+                sheet.addAction(UIAlertAction(title: "投稿の削除", style: .destructive, handler: {[weak self] _ in
+                    print("delete called")
+                    
+                    ProgressHUD.show("ポストを削除しています...")
+                    guard let post = self?.model else{
+                        return
                     }
-                    if !res{
-                        print("error")
-                        ProgressHUD.showError("削除に失敗しました。")
-                    }
-                    else{
-                        DatabaseManager.shared.deleteYorimichiPost(post: post, completion: { res in
-                            if !res{
-                                print("error")
-                                ProgressHUD.showError("削除に失敗しました。")
+                    
+                    let group = DispatchGroup()
+                    group.enter()
+                    group.enter()
+                    
+                    for targetUser in post.likers {
+                        group.enter()
+                        DatabaseManager.shared.removeYorimichiLikes(with: post, for: targetUser, completion: { res in
+                            defer{
+                                group.leave()
                             }
-                            else{
-                                DatabaseManager.shared.deleteYorimichiPostAtAll(post: post, completion: { res in
-                                    if !res{
-                                        print("error")
-                                        ProgressHUD.showError("削除に失敗しました。")
-                                    }
-                                    else{
-                                    }
-                                    
-                                    
-                        })
-                            }
-                            
+                            print("=============")
+                            print(res)
                             
                         })
                     }
                     
-                })
-                
-                StorageManager.shared.deletePost(post: post, completion: { res in
-                    defer{
-                        group.leave()
+                    for targetUser in post.yorimichi {
+                        group.enter()
+                        DatabaseManager.shared.removeYorimichiCandidate(with: post, for: targetUser, completion: { res in
+                            defer{
+                                group.leave()
+                            }
+                            print("=============")
+                            print(res)
+                            
+                        })
                     }
-                    if !res {
-                        ProgressHUD.showError("削除に失敗しました。")
-                    }
-                    else{
+                    
+                    
+                    DatabaseManager.shared.deletePost(post: post, completion: { res in
+                        defer{
+                            group.leave()
+                        }
+                        if !res{
+                            print("error")
+                            ProgressHUD.showError("削除に失敗しました。")
+                        }
+                        else{
+                            DatabaseManager.shared.deleteYorimichiPost(post: post, completion: { res in
+                                if !res{
+                                    print("error")
+                                    ProgressHUD.showError("削除に失敗しました。")
+                                }
+                                else{
+                                    DatabaseManager.shared.deleteYorimichiPostAtAll(post: post, completion: { res in
+                                        if !res{
+                                            print("error")
+                                            ProgressHUD.showError("削除に失敗しました。")
+                                        }
+                                        else{
+                                        }
+                                        
+                                        
+                                    })
+                                }
+                                
+                                
+                            })
+                        }
                         
+                    })
+                    
+                    StorageManager.shared.deletePost(post: post, completion: { res in
+                        defer{
+                            group.leave()
+                        }
+                        if !res {
+                            ProgressHUD.showError("削除に失敗しました。")
+                        }
+                        else{
+                            
+                        }
+                        
+                    })
+                    
+                    
+                    group.notify(queue: .main){
+                        ProgressHUD.showSuccess("削除しました。")
+                        NotificationCenter.default.post(name: .didPostNotification, object: nil)
                     }
                     
-                })
+                }))
                 
-                
-                group.notify(queue: .main){
-                    ProgressHUD.showSuccess("削除しました。")
-                    NotificationCenter.default.post(name: .didPostNotification, object: nil)
-                }
-                
-            }))
+            }
+
             
         }
         sheet.addAction(UIAlertAction(title: "投稿を通報する", style: .destructive, handler: {[weak self] _ in

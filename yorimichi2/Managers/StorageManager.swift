@@ -51,6 +51,14 @@ final class StorageManager{
         
     }
     
+    public func uploadVideoForSpecificUser(username: String, from url: URL, id: String, completion: @escaping (Bool) -> Void){
+        storage.child("\(username)/videos/\(id).mov").putFile(from: url, metadata: nil, completion: {_, error in
+            completion(error == nil)
+        })
+        
+        
+    }
+    
     public func generateVideoName() -> String{
         let uuidString = UUID().uuidString
         let number = Int.random(in: 0...1000)

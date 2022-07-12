@@ -33,10 +33,35 @@ class PhotoEditInfoViewController: UIViewController {
     private var location: Location?
     private var submitType: SubmitType?
     
+    private var loadForUpdate: Bool = false
+    private var loadPost: Post? = nil
+    
 //    init(image: UIImage){
 //        self.image = image
 //        super.init(nibName: nil, bundle: nil)
 //    }
+    
+//    private let helpHeader: UILabel = {
+//        let label = UILabel()
+//        label.textAlignment = .left
+//        label.numberOfLines = 0
+//        label.text = "投稿時のヘルプ"
+//        label.font = UIFont.boldSystemFont(ofSize: 18.0)
+//        label.textColor = .label
+//
+//        return label
+//    }()
+//
+//    private let captionHelp: UILabel = {
+//        let label = UILabel()
+//        label.textAlignment = .left
+//        label.numberOfLines = 0
+//        label.text = "キャプションについて"
+//        label.font = .systemFont(ofSize: 15)
+//        label.textColor = .label
+//
+//        return label
+//    }()
     
     init(){
         super.init(nibName: nil, bundle: nil)
@@ -51,21 +76,64 @@ class PhotoEditInfoViewController: UIViewController {
     
     // MARK: - Lifecycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+      super.viewWillDisappear(animated)
+     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController!.view.backgroundColor = .systemBackground
+        
+//        self.edgesForExtendedLayout = UIRectEdge.init()
+        extendedLayoutIncludesOpaqueBars = true
         title = "投稿の編集"
         
+        print("\n\nhere===============")
         print(viewModels)
 
         setUpCollectionView()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Post", style: .done, target: self, action: #selector(didTapPost))
+        
+        if(!self.loadForUpdate){
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "投稿する", style: .done, target: self, action: #selector(didTapPost))
+            
+        }
+        else{
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "更新する", style: .done, target: self, action: #selector(didTapUpdate))
+            
+        }
         genre = GenreInfo(code: "G000", type: .food)
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         //imageView.frame = CGRect(x: 0, y: view.safeAreaInsets.top, width: view.width, height: view.width)
-        collectionView?.frame = CGRect(x: 0, y: view.safeAreaInsets.bottom + 10, width: view.width, height: view.height)
+        collectionView?.frame = CGRect(x: 0, y: view.safeAreaInsets.top + 10, width: view.width, height: view.height)
+    }
+    
+    public func loadInfomationForUpdate(image: UIImage, post: Post){
+        viewModels.append(.post(viewModel: PhotoEditInfoPostViewModel(image: image)))
+        viewModels.append(.caption)
+        viewModels.append(.location(viewModel: PhotoEditInfoLocationViewModel(titleHeader: "場所検索", title: post.locationTitle, subTitle: post.locationSubTitle)))
+        viewModels.append(.location(viewModel: PhotoEditInfoLocationViewModel(titleHeader: "場所手動入力", title: post.locationTitle, subTitle: post.locationSubTitle)))
+        viewModels.append(.genre(viewModel: PhotoEditInfoGenreViewModel(genre: post.genre)))
+        
+        submitType = .photo(image: image)
+        
+        self.loadForUpdate = true
+        self.loadPost = post
+        
+        
+        self.caption = post.caption
+        self.genre = post.genre
+        self.locationTitle = post.locationTitle
+        self.locationSubTitle = post.locationSubTitle
+        self.location = post.location
     }
     
     
@@ -91,7 +159,8 @@ class PhotoEditInfoViewController: UIViewController {
     public func createPhotoViewModels(image: UIImage){
         viewModels.append(.post(viewModel: PhotoEditInfoPostViewModel(image: image)))
         viewModels.append(.caption)
-        viewModels.append(.location(viewModel: PhotoEditInfoLocationViewModel(title: "名称から検索", subTitle: "場所詳細")))
+        viewModels.append(.location(viewModel: PhotoEditInfoLocationViewModel(titleHeader: "場所検索", title: "名称から検索", subTitle: "場所詳細")))
+        viewModels.append(.location(viewModel: PhotoEditInfoLocationViewModel(titleHeader: "場所手動指定", title: "マップ上で手動ピン付け", subTitle: "場所詳細")))
         viewModels.append(.genre(viewModel: PhotoEditInfoGenreViewModel(genre: GenreInfo(code: "G000", type: .food))))
         
         submitType = .photo(image: image)
@@ -100,10 +169,15 @@ class PhotoEditInfoViewController: UIViewController {
     public func createVideoViewModels(url: URL){
         viewModels.append(.video(viewModel: PhotoEditInfoVideoViewModel(url: url)))
         viewModels.append(.caption)
-        viewModels.append(.location(viewModel: PhotoEditInfoLocationViewModel(title: "名称から検索", subTitle: "場所詳細")))
+        viewModels.append(.location(viewModel: PhotoEditInfoLocationViewModel(titleHeader: "場所検索", title: "名称から検索", subTitle: "場所詳細")))
+        viewModels.append(.location(viewModel: PhotoEditInfoLocationViewModel(titleHeader: "場所手動指定", title: "マップ上で手動ピン付け", subTitle: "場所詳細")))
         viewModels.append(.genre(viewModel: PhotoEditInfoGenreViewModel(genre: GenreInfo(code: "G000", type: .food))))
         
         submitType = .video(url: url)
+    }
+    
+    public func configureForEditPost(){
+        print("configure called")
     }
     
     
@@ -118,6 +192,69 @@ class PhotoEditInfoViewController: UIViewController {
         }
         
         return "\(username)_\(randomNumber)_\(timeStamp)"
+    }
+    
+    private func createNewPostIDForSpecific(username: String) -> String? {
+        let date = Date()
+        let timeStamp = date.timeIntervalSince1970
+        let randomNumber = Int.random(in: 0...1000)
+        
+        return "\(username)_\(randomNumber)_\(timeStamp)"
+    }
+    
+    
+    @objc private func didTapUpdate(){
+        guard var updatePost = self.loadPost else{
+            return
+        }
+        print("here caption2")
+        print(caption)
+        updatePost.caption = caption
+        
+        if let location = location {
+            updatePost.location = location
+        }
+        if let locationTitle = locationTitle {
+            updatePost.locationTitle = locationTitle
+        }
+        if let locationSubTitle = locationSubTitle {
+            updatePost.locationSubTitle = locationSubTitle
+
+        }
+        if let genre = genre {
+            updatePost.genre = genre
+
+        }
+        
+        print("after mod\n\n\(updatePost)")
+        
+        DatabaseManager.shared.updatePost(post: updatePost, completion: {[weak self] res in
+            print("\n\n\nhereee===============\(res)")
+            
+            // MARK: Upload for YorimichiData For All Genre
+            DatabaseManager.shared.createYorimichiPostAtAll(
+                post: updatePost, completion: {[weak self] finished in
+                    guard finished else{
+                        return
+                    }
+
+                })
+
+            // MARK: Upload for YorimichiData
+            DatabaseManager.shared.createYorimichiPost(
+                post: updatePost, completion: {[weak self] finished in
+                    guard finished else{
+                        return
+                    }
+
+                    ProgressHUD.showSuccess("投稿を更新しました。")
+                    self?.tabBarController?.tabBar.isHidden = false
+                    self?.tabBarController?.selectedIndex = 0
+                    self?.navigationController?.popToRootViewController(animated: false)
+
+                    NotificationCenter.default.post(name: .didPostNotification, object: nil)
+                })
+        })
     }
     
     @objc private func didTapPost(){
@@ -149,6 +286,10 @@ class PhotoEditInfoViewController: UIViewController {
               let dateString = String.date(from: Date()) else{
                   return
               }
+        guard let newPostIdSpecific = createNewPostIDForSpecific(username: "名無しさん"),
+              let dateString = String.date(from: Date()) else{
+                  return
+              }
         
         guard let locationTitle = locationTitle,
               let locationSubTitle = locationSubTitle,
@@ -167,210 +308,428 @@ class PhotoEditInfoViewController: UIViewController {
             return
         }
         
-        switch submitType{
-        case .photo(let image):
-            
-            ProgressHUD.show("投稿しています...")
-            
-            // MARK: Upload for User Post Data
-            StorageManager.shared.uploadPost(data: image.pngData(), id: newPostId, completion: { newPostDownloadURL in
-                guard let url = newPostDownloadURL else {
-                    print("error: failed to upload post to storage")
-                    return
-                }
+        
+        let sheet = UIAlertController(title: "投稿アクション", message: nil, preferredStyle: .actionSheet)
+        sheet.addAction(UIAlertAction(title: "キャンセル", style: .cancel, handler: nil))
+        
+        sheet.addAction(UIAlertAction(title: "通常投稿", style: .default, handler: {[weak self] _ in
+            print("\n\nmodification called+++++++++++++")
+            switch submitType{
+            case .photo(let image):
                 
+                ProgressHUD.show("投稿しています...")
                 
-                // Find user
-                
-                DatabaseManager.shared.findUser(username: username, completion: { user in
-                    guard let user = user else {
-                        print("cannot find user, something went wrong")
+                // MARK: Upload for User Post Data
+                StorageManager.shared.uploadPost(data: image.pngData(), id: newPostId, completion: { newPostDownloadURL in
+                    guard let url = newPostDownloadURL else {
+                        print("error: failed to upload post to storage")
                         return
                     }
-                    // Update database
-                    let newPost: Post = Post(
-                        id: newPostId,
-                        caption: self.caption,
-                        locationTitle: locationTitle,
-                        locationSubTitle: locationSubTitle,
-                        location: location,
-                        postedDate: dateString,
-                        likers: [],
-                        yorimichi: [],
-                        postUrlString: url.absoluteString,
-                        postThumbnailUrlString: "",
-                        genre: genre,
-                        user: user,
-                        isVideo: false
-                    )
                     
-                    DatabaseManager.shared.createPost(post: newPost, completion: { [weak self] finished in
-                        guard finished else{
+                    
+                    // Find user
+                    
+                    DatabaseManager.shared.findUser(username: username, completion: { user in
+                        guard let user = user else {
+                            print("cannot find user, something went wrong")
                             return
                         }
+                        // Update database
+                        let newPost: Post = Post(
+                            id: newPostId,
+                            caption: self?.caption ?? "",
+                            locationTitle: locationTitle,
+                            locationSubTitle: locationSubTitle,
+                            location: location,
+                            postedDate: dateString,
+                            likers: [],
+                            yorimichi: [],
+                            postUrlString: url.absoluteString,
+                            postThumbnailUrlString: "",
+                            genre: genre,
+                            user: user,
+                            isVideo: false
+                        )
                         
-                        // MARK: Upload for YorimichiData For All Genre
-                        DatabaseManager.shared.createYorimichiPostAtAll(
-                            post: newPost, completion: {[weak self] finished in
-                                guard finished else{
+                        DatabaseManager.shared.createPost(post: newPost, completion: { [weak self] finished in
+                            guard finished else{
+                                return
+                            }
+                            
+                            // MARK: Upload for YorimichiData For All Genre
+                            DatabaseManager.shared.createYorimichiPostAtAll(
+                                post: newPost, completion: {[weak self] finished in
+                                    guard finished else{
+                                        return
+                                    }
+                                    
+                                })
+                            
+                            // MARK: Upload for YorimichiData
+                            DatabaseManager.shared.createYorimichiPost(
+                                post: newPost, completion: {[weak self] finished in
+                                    guard finished else{
+                                        return
+                                    }
+                                    
+                                    ProgressHUD.showSuccess("投稿しました。")
+                                    self?.tabBarController?.tabBar.isHidden = false
+                                    self?.tabBarController?.selectedIndex = 0
+                                    self?.navigationController?.popToRootViewController(animated: false)
+                                    
+                                    NotificationCenter.default.post(name: .didPostNotification, object: nil)
+                                })
+                            
+                        })
+                        
+                    })
+                    
+                    
+                    
+                })
+                
+                
+            case .video(let url):
+                // Generate a video name that is unique based on id
+                let newVideoId = StorageManager.shared.generateVideoName()
+                
+                ProgressHUD.show("ビデオを投稿しています...")
+                
+                // Genereate thumbnail
+                let asset = AVAsset(url: url)
+                let generator = AVAssetImageGenerator(asset: asset)
+                
+                var uploadingThumbnail = UIImage()
+                
+                do{
+                    let cgImage = try generator.copyCGImage(at: .zero, actualTime: nil)
+                    let thumbnail = UIImage(cgImage: cgImage)
+                    let resizedThumbnail = thumbnail.sd_resizedImage(with: CGSize(width: 640, height: 640), scaleMode: .aspectFill)
+                    
+                    if let resizedThumbnail = resizedThumbnail {
+                        uploadingThumbnail = resizedThumbnail
+                        uploadingThumbnail.sd_rotatedImage(withAngle: 90, fitSize: true)
+                    }else{
+                        
+                    }
+                    
+                }
+                catch{
+                    print(error)
+                }
+                
+                StorageManager.shared.uploadThumbnail(data: uploadingThumbnail.pngData(), id: newVideoId, completion: { newPostDownloadURL in
+                    guard let thumbnailUrl = newPostDownloadURL else {
+                        print("error: failed to upload post to storage")
+                        return
+                    }
+                    
+                    // Upload video
+                    //            let newVideoName = "\(newVideoId).mov"
+                    StorageManager.shared.uploadVideo(from: url, id: newVideoId, completion: {[weak self] success in
+                        DispatchQueue.main.async {
+                            
+                            if success{
+                                guard let dateString = String.date(from: Date()) else{
                                     return
                                 }
                                 
-                            })
-                        
-                        // MARK: Upload for YorimichiData
-                        DatabaseManager.shared.createYorimichiPost(
-                            post: newPost, completion: {[weak self] finished in
-                                guard finished else{
-                                    return
-                                }
+                                // Find user
+                                DatabaseManager.shared.findUser(username: username, completion: { user in
+                                    guard let user = user else {
+                                        print("cannot find user, something went wrong")
+                                        return
+                                        
+                                    }
+                                    let newPost = Post(
+                                        id: newVideoId,
+                                        caption: self?.caption ?? "",
+                                        locationTitle: locationTitle,
+                                        locationSubTitle: locationSubTitle,
+                                        location: location,
+                                        postedDate: dateString,
+                                        likers: [],
+                                        yorimichi: [],
+                                        postUrlString: "",
+                                        postThumbnailUrlString: thumbnailUrl.absoluteString,
+                                        genre: genre,
+                                        user: user,
+                                        isVideo: true
+                                    )
+                                    DatabaseManager.shared.createVideoPost(post: newPost, completion: { databaseUpdated in
+                                        if databaseUpdated{
+                                            HapticManager.shared.vibrate(for: .success)
+                                            self?.navigationController?.popToRootViewController(animated: true)
+                                            self?.tabBarController?.selectedIndex = 0
+                                            self?.tabBarController?.tabBar.isHidden = false
+                                            
+                                            // MARK: Upload for YorimichiData
+                                            DatabaseManager.shared.createYorimichiVideoPost(
+                                                post: newPost, completion: {[weak self] finished in
+                                                    guard finished else{
+                                                        return
+                                                    }
+                                                    
+                                                    ProgressHUD.showSuccess("投稿しました。")
+                                                    self?.tabBarController?.tabBar.isHidden = false
+                                                    self?.tabBarController?.selectedIndex = 0
+                                                    self?.navigationController?.popToRootViewController(animated: false)
+                                                    
+                                                    NotificationCenter.default.post(name: .didPostNotification, object: nil)
+                                                    
+                                                })
+                                            
+                                            // MARK: Upload for YorimichiData For All Genre
+                                            DatabaseManager.shared.createYorimichiVideoPostAtAll(
+                                                post: newPost, completion: {[weak self] finished in
+                                                    guard finished else{
+                                                        return
+                                                    }
+                                                    
+                                                })
+                                            
+                                        }
+                                        else{
+                                            HapticManager.shared.vibrate(for: .error)
+                                            let alert = UIAlertController(title: "ビデオ投稿エラー", message: "ビデオ投稿ができませんでした。再度お試しください。", preferredStyle: .alert)
+                                            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                                            self?.present(alert, animated: true)
+                                        }
+                                    })
+                                    
+                                })
                                 
-                                ProgressHUD.showSuccess("投稿しました。")
-                                self?.tabBarController?.tabBar.isHidden = false
-                                self?.tabBarController?.selectedIndex = 0
-                                self?.navigationController?.popToRootViewController(animated: false)
                                 
-                                NotificationCenter.default.post(name: .didPostNotification, object: nil)
-                            })
-                        
+                            }
+                            else{
+                                HapticManager.shared.vibrate(for: .error)
+                                ProgressHUD.dismiss()
+                                let alert = UIAlertController(title: "ビデオ投稿エラー", message: "ビデオ投稿ができませんでした。再度お試しください。", preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                                self?.present(alert, animated: true)
+                                
+                            }
+                        }
                     })
                     
                 })
                 
                 
                 
-            })
-            
-   
-        case .video(let url):
-            // Generate a video name that is unique based on id
-            let newVideoId = StorageManager.shared.generateVideoName()
-            
-            ProgressHUD.show("ビデオを投稿しています...")
-            
-            // Genereate thumbnail
-            let asset = AVAsset(url: url)
-            let generator = AVAssetImageGenerator(asset: asset)
-            
-            var uploadingThumbnail = UIImage()
-            
-            do{
-                let cgImage = try generator.copyCGImage(at: .zero, actualTime: nil)
-                let thumbnail = UIImage(cgImage: cgImage)
-                let resizedThumbnail = thumbnail.sd_resizedImage(with: CGSize(width: 640, height: 640), scaleMode: .aspectFill)
-                
-                if let resizedThumbnail = resizedThumbnail {
-                    uploadingThumbnail = resizedThumbnail
-                    uploadingThumbnail.sd_rotatedImage(withAngle: 90, fitSize: true)
-                }else{
-
-                }
-
             }
-            catch{
-                print(error)
-            }
-            
-            StorageManager.shared.uploadThumbnail(data: uploadingThumbnail.pngData(), id: newVideoId, completion: { newPostDownloadURL in
-                guard let thumbnailUrl = newPostDownloadURL else {
-                    print("error: failed to upload post to storage")
-                    return
-                }
+
+        }))
+        
+        
+        sheet.addAction(UIAlertAction(title: "匿名投稿", style: .default, handler: {[weak self] _ in
+            print("\n\nmodification called+++++++++++++")
+            switch submitType{
+            case .photo(let image):
                 
-                // Upload video
-                //            let newVideoName = "\(newVideoId).mov"
-                StorageManager.shared.uploadVideo(from: url, id: newVideoId, completion: {[weak self] success in
-                    DispatchQueue.main.async {
+                ProgressHUD.show("投稿しています...")
+                
+                // MARK: Upload for User Post Data
+                StorageManager.shared.uploadPost(data: image.pngData(), id: newPostIdSpecific, completion: { newPostDownloadURL in
+                    guard let url = newPostDownloadURL else {
+                        print("error: failed to upload post to storage")
+                        return
+                    }
+                    
+                    
+                    // Find user
+                    
+                    DatabaseManager.shared.findUser(username: "名無しさん", completion: { user in
+                        guard let user = user else {
+                            print("cannot find user, something went wrong")
+                            return
+                        }
+                        // Update database
+                        let newPost: Post = Post(
+                            id: newPostIdSpecific,
+                            caption: self?.caption ?? "",
+                            locationTitle: locationTitle,
+                            locationSubTitle: locationSubTitle,
+                            location: location,
+                            postedDate: dateString,
+                            likers: [],
+                            yorimichi: [],
+                            postUrlString: url.absoluteString,
+                            postThumbnailUrlString: "",
+                            genre: genre,
+                            user: user,
+                            isVideo: false
+                        )
                         
-                        if success{
-                            guard let dateString = String.date(from: Date()) else{
+                        DatabaseManager.shared.createPostSpecificUser(post: newPost, completion: { [weak self] finished in
+                            guard finished else{
                                 return
                             }
                             
-                            // Find user
-                            DatabaseManager.shared.findUser(username: username, completion: { user in
-                                guard let user = user else {
-                                    print("cannot find user, something went wrong")
-                                    return
+                            // MARK: Upload for YorimichiData For All Genre
+                            DatabaseManager.shared.createYorimichiPostAtAll(
+                                post: newPost, completion: {[weak self] finished in
+                                    guard finished else{
+                                        return
+                                    }
                                     
-                                }
-                                let newPost = Post(
-                                    id: newVideoId,
-                                    caption: self?.caption ?? "",
-                                    locationTitle: locationTitle,
-                                    locationSubTitle: locationSubTitle,
-                                    location: location,
-                                    postedDate: dateString,
-                                    likers: [],
-                                    yorimichi: [],
-                                    postUrlString: "",
-                                    postThumbnailUrlString: thumbnailUrl.absoluteString,
-                                    genre: genre,
-                                    user: user,
-                                    isVideo: true
-                                )
-                                DatabaseManager.shared.createVideoPost(post: newPost, completion: { databaseUpdated in
-                                    if databaseUpdated{
-                                        HapticManager.shared.vibrate(for: .success)
-                                        self?.navigationController?.popToRootViewController(animated: true)
-                                        self?.tabBarController?.selectedIndex = 0
-                                        self?.tabBarController?.tabBar.isHidden = false
-                                        
-                                        // MARK: Upload for YorimichiData
-                                        DatabaseManager.shared.createYorimichiVideoPost(
-                                            post: newPost, completion: {[weak self] finished in
-                                                guard finished else{
-                                                    return
-                                                }
-                                                
-                                                ProgressHUD.showSuccess("投稿しました。")
-                                                self?.tabBarController?.tabBar.isHidden = false
-                                                self?.tabBarController?.selectedIndex = 0
-                                                self?.navigationController?.popToRootViewController(animated: false)
-                                                
-                                                NotificationCenter.default.post(name: .didPostNotification, object: nil)
-                                                
-                                            })
-                                        
-                                        // MARK: Upload for YorimichiData For All Genre
-                                        DatabaseManager.shared.createYorimichiVideoPostAtAll(
-                                            post: newPost, completion: {[weak self] finished in
-                                                guard finished else{
-                                                    return
-                                                }
-                                                
-                                            })
-                                        
-                                    }
-                                    else{
-                                        HapticManager.shared.vibrate(for: .error)
-                                        let alert = UIAlertController(title: "ビデオ投稿エラー", message: "ビデオ投稿ができませんでした。再度お試しください。", preferredStyle: .alert)
-                                        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                                        self?.present(alert, animated: true)
-                                    }
                                 })
-                                
-                            })
                             
+                            // MARK: Upload for YorimichiData
+                            DatabaseManager.shared.createYorimichiPost(
+                                post: newPost, completion: {[weak self] finished in
+                                    guard finished else{
+                                        return
+                                    }
+                                    
+                                    ProgressHUD.showSuccess("投稿しました。")
+                                    self?.tabBarController?.tabBar.isHidden = false
+                                    self?.tabBarController?.selectedIndex = 0
+                                    self?.navigationController?.popToRootViewController(animated: false)
+                                    
+                                    NotificationCenter.default.post(name: .didPostNotification, object: nil)
+                                })
                             
-                        }
-                        else{
-                            HapticManager.shared.vibrate(for: .error)
-                            ProgressHUD.dismiss()
-                            let alert = UIAlertController(title: "ビデオ投稿エラー", message: "ビデオ投稿ができませんでした。再度お試しください。", preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                            self?.present(alert, animated: true)
-                            
-                        }
-                    }
+                        })
+                        
+                    })
+                    
+                    
+                    
                 })
                 
-            })
-            
-            
-            
-        }
+                
+            case .video(let url):
+                // Generate a video name that is unique based on id
+                let newVideoId = StorageManager.shared.generateVideoName()
+                
+                ProgressHUD.show("ビデオを投稿しています...")
+                
+                // Genereate thumbnail
+                let asset = AVAsset(url: url)
+                let generator = AVAssetImageGenerator(asset: asset)
+                
+                var uploadingThumbnail = UIImage()
+                
+                do{
+                    let cgImage = try generator.copyCGImage(at: .zero, actualTime: nil)
+                    let thumbnail = UIImage(cgImage: cgImage)
+                    let resizedThumbnail = thumbnail.sd_resizedImage(with: CGSize(width: 640, height: 640), scaleMode: .aspectFill)
+                    
+                    if let resizedThumbnail = resizedThumbnail {
+                        uploadingThumbnail = resizedThumbnail
+                        uploadingThumbnail.sd_rotatedImage(withAngle: 90, fitSize: true)
+                    }else{
+                        
+                    }
+                    
+                }
+                catch{
+                    print(error)
+                }
+                
+                StorageManager.shared.uploadThumbnail(data: uploadingThumbnail.pngData(), id: newVideoId, completion: { newPostDownloadURL in
+                    guard let thumbnailUrl = newPostDownloadURL else {
+                        print("error: failed to upload post to storage")
+                        return
+                    }
+                    
+                    // Upload video
+                    //            let newVideoName = "\(newVideoId).mov"
+                    StorageManager.shared.uploadVideoForSpecificUser(username: "名無しさん", from: url, id: newVideoId, completion: {[weak self] success in
+                        DispatchQueue.main.async {
+                            
+                            if success{
+                                guard let dateString = String.date(from: Date()) else{
+                                    return
+                                }
+                                
+                                // Find user
+                                DatabaseManager.shared.findUser(username: "名無しさん", completion: { user in
+                                    guard let user = user else {
+                                        print("cannot find user, something went wrong")
+                                        return
+                                        
+                                    }
+                                    let newPost = Post(
+                                        id: newVideoId,
+                                        caption: self?.caption ?? "",
+                                        locationTitle: locationTitle,
+                                        locationSubTitle: locationSubTitle,
+                                        location: location,
+                                        postedDate: dateString,
+                                        likers: [],
+                                        yorimichi: [],
+                                        postUrlString: "",
+                                        postThumbnailUrlString: thumbnailUrl.absoluteString,
+                                        genre: genre,
+                                        user: user,
+                                        isVideo: true
+                                    )
+                                    DatabaseManager.shared.createVideoPostForSpecific(post: newPost, completion: { databaseUpdated in
+                                        if databaseUpdated{
+                                            HapticManager.shared.vibrate(for: .success)
+                                            self?.navigationController?.popToRootViewController(animated: true)
+                                            self?.tabBarController?.selectedIndex = 0
+                                            self?.tabBarController?.tabBar.isHidden = false
+                                            
+                                            // MARK: Upload for YorimichiData
+                                            DatabaseManager.shared.createYorimichiVideoPost(
+                                                post: newPost, completion: {[weak self] finished in
+                                                    guard finished else{
+                                                        return
+                                                    }
+                                                    
+                                                    ProgressHUD.showSuccess("投稿しました。")
+                                                    self?.tabBarController?.tabBar.isHidden = false
+                                                    self?.tabBarController?.selectedIndex = 0
+                                                    self?.navigationController?.popToRootViewController(animated: false)
+                                                    
+                                                    NotificationCenter.default.post(name: .didPostNotification, object: nil)
+                                                    
+                                                })
+                                            
+                                            // MARK: Upload for YorimichiData For All Genre
+                                            DatabaseManager.shared.createYorimichiVideoPostAtAll(
+                                                post: newPost, completion: {[weak self] finished in
+                                                    guard finished else{
+                                                        return
+                                                    }
+                                                    
+                                                })
+                                            
+                                        }
+                                        else{
+                                            HapticManager.shared.vibrate(for: .error)
+                                            let alert = UIAlertController(title: "ビデオ投稿エラー", message: "ビデオ投稿ができませんでした。再度お試しください。", preferredStyle: .alert)
+                                            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                                            self?.present(alert, animated: true)
+                                        }
+                                    })
+                                    
+                                })
+                                
+                                
+                            }
+                            else{
+                                HapticManager.shared.vibrate(for: .error)
+                                ProgressHUD.dismiss()
+                                let alert = UIAlertController(title: "ビデオ投稿エラー", message: "ビデオ投稿ができませんでした。再度お試しください。", preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                                self?.present(alert, animated: true)
+                                
+                            }
+                        }
+                    })
+                    
+                })
+                
+                
+                
+            }
+
+        }))
         
+        present(sheet, animated: true)
         
         
     }
@@ -378,7 +737,7 @@ class PhotoEditInfoViewController: UIViewController {
     // MARK: - CollectionView Layout
     
     private func configureCollectionViewLayout(){
-        let sectionHeight: CGFloat = 420
+        let sectionHeight: CGFloat = 500
 
         
         let layout = UICollectionViewCompositionalLayout(sectionProvider: {index, _ ->
@@ -389,10 +748,11 @@ class PhotoEditInfoViewController: UIViewController {
             
             let captionItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)))
             let locationItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(80)))
+            let directLocationItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(80)))
             let genreItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(80)))
             
             
-            let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(sectionHeight)), subitems: [postItem, captionItem, locationItem, genreItem])
+            let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(sectionHeight)), subitems: [postItem, captionItem, locationItem, directLocationItem, genreItem])
             
             group.contentInsets = NSDirectionalEdgeInsets(top: 3, leading: 0, bottom: 3, trailing: 0)
             
@@ -446,6 +806,9 @@ extension PhotoEditInfoViewController: UICollectionViewDelegate, UICollectionVie
             }
             
             cell.delegate = self
+            if(self.loadForUpdate){
+                cell.field.text = self.loadPost?.caption
+            }
             return cell
             
         case .location(let viewModel):
@@ -484,6 +847,11 @@ extension PhotoEditInfoViewController: PhotoEditInfoCollectionLocationViewCellDe
         //navigationController?.pushViewController(vc, animated: true)
         present(UINavigationController(rootViewController: vc), animated: true)
     }
+    func photoEditInfoCollectionLocationViewCellDidTapDirectLocation() {
+        let vc = DirectSearchLocationViewController()
+        vc.delegate = self
+        present(UINavigationController(rootViewController: vc), animated: true)
+    }
 }
 
 extension PhotoEditInfoViewController: PhotoEditInfoCollectionGenreViewCellDelegate{
@@ -497,16 +865,16 @@ extension PhotoEditInfoViewController: PhotoEditInfoCollectionGenreViewCellDeleg
 }
 
 extension PhotoEditInfoViewController: SearchLocationViewControllerDelegate{
-    func searchLocationViewControllerDidEnterDirectLocation(text: String?, location: Location) {
-        print("tapped location direct entered")
-        self.locationTitle = text
-        self.locationSubTitle = ""
-        self.location = location
-        
-        let model = PhotoEditInfoCellType.location(viewModel: PhotoEditInfoLocationViewModel(title: text ?? "", subTitle: "マップ上で選択済み"))
-        viewModels[2] = model
-        self.collectionView?.reloadData()
-    }
+//    func searchLocationViewControllerDidEnterDirectLocation(text: String?, location: Location) {
+//        print("tapped location direct entered")
+//        self.locationTitle = text
+//        self.locationSubTitle = ""
+//        self.location = location
+//        
+//        let model = PhotoEditInfoCellType.location(viewModel: PhotoEditInfoLocationViewModel(title: text ?? "", subTitle: "マップ上で選択済み"))
+//        viewModels[2] = model
+//        self.collectionView?.reloadData()
+//    }
     
     func searchLocationViewControllerDidSelected(title: String, subTitle: String, location: Location) {
         print("\n\n")
@@ -514,15 +882,31 @@ extension PhotoEditInfoViewController: SearchLocationViewControllerDelegate{
         print(subTitle)
         dismiss(animated: true, completion: nil)
 
-        let model = PhotoEditInfoCellType.location(viewModel: PhotoEditInfoLocationViewModel(title: title, subTitle: subTitle))
+        let model = PhotoEditInfoCellType.location(viewModel: PhotoEditInfoLocationViewModel(titleHeader: "場所検索", title: title, subTitle: subTitle))
         viewModels[2] = model
+        let modelDirect = PhotoEditInfoCellType.location(viewModel: PhotoEditInfoLocationViewModel(titleHeader: "場所手動入力", title: title, subTitle: subTitle))
+        viewModels[3] = modelDirect
         self.locationTitle = title
         self.locationSubTitle = subTitle
         self.location = location
         self.collectionView?.reloadData()
     }
-    
-    
+}
+
+extension PhotoEditInfoViewController: DirectSearchLocationViewControllerDelegate{
+    func searchLocationViewControllerDidEnterDirectLocation(text: String?, location: Location) {
+        print("tapped location direct entered")
+        self.locationTitle = text
+        self.locationSubTitle = ""
+        self.location = location
+        
+        let model = PhotoEditInfoCellType.location(viewModel: PhotoEditInfoLocationViewModel(titleHeader: "場所検索", title: text ?? "", subTitle: "マップ上で選択済み"))
+
+        let modelDirect = PhotoEditInfoCellType.location(viewModel: PhotoEditInfoLocationViewModel(titleHeader: "場所手動入力", title: self.locationTitle ?? "", subTitle: "マップ上で選択済み"))
+        self.viewModels[2] = model
+        self.viewModels[3] = modelDirect
+        self.collectionView?.reloadData()
+    }
     
 }
 
@@ -541,7 +925,7 @@ extension PhotoEditInfoViewController: SearchGenreViewControllerDelegate{
             genreType = GenreType.shop
         }
         let model = PhotoEditInfoCellType.genre(viewModel: PhotoEditInfoGenreViewModel(genre: GenreInfo(code: code, type: genreType)))
-        viewModels[3] = model
+        viewModels[4] = model
         self.collectionView?.reloadData()
         if (foodGenreList.contains(code)){
             self.genre = GenreInfo(code: code, type: .food)
@@ -563,8 +947,9 @@ extension PhotoEditInfoViewController: SearchGenreViewControllerDelegate{
 
 extension PhotoEditInfoViewController: PhotoEditInfoCollectionCaptionViewCellDelegate{
     func photoEditInfoCollectionCaptionViewCellDidEndEditing(text: String) {
-        print("called: \(text)")
         caption = text
+        print("here caption1: \(caption)")
+
     }
     
     
@@ -589,8 +974,10 @@ extension PhotoEditInfoViewController: CLLocationManagerDelegate{
         self.geocoder.reverseGeocodeLocation( location, completionHandler: {[weak self] ( placemarks, error ) in
             if let placemark = placemarks?.first {
                 self?.locationSubTitle = "\(placemark.administrativeArea ?? "") \(placemark.name ?? "")"
-                let model = PhotoEditInfoCellType.location(viewModel: PhotoEditInfoLocationViewModel(title: self?.locationTitle ?? "", subTitle: self?.locationSubTitle ?? ""))
+                let model = PhotoEditInfoCellType.location(viewModel: PhotoEditInfoLocationViewModel(titleHeader: "場所検索", title: self?.locationTitle ?? "", subTitle: self?.locationSubTitle ?? ""))
+                let modelDirect = PhotoEditInfoCellType.location(viewModel: PhotoEditInfoLocationViewModel(titleHeader: "場所手動入力", title: self?.locationTitle ?? "", subTitle: self?.locationSubTitle ?? ""))
                 self?.viewModels[2] = model
+                self?.viewModels[3] = modelDirect
                 
                 self?.location = Location(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
                 

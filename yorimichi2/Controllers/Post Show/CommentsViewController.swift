@@ -305,18 +305,27 @@ extension CommentsViewController: UITableViewDelegate, UITableViewDataSource{
             print("called selected1")
             let comment = commentsMenu[indexPath.row]
             tableView.deselectRow(at: indexPath, animated: true)
-            let vc = ProfileViewController(user: comment.user)
-            navigationController?.pushViewController(vc, animated: true)
+            let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+            if(!isGhost){
+                let vc = ProfileViewController(user: comment.user)
+                navigationController?.pushViewController(vc, animated: true)
+            }
         case .price:
             let comment = commentsPrice[indexPath.row]
             tableView.deselectRow(at: indexPath, animated: true)
-            let vc = ProfileViewController(user: comment.user)
-            navigationController?.pushViewController(vc, animated: true)
+            let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+            if(!isGhost){
+                let vc = ProfileViewController(user: comment.user)
+                navigationController?.pushViewController(vc, animated: true)
+            }
         case .time:
             let comment = commentsTime[indexPath.row]
             tableView.deselectRow(at: indexPath, animated: true)
-            let vc = ProfileViewController(user: comment.user)
-            navigationController?.pushViewController(vc, animated: true)
+            let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+            if(!isGhost){
+                let vc = ProfileViewController(user: comment.user)
+                navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
 }

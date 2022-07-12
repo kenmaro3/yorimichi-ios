@@ -9,16 +9,16 @@ import Foundation
 
 struct Post: Codable{
     let id: String
-    let caption: String
-    let locationTitle: String
-    let locationSubTitle: String
-    let location: Location
+    var caption: String
+    var locationTitle: String
+    var locationSubTitle: String
+    var location: Location
     let postedDate: String
     var likers: [String]
     var yorimichi: [String]
     let postUrlString: String
     let postThumbnailUrlString: String
-    let genre: GenreInfo
+    var genre: GenreInfo
     let user: User
     let isVideo: Bool
     

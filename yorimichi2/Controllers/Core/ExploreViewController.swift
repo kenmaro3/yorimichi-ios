@@ -293,7 +293,14 @@ class ExploreViewController: UIViewController, UISearchResultsUpdating, UITableV
         tableView.register(PhotoTableViewFooterView.self,
                            forHeaderFooterViewReuseIdentifier: PhotoTableViewFooterView.identifier)
         view.backgroundColor = .systemBackground
-        title = "Explore"
+        
+        let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+        if(!isGhost){
+            title = "Explore"
+        }
+        else{
+            title = "Explore (ゴーストモード)"
+        }
         (searchVC.searchResultsController as? SearchPostResultsViewController)?.delegate = self
 
         searchVC.searchBar.placeholder = "キーワード検索 ..."
@@ -305,7 +312,30 @@ class ExploreViewController: UIViewController, UISearchResultsUpdating, UITableV
         tableView.dataSource = self
 
         fetchData()
+        
+        configureNavBar()
 
+    }
+    
+    @objc private func didTapSettings(){
+        let vc = SettingsViewController()
+        present(UINavigationController(rootViewController: vc), animated: true)
+    }
+
+    private func configureNavBar(){
+        let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+        if isGhost{
+            let settingButton = UIBarButtonItem(
+                image: UIImage(systemName: "gear"),
+                style: .done,
+                target: self,
+                action: #selector(didTapSettings)
+            )
+            navigationItem.rightBarButtonItems = [settingButton]
+        }
+        else{
+            
+        }
     }
     
     private func filterForRecent(allPosts: [Post], completion: (Bool) -> Void){

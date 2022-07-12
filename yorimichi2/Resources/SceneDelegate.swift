@@ -41,18 +41,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
         if let username = UserDefaults.standard.string(forKey: "username"){
-            if let email = UserDefaults.standard.string(forKey: "email"){
-                if AuthManager.shared.isSignedIn{
-                    // Signed in
-                    window.rootViewController = TabBarViewController()
-                    
+            let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+            if(isGhost){
+                // Sign in VC
+                let vc = SignInViewController()
+                let navVC = UINavigationController(rootViewController: vc)
+                window.rootViewController = navVC
+            }
+            else{
+                if let email = UserDefaults.standard.string(forKey: "email"){
+                    if AuthManager.shared.isSignedIn{
+                        // Signed in
+                        window.rootViewController = TabBarViewController()
+                        
+                    }
+                    else{
+                        // Sign in VC
+                        let vc = SignInViewController()
+                        let navVC = UINavigationController(rootViewController: vc)
+                        window.rootViewController = navVC
+                    }
                 }
-                else{
-                    // Sign in VC
-                    let vc = SignInViewController()
-                    let navVC = UINavigationController(rootViewController: vc)
-                    window.rootViewController = navVC
-                }
+                
             }
         }
         else{

@@ -886,69 +886,73 @@ extension VideoPostViewController: PostHeaderViewDelegate{
 //        }))
         
         if isCurrentUserOwnsThisPost(){
-            sheet.addAction(UIAlertAction(title: "投稿の削除", style: .default, handler: {[weak self] _ in
-                print("delete called")
-                let group = DispatchGroup()
-                group.enter()
-                group.enter()
+            let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+            if(!isGhost){
                 
-                ProgressHUD.show("ポストを削除しています...")
-                guard let post = self?.model else{
-                    return
-                }
-                DatabaseManager.shared.deleteVideoPost(post: post, completion: { res in
-                    defer{
-                        group.leave()
-                    }
-                    if !res{
-                        print("error")
-                        ProgressHUD.showError("削除に失敗しました。")
-                    }
-                    else{
-                        DatabaseManager.shared.deleteYorimichiVideoPost(post: post, completion: { res in
-                            if !res{
-                                print("error")
-                                ProgressHUD.showError("削除に失敗しました。")
-                            }
-                            else{
-                                DatabaseManager.shared.deleteYorimichiVideoPostAtAll(post: post, completion: { res in
-                                    if !res{
-                                        print("error")
-                                        ProgressHUD.showError("削除に失敗しました。")
-                                    }
-                                    else{
-                                    }
-                                    
-                                    
-                                })
-                            }
-                            
-                            
-                        })
-                    }
+                sheet.addAction(UIAlertAction(title: "投稿の削除", style: .default, handler: {[weak self] _ in
+                    print("delete called")
+                    let group = DispatchGroup()
+                    group.enter()
+                    group.enter()
                     
-                })
-                
-                StorageManager.shared.deleteVideoPost(post: post, completion: { res in
-                    defer{
-                        group.leave()
+                    ProgressHUD.show("ポストを削除しています...")
+                    guard let post = self?.model else{
+                        return
                     }
-                    if !res {
-                        ProgressHUD.showError("削除に失敗しました。")
-                    }
-                    else{
+                    DatabaseManager.shared.deleteVideoPost(post: post, completion: { res in
+                        defer{
+                            group.leave()
+                        }
+                        if !res{
+                            print("error")
+                            ProgressHUD.showError("削除に失敗しました。")
+                        }
+                        else{
+                            DatabaseManager.shared.deleteYorimichiVideoPost(post: post, completion: { res in
+                                if !res{
+                                    print("error")
+                                    ProgressHUD.showError("削除に失敗しました。")
+                                }
+                                else{
+                                    DatabaseManager.shared.deleteYorimichiVideoPostAtAll(post: post, completion: { res in
+                                        if !res{
+                                            print("error")
+                                            ProgressHUD.showError("削除に失敗しました。")
+                                        }
+                                        else{
+                                        }
+                                        
+                                        
+                                    })
+                                }
+                                
+                                
+                            })
+                        }
                         
+                    })
+                    
+                    StorageManager.shared.deleteVideoPost(post: post, completion: { res in
+                        defer{
+                            group.leave()
+                        }
+                        if !res {
+                            ProgressHUD.showError("削除に失敗しました。")
+                        }
+                        else{
+                            
+                        }
+                        
+                    })
+                    
+                    
+                    group.notify(queue: .main){
+                        ProgressHUD.showSuccess("削除しました。")
+                        NotificationCenter.default.post(name: .didPostNotification, object: nil)
                     }
                     
-                })
-                
-                
-                group.notify(queue: .main){
-                    ProgressHUD.showSuccess("削除しました。")
-                    NotificationCenter.default.post(name: .didPostNotification, object: nil)
-                }
-                
-            }))
+                }))
+            }
         }
         
         sheet.addAction(UIAlertAction(title: "投稿を通報する", style: .destructive, handler: {[weak self] _ in

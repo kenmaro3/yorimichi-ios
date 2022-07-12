@@ -9,6 +9,7 @@ import UIKit
 
 protocol PhotoEditInfoCollectionLocationViewCellDelegate: AnyObject{
     func photoEditInfoCollectionLocationViewCellDidTapLocation()
+    func photoEditInfoCollectionLocationViewCellDidTapDirectLocation()
 }
 
 class PhotoEditInfoCollectionLocationViewCell: UICollectionViewListCell {
@@ -16,10 +17,12 @@ class PhotoEditInfoCollectionLocationViewCell: UICollectionViewListCell {
     
     weak var delegate: PhotoEditInfoCollectionLocationViewCellDelegate?
     
+    private var semiModalPresenter = SemiModalPresenter()
+    
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "場所情報"
+        label.text = "場所検索"
         label.font = .systemFont(ofSize: 16)
         label.textColor = UIColor.label
         return label
@@ -45,14 +48,22 @@ class PhotoEditInfoCollectionLocationViewCell: UICollectionViewListCell {
         
     }()
     
-    private let button: UIButton = {
+//    private let button: UIButton = {
+//        let button = UIButton()
+//        button.tintColor = .secondaryLabel
+//        let image = UIImage(systemName: "chevron.right", withConfiguration:  UIImage.SymbolConfiguration(pointSize: 18))
+//        //button.backgroundColor = UIColor.systemGray.withAlphaComponent(0.5)
+//        button.setImage(image, for: .normal)
+//        button.layer.borderColor = UIColor.white.cgColor
+//
+//        return button
+//    }()
+    
+    private let infoButton: UIButton = {
         let button = UIButton()
+        button.setBackgroundImage(UIImage(systemName: "info.circle"), for: .normal)
         button.tintColor = .secondaryLabel
-        let image = UIImage(systemName: "chevron.right", withConfiguration:  UIImage.SymbolConfiguration(pointSize: 18))
-        //button.backgroundColor = UIColor.systemGray.withAlphaComponent(0.5)
-        button.setImage(image, for: .normal)
-        button.layer.borderColor = UIColor.white.cgColor
-        
+        button.imageView?.contentMode = .scaleAspectFit
         return button
     }()
     
@@ -61,10 +72,13 @@ class PhotoEditInfoCollectionLocationViewCell: UICollectionViewListCell {
         contentView.clipsToBounds = true
         contentView.backgroundColor = .systemBackground
         contentView.addSubview(titleLabel)
-        contentView.addSubview(button)
+//        contentView.addSubview(button)
         contentView.addSubview(locationLabel1)
         contentView.addSubview(locationLabel2)
-        self.addBorder(width: 0.5, color: UIColor.secondarySystemBackground, position: .bottom)
+        contentView.addSubview(infoButton)
+//        self.addBorder(width: 0.5, color: UIColor.secondarySystemBackground, position: .bottom)
+        
+        infoButton.addTarget(self, action: #selector(didTapInfo), for: .touchUpInside)
         
         
         addTap()
@@ -75,6 +89,16 @@ class PhotoEditInfoCollectionLocationViewCell: UICollectionViewListCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Actions
+    
+    @objc private func didTapInfo(){
+        print("singin info tapped")
+        let viewController = LocationInfoModalViewController()
+        semiModalPresenter.viewController = viewController
+        parentViewController()?.present(viewController, animated: true)
+        
+    }
+    
     private func addTap(){
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapLocation))
         addGestureRecognizer(tap)
@@ -83,7 +107,16 @@ class PhotoEditInfoCollectionLocationViewCell: UICollectionViewListCell {
     
     @objc private func didTapLocation(){
         print("did tap location")
-        delegate?.photoEditInfoCollectionLocationViewCellDidTapLocation()
+        if(titleLabel.text == "場所検索"){
+            delegate?.photoEditInfoCollectionLocationViewCellDidTapLocation()
+        }
+        else if(titleLabel.text == "場所手動入力"){
+            delegate?.photoEditInfoCollectionLocationViewCellDidTapDirectLocation()
+            
+        }
+        else{
+            fatalError("unknown viewModel title found, probably impl bug")
+        }
         
     }
     
@@ -98,15 +131,18 @@ class PhotoEditInfoCollectionLocationViewCell: UICollectionViewListCell {
         
         
         let buttonSize: CGFloat = 30
-        button.frame = CGRect(x: contentView.right - button.width - 10, y: (contentView.height-button.height)/2, width: buttonSize, height: buttonSize)
-                locationLabel2.sizeToFit()
+        infoButton.frame = CGRect(x: contentView.right - buttonSize - 14, y: (contentView.height-buttonSize)/2, width: buttonSize, height: buttonSize)
+        
+        locationLabel2.sizeToFit()
         let locationLabel2Width = min(locationLabel2.width, contentView.width - titleLabel.width - buttonSize - 40)
         locationLabel2.frame = CGRect(x: titleLabel.right + 20, y: locationLabel1.bottom+5, width: locationLabel2Width, height: locationLabel2.height)
 
         
     }
     
+    
     public func configure(viewModel: PhotoEditInfoLocationViewModel){
+        titleLabel.text = viewModel.titleHeader
         locationLabel1.text = viewModel.title
         locationLabel2.text = viewModel.subTitle
         

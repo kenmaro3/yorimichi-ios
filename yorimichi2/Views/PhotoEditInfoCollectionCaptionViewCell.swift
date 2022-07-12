@@ -57,7 +57,7 @@ class PhotoEditInfoCollectionCaptionViewCell: UICollectionViewListCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        field.frame = CGRect(x: 10, y: 10, width: contentView.width-20, height: contentView.height-20)
+        field.frame = CGRect(x: 20, y: 10, width: contentView.width-40, height: contentView.height-20)
     }
 }
 
@@ -89,6 +89,14 @@ extension PhotoEditInfoCollectionCaptionViewCell: UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
         if (textView.text == "キャプションを追加してください。"){
             textView.text = ""
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if let text = textView.text {
+            print(text)
+            delegate?.photoEditInfoCollectionCaptionViewCellDidEndEditing(text: textView.text ?? "")
+            
         }
     }
     

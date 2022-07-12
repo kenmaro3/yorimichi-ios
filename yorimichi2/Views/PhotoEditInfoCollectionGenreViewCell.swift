@@ -16,6 +16,8 @@ class PhotoEditInfoCollectionGenreViewCell: UICollectionViewListCell {
     
     weak var delegate: PhotoEditInfoCollectionGenreViewCellDelegate?
     
+    private var semiModalPresenter = SemiModalPresenter()
+    
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -36,26 +38,25 @@ class PhotoEditInfoCollectionGenreViewCell: UICollectionViewListCell {
     }()
     
     
-    private let button: UIButton = {
+    private let infoButton: UIButton = {
         let button = UIButton()
+        button.setBackgroundImage(UIImage(systemName: "info.circle"), for: .normal)
         button.tintColor = .secondaryLabel
-        let image = UIImage(systemName: "chevron.right", withConfiguration:  UIImage.SymbolConfiguration(pointSize: 18))
-        //button.backgroundColor = UIColor.systemGray.withAlphaComponent(0.5)
-        button.setImage(image, for: .normal)
-        button.layer.borderColor = UIColor.white.cgColor
-        
+        button.imageView?.contentMode = .scaleAspectFit
         return button
     }()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.clipsToBounds = true
         contentView.backgroundColor = .systemBackground
         contentView.addSubview(titleLabel)
-        contentView.addSubview(button)
+        contentView.addSubview(infoButton)
         contentView.addSubview(genreLabel1)
-        self.addBorder(width: 0.5, color: UIColor.secondarySystemBackground, position: .bottom)
+//        self.addBorder(width: 0.5, color: UIColor.secondarySystemBackground, position: .bottom)
         
+        infoButton.addTarget(self, action: #selector(didTapInfo), for: .touchUpInside)
         
         addTap()
         
@@ -63,6 +64,16 @@ class PhotoEditInfoCollectionGenreViewCell: UICollectionViewListCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func didTapInfo(){
+        print("singin info tapped")
+        let viewController = GenreInfoModalViewController()
+        semiModalPresenter.viewController = viewController
+        parentViewController()?.present(viewController, animated: true)
+        
     }
     
     private func addTap(){
@@ -88,7 +99,7 @@ class PhotoEditInfoCollectionGenreViewCell: UICollectionViewListCell {
         
         
         let buttonSize: CGFloat = 30
-        button.frame = CGRect(x: contentView.right - button.width - 10, y: (contentView.height-button.height)/2, width: buttonSize, height: buttonSize)
+        infoButton.frame = CGRect(x: contentView.right - buttonSize - 14, y: (contentView.height-buttonSize)/2, width: buttonSize, height: buttonSize)
 
         
     }

@@ -145,16 +145,28 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let button = UIButton(frame: footer.bounds)
         button.frame = CGRect(x: 0, y: 0, width: footer.width, height: footer.height/2)
         footer.addSubview(button)
-        button.setTitle("ログアウト", for: .normal)
-        button.setTitleColor(.systemRed, for: .normal)
-        button.addTarget(self, action: #selector(didTapSignOut), for: .touchUpInside)
         
-        let buttonDeleteAccount = UIButton()
-        buttonDeleteAccount.frame = CGRect(x: 0, y: button.bottom, width: footer.width, height: footer.height/2)
-        footer.addSubview(buttonDeleteAccount)
-        buttonDeleteAccount.setTitle("アカウントの消去", for: .normal)
-        buttonDeleteAccount.setTitleColor(.systemRed, for: .normal)
-        buttonDeleteAccount.addTarget(self, action: #selector(didTapDeleteAccount), for: .touchUpInside)
+        let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+        
+        if(!isGhost){
+            
+            button.setTitle("ログアウト", for: .normal)
+            button.setTitleColor(.systemRed, for: .normal)
+            button.addTarget(self, action: #selector(didTapSignOut), for: .touchUpInside)
+            
+            let buttonDeleteAccount = UIButton()
+            buttonDeleteAccount.frame = CGRect(x: 0, y: button.bottom, width: footer.width, height: footer.height/2)
+            footer.addSubview(buttonDeleteAccount)
+            buttonDeleteAccount.setTitle("アカウントの消去", for: .normal)
+            buttonDeleteAccount.setTitleColor(.systemRed, for: .normal)
+            buttonDeleteAccount.addTarget(self, action: #selector(didTapDeleteAccount), for: .touchUpInside)
+        }
+        else{
+            button.setTitle("ゴーストモードからログアウト", for: .normal)
+            button.setTitleColor(.systemRed, for: .normal)
+            button.addTarget(self, action: #selector(didTapSignOut), for: .touchUpInside)
+        }
+        
         
         tableView.tableFooterView = footer
     }

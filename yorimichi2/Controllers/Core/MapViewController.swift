@@ -1793,7 +1793,7 @@ extension MapViewController{
         goButton.center.x = view.width/4*3 + 30
         goLabel.center.x = view.width/4*3 + 30
         
-        bannerView.frame = CGRect(x: view.right/2 - 320/2, y:  goButton.top - 130, width: 320, height: 120)
+        bannerView.frame = CGRect(x: view.right/2 - 320/2, y:  goButton.top - 130, width: 300, height: 120)
         
     }
     

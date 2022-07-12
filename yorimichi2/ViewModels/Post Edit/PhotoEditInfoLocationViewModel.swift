@@ -8,6 +8,7 @@
 import Foundation
 
 struct PhotoEditInfoLocationViewModel{
+    let titleHeader: String
     let title: String
     let subTitle: String
 }

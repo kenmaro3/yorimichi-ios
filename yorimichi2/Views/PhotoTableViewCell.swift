@@ -68,9 +68,13 @@ class PhotoTableViewCell: UITableViewCell {
         print("here contentView===========")
         print(contentView.bounds)
         
+        let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+        if(!isGhost){
+            container.addSubview(profileName)
+            container.addSubview(profilePictureImageView)
+        }
+        
         container.addSubview(postImageView)
-        container.addSubview(profilePictureImageView)
-        container.addSubview(profileName)
         container.addSubview(label)
         container.addSubview(info)
     }
@@ -96,27 +100,52 @@ class PhotoTableViewCell: UITableViewCell {
         
         container.layer.cornerRadius = 8
         
+        
+        let isGhost = UserDefaults.standard.bool(forKey: "isGhost")
+        if(!isGhost){
+            let imageSize: CGFloat = 24
+            profilePictureImageView.frame = CGRect(x: 20, y: 6, width: imageSize, height: imageSize)
+            profilePictureImageView.layer.cornerRadius = imageSize/2
+            
+            let postSize: CGFloat = container.height - 12
+            postImageView.frame = CGRect(x: container.width-postSize-10, y: 6, width: postSize, height: postSize)
+            postImageView.clipsToBounds = true
+            postImageView.layer.cornerRadius = 10
+            
+            
+            
+            profileName.sizeToFit()
+            info.sizeToFit()
+            label.sizeToFit()
+            
+            profileName.frame = CGRect(x: profilePictureImageView.right + 20, y: 10, width: profileName.width, height: profileName.height)
+            
+            label.frame = CGRect(x: 20, y: profilePictureImageView.bottom+14, width: container.width-postImageView.width - 30, height: label.height)
+            
+            
+            info.frame = CGRect(x: 20, y: label.bottom + 10, width: container.width-postImageView.width - 30, height: info.height)
+        }
+        else{
+            let imageSize: CGFloat = 24
+            
+            let postSize: CGFloat = container.height - 12
+            postImageView.frame = CGRect(x: container.width-postSize-10, y: 6, width: postSize, height: postSize)
+            postImageView.clipsToBounds = true
+            postImageView.layer.cornerRadius = 10
+            
+            
+            
+            info.sizeToFit()
+            label.sizeToFit()
+            
+            
+            label.frame = CGRect(x: 20, y: 6+14, width: container.width-postImageView.width - 30, height: label.height)
+            
+            info.frame = CGRect(x: 20, y: label.bottom + 10, width: container.width-postImageView.width - 30, height: info.height)
+            
+        }
+        
 
-        let imageSize: CGFloat = 24
-        profilePictureImageView.frame = CGRect(x: 20, y: 6, width: imageSize, height: imageSize)
-        profilePictureImageView.layer.cornerRadius = imageSize/2
-        
-        let postSize: CGFloat = container.height - 12
-        postImageView.frame = CGRect(x: container.width-postSize-10, y: 6, width: postSize, height: postSize)
-        postImageView.clipsToBounds = true
-        postImageView.layer.cornerRadius = 10
-        
-        
-        
-        profileName.sizeToFit()
-        info.sizeToFit()
-        label.sizeToFit()
-        
-        profileName.frame = CGRect(x: profilePictureImageView.right + 20, y: 6, width: profileName.width, height: profileName.height)
-        
-        label.frame = CGRect(x: 20, y: profilePictureImageView.bottom+14, width: label.width, height: label.height)
-        
-        info.frame = CGRect(x: 20, y: label.bottom + 10, width: info.width, height: info.height)
         
     }
     

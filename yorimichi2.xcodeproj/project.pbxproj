@@ -27,6 +27,30 @@
 		0A14746C279C28CC0005344A /* PhotoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A14746A279C28CC0005344A /* PhotoCellViewModel.swift */; };
 		0A14746E279C559F0005344A /* PhotoTableViewFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A14746D279C559F0005344A /* PhotoTableViewFooterView.swift */; };
 		0A14746F279C559F0005344A /* PhotoTableViewFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A14746D279C559F0005344A /* PhotoTableViewFooterView.swift */; };
+		0A1827702814DF4C00822881 /* SemiModalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A18276F2814DF4C00822881 /* SemiModalPresenter.swift */; };
+		0A1827712814DF4C00822881 /* SemiModalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A18276F2814DF4C00822881 /* SemiModalPresenter.swift */; };
+		0A1827732814DF7800822881 /* SemiModalIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1827722814DF7800822881 /* SemiModalIndicatorView.swift */; };
+		0A1827742814DF7800822881 /* SemiModalIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1827722814DF7800822881 /* SemiModalIndicatorView.swift */; };
+		0A1827762814DF9A00822881 /* SemiModalDismissAnimatedTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1827752814DF9A00822881 /* SemiModalDismissAnimatedTransition.swift */; };
+		0A1827772814DF9A00822881 /* SemiModalDismissAnimatedTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1827752814DF9A00822881 /* SemiModalDismissAnimatedTransition.swift */; };
+		0A1827792814DFB500822881 /* SemiModalDismissInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1827782814DFB500822881 /* SemiModalDismissInteractiveTransition.swift */; };
+		0A18277A2814DFB500822881 /* SemiModalDismissInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1827782814DFB500822881 /* SemiModalDismissInteractiveTransition.swift */; };
+		0A18277C2814DFD200822881 /* SemiModalOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A18277B2814DFD200822881 /* SemiModalOverlayView.swift */; };
+		0A18277D2814DFD200822881 /* SemiModalOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A18277B2814DFD200822881 /* SemiModalOverlayView.swift */; };
+		0A18277F2814DFF600822881 /* SemiModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A18277E2814DFF600822881 /* SemiModalPresentationController.swift */; };
+		0A1827802814DFF600822881 /* SemiModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A18277E2814DFF600822881 /* SemiModalPresentationController.swift */; };
+		0A1827822814E07600822881 /* GhostModeInfoModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1827812814E07600822881 /* GhostModeInfoModalViewController.swift */; };
+		0A1827832814E07600822881 /* GhostModeInfoModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1827812814E07600822881 /* GhostModeInfoModalViewController.swift */; };
+		0A1827852814E11400822881 /* SignInModeInfoModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1827842814E11400822881 /* SignInModeInfoModalViewController.swift */; };
+		0A1827862814E11400822881 /* SignInModeInfoModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1827842814E11400822881 /* SignInModeInfoModalViewController.swift */; };
+		0A1827882814F17D00822881 /* GhostTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1827872814F17D00822881 /* GhostTabBarViewController.swift */; };
+		0A1827892814F17D00822881 /* GhostTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1827872814F17D00822881 /* GhostTabBarViewController.swift */; };
+		0A18278B2815024800822881 /* DirectSearchLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A18278A2815024800822881 /* DirectSearchLocationViewController.swift */; };
+		0A18278C2815024800822881 /* DirectSearchLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A18278A2815024800822881 /* DirectSearchLocationViewController.swift */; };
+		0A18278E28150DE600822881 /* LocationInfoModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A18278D28150DE600822881 /* LocationInfoModalViewController.swift */; };
+		0A18278F28150DE600822881 /* LocationInfoModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A18278D28150DE600822881 /* LocationInfoModalViewController.swift */; };
+		0A18279128150F5400822881 /* GenreInfoModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A18279028150F5400822881 /* GenreInfoModalViewController.swift */; };
+		0A18279228150F5400822881 /* GenreInfoModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A18279028150F5400822881 /* GenreInfoModalViewController.swift */; };
 		0A1CA0A5275C591700F2C22D /* SearchPlaceResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CA0A4275C591700F2C22D /* SearchPlaceResultsViewController.swift */; };
 		0A1CA0A6275C591700F2C22D /* SearchPlaceResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CA0A4275C591700F2C22D /* SearchPlaceResultsViewController.swift */; };
 		0A1CA0A8275C593500F2C22D /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1CA0A7275C593500F2C22D /* ExploreViewController.swift */; };
@@ -331,6 +355,18 @@
 		0A147467279C282C0005344A /* PhotoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewCell.swift; sourceTree = "<group>"; };
 		0A14746A279C28CC0005344A /* PhotoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellViewModel.swift; sourceTree = "<group>"; };
 		0A14746D279C559F0005344A /* PhotoTableViewFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewFooterView.swift; sourceTree = "<group>"; };
+		0A18276F2814DF4C00822881 /* SemiModalPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiModalPresenter.swift; sourceTree = "<group>"; };
+		0A1827722814DF7800822881 /* SemiModalIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiModalIndicatorView.swift; sourceTree = "<group>"; };
+		0A1827752814DF9A00822881 /* SemiModalDismissAnimatedTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiModalDismissAnimatedTransition.swift; sourceTree = "<group>"; };
+		0A1827782814DFB500822881 /* SemiModalDismissInteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiModalDismissInteractiveTransition.swift; sourceTree = "<group>"; };
+		0A18277B2814DFD200822881 /* SemiModalOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiModalOverlayView.swift; sourceTree = "<group>"; };
+		0A18277E2814DFF600822881 /* SemiModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiModalPresentationController.swift; sourceTree = "<group>"; };
+		0A1827812814E07600822881 /* GhostModeInfoModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostModeInfoModalViewController.swift; sourceTree = "<group>"; };
+		0A1827842814E11400822881 /* SignInModeInfoModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInModeInfoModalViewController.swift; sourceTree = "<group>"; };
+		0A1827872814F17D00822881 /* GhostTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostTabBarViewController.swift; sourceTree = "<group>"; };
+		0A18278A2815024800822881 /* DirectSearchLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectSearchLocationViewController.swift; sourceTree = "<group>"; };
+		0A18278D28150DE600822881 /* LocationInfoModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfoModalViewController.swift; sourceTree = "<group>"; };
+		0A18279028150F5400822881 /* GenreInfoModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreInfoModalViewController.swift; sourceTree = "<group>"; };
 		0A1CA0A4275C591700F2C22D /* SearchPlaceResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPlaceResultsViewController.swift; sourceTree = "<group>"; };
 		0A1CA0A7275C593500F2C22D /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
 		0A1CA0AA275C61DF00F2C22D /* SpecificPostsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificPostsViewController.swift; sourceTree = "<group>"; };
@@ -519,6 +555,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A18276E2814DF3100822881 /* SemiModal */ = {
+			isa = PBXGroup;
+			children = (
+				0A18276F2814DF4C00822881 /* SemiModalPresenter.swift */,
+				0A1827722814DF7800822881 /* SemiModalIndicatorView.swift */,
+				0A1827752814DF9A00822881 /* SemiModalDismissAnimatedTransition.swift */,
+				0A1827782814DFB500822881 /* SemiModalDismissInteractiveTransition.swift */,
+				0A18277B2814DFD200822881 /* SemiModalOverlayView.swift */,
+				0A18277E2814DFF600822881 /* SemiModalPresentationController.swift */,
+			);
+			path = SemiModal;
+			sourceTree = "<group>";
+		};
 		0A841FDE2754DE7E0021EA3E /* GoogleService-info-Production */ = {
 			isa = PBXGroup;
 			children = (
@@ -568,6 +617,8 @@
 			children = (
 				0AD3198D271FB81600734539 /* SignInViewController.swift */,
 				0AD3198F271FB82100734539 /* SignUpViewController.swift */,
+				0A1827812814E07600822881 /* GhostModeInfoModalViewController.swift */,
+				0A1827842814E11400822881 /* SignInModeInfoModalViewController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -578,6 +629,9 @@
 				0ACCEF78273A157700AB4026 /* PhotoEditInfoViewController.swift */,
 				0ACCEF8A273A7B3E00AB4026 /* SearchLocationViewController.swift */,
 				0ACB081A273BAAD300CD960C /* SearchGenreViewController.swift */,
+				0A18278A2815024800822881 /* DirectSearchLocationViewController.swift */,
+				0A18278D28150DE600822881 /* LocationInfoModalViewController.swift */,
+				0A18279028150F5400822881 /* GenreInfoModalViewController.swift */,
 			);
 			path = "Post Upload";
 			sourceTree = "<group>";
@@ -627,6 +681,7 @@
 		0AD3194A271FB3ED00734539 /* yorimichi2 */ = {
 			isa = PBXGroup;
 			children = (
+				0A18276E2814DF3100822881 /* SemiModal */,
 				0A42DDB52747BD6D00A36B0F /* yorimichi2.entitlements */,
 				0ACDA56227268E4700DA3596 /* Utils */,
 				0AD31980271FB74800734539 /* Resources */,
@@ -811,6 +866,7 @@
 				0A1CA0A7275C593500F2C22D /* ExploreViewController.swift */,
 				0A9E1D68276DF4B50044DA20 /* NotificationViewController.swift */,
 				0A0F7ACD2799A8CC0087A7C8 /* TestViewController.swift */,
+				0A1827872814F17D00822881 /* GhostTabBarViewController.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1138,6 +1194,7 @@
 				0A841F562754DC970021EA3E /* SwipeInfo.swift in Sources */,
 				0A841F572754DC970021EA3E /* ListGenreTableViewCell.swift in Sources */,
 				0A841F582754DC970021EA3E /* CommentBarView.swift in Sources */,
+				0A1827832814E07600822881 /* GhostModeInfoModalViewController.swift in Sources */,
 				0A841F592754DC970021EA3E /* PhotoEditInfoCollectionLocationViewCell.swift in Sources */,
 				0A841F5A2754DC970021EA3E /* ListOnMapLeftViewController.swift in Sources */,
 				0A052FF827701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift in Sources */,
@@ -1146,9 +1203,13 @@
 				0A841F5D2754DC970021EA3E /* RecordButton.swift in Sources */,
 				0A841F5E2754DC970021EA3E /* ListGenreTableViewCellViewModel.swift in Sources */,
 				0A841F5F2754DC970021EA3E /* PhotoEditInfoCellType.swift in Sources */,
+				0A1827712814DF4C00822881 /* SemiModalPresenter.swift in Sources */,
+				0A18277D2814DFD200822881 /* SemiModalOverlayView.swift in Sources */,
 				0A841F602754DC970021EA3E /* ProfileVideoCellViewModel.swift in Sources */,
+				0A18278C2815024800822881 /* DirectSearchLocationViewController.swift in Sources */,
 				0ACED45D27A97BEA00A04770 /* ExploreDetailViewController.swift in Sources */,
 				0A841F612754DC970021EA3E /* PostHeaderView.swift in Sources */,
+				0A1827892814F17D00822881 /* GhostTabBarViewController.swift in Sources */,
 				0A841F622754DC970021EA3E /* NotificationCellViewModels.swift in Sources */,
 				0A841F632754DC970021EA3E /* ListMethodsTableViewCellViewModel.swift in Sources */,
 				0A841F642754DC970021EA3E /* SearchLocationResultsViewController.swift in Sources */,
@@ -1156,12 +1217,14 @@
 				0A14746F279C559F0005344A /* PhotoTableViewFooterView.swift in Sources */,
 				0A841F652754DC970021EA3E /* ListViewController.swift in Sources */,
 				0A1CA0AC275C61DF00F2C22D /* SpecificPostsViewController.swift in Sources */,
+				0A1827862814E11400822881 /* SignInModeInfoModalViewController.swift in Sources */,
 				0A841F662754DC970021EA3E /* ListYorimichiLikesCellType.swift in Sources */,
 				0A841F672754DC970021EA3E /* ListExploreResultTableViewCell.swift in Sources */,
 				0A841F682754DC970021EA3E /* PostComment.swift in Sources */,
 				0A841F692754DC970021EA3E /* SettingsModels.swift in Sources */,
 				0A841F6A2754DC970021EA3E /* ListOnMapViewController.swift in Sources */,
 				0A841F6B2754DC970021EA3E /* ListUserTableViewCell.swift in Sources */,
+				0A1827742814DF7800822881 /* SemiModalIndicatorView.swift in Sources */,
 				0A841F6C2754DC970021EA3E /* Post.swift in Sources */,
 				0A841F6D2754DC970021EA3E /* PhotoEditInfoViewController.swift in Sources */,
 				0A841F6E2754DC970021EA3E /* LikeNotificationTableViewCell.swift in Sources */,
@@ -1220,9 +1283,11 @@
 				0A841F9C2754DC970021EA3E /* LocationManager.swift in Sources */,
 				0A841F9D2754DC970021EA3E /* PhotoEditInfoCollectionVideoViewCell.swift in Sources */,
 				0A841F9E2754DC970021EA3E /* SwipeViewController.swift in Sources */,
+				0A18278F28150DE600822881 /* LocationInfoModalViewController.swift in Sources */,
 				0A841F9F2754DC970021EA3E /* PosterColectionViewCellViewModel.swift in Sources */,
 				0A841FA02754DC970021EA3E /* PhotoPostViewController.swift in Sources */,
 				0A841FA12754DC970021EA3E /* TabBarViewController.swift in Sources */,
+				0A18279228150F5400822881 /* GenreInfoModalViewController.swift in Sources */,
 				0A841FA22754DC970021EA3E /* Shop.swift in Sources */,
 				0A841FA32754DC970021EA3E /* HapticsManager.swift in Sources */,
 				0A841FA42754DC970021EA3E /* MethodsInfo.swift in Sources */,
@@ -1235,7 +1300,9 @@
 				0A841FAB2754DC970021EA3E /* SceneDelegate.swift in Sources */,
 				0A147469279C282C0005344A /* PhotoTableViewCell.swift in Sources */,
 				0A841FAC2754DC970021EA3E /* AnalyticsManager.swift in Sources */,
+				0A1827802814DFF600822881 /* SemiModalPresentationController.swift in Sources */,
 				0A841FAD2754DC970021EA3E /* Notification.swift in Sources */,
+				0A1827772814DF9A00822881 /* SemiModalDismissAnimatedTransition.swift in Sources */,
 				0A841FAE2754DC970021EA3E /* SearchViewController.swift in Sources */,
 				0A841FAF2754DC970021EA3E /* ListMethodsViewController.swift in Sources */,
 				0A841FB02754DC970021EA3E /* AlertManager.swift in Sources */,
@@ -1271,6 +1338,7 @@
 				0A841FCB2754DC970021EA3E /* HomeFeedCellType.swift in Sources */,
 				0A841FCC2754DC970021EA3E /* ProfileViewController.swift in Sources */,
 				0A841FCD2754DC970021EA3E /* HomeViewController.swift in Sources */,
+				0A18277A2814DFB500822881 /* SemiModalDismissInteractiveTransition.swift in Sources */,
 				0A841FCE2754DC970021EA3E /* PostRatingCollectionViewCellViewModel.swift in Sources */,
 				0A841FCF2754DC970021EA3E /* CustomAnnotationViewModel.swift in Sources */,
 				0A841FD02754DC970021EA3E /* User.swift in Sources */,
@@ -1286,6 +1354,7 @@
 				0ACDA55B27268CC600DA3596 /* SwipeInfo.swift in Sources */,
 				0ACDA56E2726A4FA00DA3596 /* ListGenreTableViewCell.swift in Sources */,
 				0ACED3CF27240A120054398A /* CommentBarView.swift in Sources */,
+				0A1827822814E07600822881 /* GhostModeInfoModalViewController.swift in Sources */,
 				0ACCEF85273A192C00AB4026 /* PhotoEditInfoCollectionLocationViewCell.swift in Sources */,
 				0AC8FB34273CDEDC003B327E /* ListOnMapLeftViewController.swift in Sources */,
 				0A052FF727701AC90029197A /* PhotoEditInfoCollectionLocationDirectViewCell.swift in Sources */,
@@ -1294,9 +1363,13 @@
 				0AD4861127369498005FEF91 /* RecordButton.swift in Sources */,
 				0ACDA56A27269D9D00DA3596 /* ListGenreTableViewCellViewModel.swift in Sources */,
 				0ACCEF7F273A183100AB4026 /* PhotoEditInfoCellType.swift in Sources */,
+				0A1827702814DF4C00822881 /* SemiModalPresenter.swift in Sources */,
+				0A18277C2814DFD200822881 /* SemiModalOverlayView.swift in Sources */,
 				0AD486272736C968005FEF91 /* ProfileVideoCellViewModel.swift in Sources */,
+				0A18278B2815024800822881 /* DirectSearchLocationViewController.swift in Sources */,
 				0ACED45C27A97BEA00A04770 /* ExploreDetailViewController.swift in Sources */,
 				0AD4863127380CDD005FEF91 /* PostHeaderView.swift in Sources */,
+				0A1827882814F17D00822881 /* GhostTabBarViewController.swift in Sources */,
 				0A901ABD2720251600EC0A36 /* NotificationCellViewModels.swift in Sources */,
 				0AB41D5B272D2EE6000BE8B5 /* ListMethodsTableViewCellViewModel.swift in Sources */,
 				0ACCEF8D273A857600AB4026 /* SearchLocationResultsViewController.swift in Sources */,
@@ -1304,12 +1377,14 @@
 				0A14746E279C559F0005344A /* PhotoTableViewFooterView.swift in Sources */,
 				0AD31994271FB84C00734539 /* ListViewController.swift in Sources */,
 				0A1CA0AB275C61DF00F2C22D /* SpecificPostsViewController.swift in Sources */,
+				0A1827852814E11400822881 /* SignInModeInfoModalViewController.swift in Sources */,
 				0AC82F56274603CD00E58887 /* ListYorimichiLikesCellType.swift in Sources */,
 				0AD2581E272E8FBF00F22274 /* ListExploreResultTableViewCell.swift in Sources */,
 				0AD4861D2736A7E4005FEF91 /* PostComment.swift in Sources */,
 				0ACED3C92723F0400054398A /* SettingsModels.swift in Sources */,
 				0AC8FB32273CDB70003B327E /* ListOnMapViewController.swift in Sources */,
 				0AC6927C27226D9B005E9737 /* ListUserTableViewCell.swift in Sources */,
+				0A1827732814DF7800822881 /* SemiModalIndicatorView.swift in Sources */,
 				0AD319AE271FB9B100734539 /* Post.swift in Sources */,
 				0ACCEF79273A157700AB4026 /* PhotoEditInfoViewController.swift in Sources */,
 				0A901ACD2720331900EC0A36 /* LikeNotificationTableViewCell.swift in Sources */,
@@ -1368,9 +1443,11 @@
 				0AC8FB2E273CA67C003B327E /* PhotoEditInfoCollectionVideoViewCell.swift in Sources */,
 				0ACDA5592726843600DA3596 /* SwipeViewController.swift in Sources */,
 				0A901AB1272024AD00EC0A36 /* PosterColectionViewCellViewModel.swift in Sources */,
+				0A18278E28150DE600822881 /* LocationInfoModalViewController.swift in Sources */,
 				0AD4862F27380B47005FEF91 /* PhotoPostViewController.swift in Sources */,
 				0AD319C2271FC0D100734539 /* TabBarViewController.swift in Sources */,
 				0AD319B6271FB9EF00734539 /* Shop.swift in Sources */,
+				0A18279128150F5400822881 /* GenreInfoModalViewController.swift in Sources */,
 				0AD319A6271FB8E000734539 /* HapticsManager.swift in Sources */,
 				0AB41D5D272D3046000BE8B5 /* MethodsInfo.swift in Sources */,
 				0AD319A2271FB8C400734539 /* StorageManager.swift in Sources */,
@@ -1383,7 +1460,9 @@
 				0AD3194E271FB3ED00734539 /* SceneDelegate.swift in Sources */,
 				0A147468279C282C0005344A /* PhotoTableViewCell.swift in Sources */,
 				0AD319A4271FB8D500734539 /* AnalyticsManager.swift in Sources */,
+				0A18277F2814DFF600822881 /* SemiModalPresentationController.swift in Sources */,
 				0AD319B0271FB9BC00734539 /* Notification.swift in Sources */,
+				0A1827762814DF9A00822881 /* SemiModalDismissAnimatedTransition.swift in Sources */,
 				0AA83255272934F4002725CF /* SearchViewController.swift in Sources */,
 				0AB41D59272D2DFD000BE8B5 /* ListMethodsViewController.swift in Sources */,
 				0AC8FB30273CC3A0003B327E /* AlertManager.swift in Sources */,
@@ -1419,6 +1498,7 @@
 				0AD319B2271FB9DB00734539 /* HomeFeedCellType.swift in Sources */,
 				0AD3198C271FB7C300734539 /* ProfileViewController.swift in Sources */,
 				0AD31984271FB79200734539 /* HomeViewController.swift in Sources */,
+				0A1827792814DFB500822881 /* SemiModalDismissInteractiveTransition.swift in Sources */,
 				0AA831BA27279170002725CF /* PostRatingCollectionViewCellViewModel.swift in Sources */,
 				0AB41D63272E30F7000BE8B5 /* CustomAnnotationViewModel.swift in Sources */,
 				0AD319AC271FB9AB00734539 /* User.swift in Sources */,
@@ -1673,7 +1753,7 @@
 				CODE_SIGN_ENTITLEMENTS = yorimichi2/yorimichi2.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B4C7245FA7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = yorimichi2/Info.plist;
@@ -1693,7 +1773,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.2;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.agrimetal.yorimichi2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = yorimichi2;
@@ -1712,7 +1792,7 @@
 				CODE_SIGN_ENTITLEMENTS = yorimichi2/yorimichi2.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B4C7245FA7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = yorimichi2/Info.plist;
@@ -1732,7 +1812,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.2;
+				MARKETING_VERSION = 1.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.agrimetal.yorimichi2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = yorimichi2;
